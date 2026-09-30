@@ -27,6 +27,10 @@ try{
  await page.goto('http://127.0.0.1:4174/');await page.waitForSelector('[data-action="next-step"]');
  await page.evaluate(async save=>{await(await import('./storage.js?v=3.0.0')).save(save);},fixture.save);
  await page.evaluate(async()=>await navigator.serviceWorker.ready);await page.reload();await page.waitForSelector('[data-action="finish"]');
+ // Finish the legacy app's registration/update jobs before switching the server to the new release.
+ await page.waitForLoadState('networkidle');
+ await page.evaluate(async()=>{const registration=await navigator.serviceWorker.ready;await registration.update();});
+ await page.waitForFunction(()=>navigator.serviceWorker.controller?.state==='activated'&&navigator.serviceWorker.controller.scriptURL.endsWith('sw.js?v=3.0.0'));
  assert.ok((await page.evaluate(()=>caches.keys())).includes('hoop-legacy-3.0.0'));served=current;
  await page.goto('http://127.0.0.1:4174/?v=3.1.0');await page.waitForSelector('[data-action="finish"]');
  const migrated=await page.evaluate(async()=>await(await import('./storage.js?v=3.1.0')).load());
@@ -48,7 +52,7 @@ try{
  assert.deepEqual(JSON.parse(JSON.stringify(finished)),fixture.finished);
  console.log('OFFLINE_READY',await page.evaluate(async()=>{
   const names=await caches.keys(),cache=await caches.open('hoop-legacy-3.1.0'),index=await cache.match('./index.html');
-  return {controller:navigator.serviceWorker.controller?.scriptURL,names,indexVersion:(await index.text()).includes('3.1.0'),keys:(await cache.keys()).map(r=>r.url),scripts:[...document.scripts].map(s=>s.src)};
+  return {controller:navigator.serviceWorker.controller?.scriptURL,names,indexVersion:index?(await index.text()).includes('3.1.0'):null,keys:(await cache.keys()).map(r=>r.url),scripts:[...document.scripts].map(s=>s.src)};
  }));
  await context.setOffline(true);await page.reload();await page.waitForSelector('text=Dernier match');
  await page.locator('[data-action="tab:player"]:visible').first().click();await page.waitForSelector('.development-report');
