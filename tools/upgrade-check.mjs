@@ -17,7 +17,7 @@ const server=http.createServer((req,res)=>{
  const pathname=new URL(req.url,'http://localhost').pathname,file=path.resolve(served,'.'+(pathname==='/'?'/index.html':pathname));
  if(!file.startsWith(path.resolve(served)+path.sep)||!fs.existsSync(file)){res.writeHead(404);res.end();return;}
  res.setHeader('Content-Type',({'.js':'application/javascript','.css':'text/css','.html':'text/html','.webmanifest':'application/manifest+json','.svg':'image/svg+xml','.png':'image/png'})[path.extname(file)]||'text/plain');
- res.setHeader('Cache-Control','no-store');fs.createReadStream(file).pipe(res);
+ fs.createReadStream(file).pipe(res);
 });
 await new Promise(r=>server.listen(4174,'127.0.0.1',r));let browser;
 try{
@@ -46,6 +46,10 @@ try{
  await page.locator('[data-action="finish"]').click();await page.waitForSelector('text=Dernier match');
  const finished=await page.evaluate(async()=>(await(await import('./storage.js?v=3.1.0')).load()).lastMatch);
  assert.deepEqual(JSON.parse(JSON.stringify(finished)),fixture.finished);
+ console.log('OFFLINE_READY',await page.evaluate(async()=>{
+  const names=await caches.keys(),cache=await caches.open('hoop-legacy-3.1.0'),index=await cache.match('./index.html');
+  return {controller:navigator.serviceWorker.controller?.scriptURL,names,indexVersion:(await index.text()).includes('3.1.0'),keys:(await cache.keys()).map(r=>r.url),scripts:[...document.scripts].map(s=>s.src)};
+ }));
  await context.setOffline(true);await page.reload();await page.waitForSelector('text=Dernier match');
  await page.locator('[data-action="tab:player"]:visible').first().click();await page.waitForSelector('.development-report');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
