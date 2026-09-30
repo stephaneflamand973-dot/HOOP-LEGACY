@@ -39,7 +39,10 @@ try{
    q.onsuccess=()=>{resolve(q.result?.engine);r.result.close();};q.onerror=()=>reject(q.error);
   };
  }));assert.equal(backup,'3.0.0');
- await page.waitForFunction(async()=>(await caches.keys()).includes('hoop-legacy-3.1.0'));
+ await page.waitForFunction(async()=>{
+  const worker=navigator.serviceWorker.controller;
+  return worker?.state==='activated'&&worker.scriptURL.endsWith('sw.js?v=3.1.0')&&!!(await(await caches.open('hoop-legacy-3.1.0')).match('./index.html'));
+ });
  await page.locator('[data-action="finish"]').click();await page.waitForSelector('text=Dernier match');
  const finished=await page.evaluate(async()=>(await(await import('./storage.js?v=3.1.0')).load()).lastMatch);
  assert.deepEqual(JSON.parse(JSON.stringify(finished)),fixture.finished);

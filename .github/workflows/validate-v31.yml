@@ -4,6 +4,7 @@ on:
     branches: [work/hoop-legacy-v3.1]
 permissions:
   contents: write
+  actions: read
 concurrency:
   group: hoop-v31-validation
   cancel-in-progress: true
@@ -31,21 +32,14 @@ jobs:
           fi
           mkdir -p .qa-previous
           git archive 14feec00c981fe322ba3ec5f9f282ded578d33b8 | tar -x -C .qa-previous
-      - name: Deux campagnes de trente saisons
-        run: |
-          node tools/long-run.mjs 2026 > /tmp/hoop-2026.log 2>&1 &
-          first_pid=$!
-          node tools/long-run.mjs 973 > /tmp/hoop-973.log 2>&1 &
-          second_pid=$!
-          result=0
-          wait "$first_pid" || result=1
-          wait "$second_pid" || result=1
-          cat /tmp/hoop-2026.log /tmp/hoop-973.log
-          exit "$result"
-      - name: Reprise de trente saisons sur mobile
-        run: |
-          node --input-type=module -e "import fs from 'node:fs';fs.writeFileSync('/tmp/hoop-long-save.json',JSON.stringify(JSON.parse(fs.readFileSync('.qa-cache/state-2026.json')).state))"
-          QA_LONG_SAVE=/tmp/hoop-long-save.json npm run test:browser
+      - name: Vérifier que le code déjà testé est identique
+        run: git diff --exit-code 0764fc086a7d9f6a61fde14e49a58fde3804ab0b HEAD -- dist tools/long-run.mjs tools/browser-check.mjs
+      - name: Reprendre les campagnes et le contrôle mobile validés
+        uses: actions/download-artifact@v4
+        with:
+          name: validation-v31
+          run-id: 36760956806
+          github-token: ${{ github.token }}
       - name: Migration réelle depuis V3
         run: QA_PREVIOUS_ROOT="$PWD/.qa-previous/dist" npm run test:upgrade
       - name: Rapport et archive de sources
