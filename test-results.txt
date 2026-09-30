@@ -1,25 +1,28 @@
 npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> hoop-legacy@2.0.0 test
+> hoop-legacy@3.0.0 test
 > node --test tests/*.test.js
 
-PARCOURS {"seasons":3,"steps":207,"initial":53,"overall":76,"draft":19,"league":"nba"}
-✔ calendriers réels, 41 réceptions NBA, effectifs partagés et absence de doublons quotidiens (48.859051ms)
-✔ feuilles de match cohérentes en 32, 40 et 48 minutes ; aucune double application (94.416303ms)
-✔ moteur déterministe et sauvegarde en cours de match (263.051362ms)
-✔ progression manuelle, plafonds et imports invalides (163.742558ms)
-✔ migration V1 conserve joueur, points et ancien match dans les archives (90.186461ms)
-✔ transfert international conserve le profil, les résultats et les effectifs (53.635444ms)
-✔ draft : une franchise détient le choix ; non-drafté reçoit des offres étrangères (73.134001ms)
-✔ trois saisons complètes : lycée, recrutement universitaire, progression puis choix de draft (22585.111236ms)
-✔ PWA : manifeste, icônes et ressources hors ligne présentes (1.328721ms)
-✔ worker : arrêt demandé après une période, état cohérent (532.399102ms)
-✔ parcours interface : création, cinq sections, entraînement, match, sauvegarde et reprise (1239.239103ms)
-ℹ tests 11
+✔ formats réels, 82 matchs NBA et calendriers sans double réservation (83.073708ms)
+✔ points, tirs et minutes émergent des possessions en 32, 40 et 48 minutes (138.179259ms)
+✔ trois présentations, commandes ignorées et sauvegarde à mi-match donnent le même match (138.670555ms)
+✔ jour, semaine et grand saut conservent chronologie, RNG, XP et blessures (4403.738906ms)
+✔ XP par domaine, efficacité et maximum commun de 99 (56.710658ms)
+✔ migration V1 et V2, historique conservé, plafonds retirés, formats invalides refusés (135.29762ms)
+✔ choix de draft et marché international gardent la même identité et les résultats (68.601917ms)
+✔ argent, placements et décisions personnelles ne se dupliquent pas (25.162631ms)
+✔ vieillissement différencié, aucune baisse identique imposée à tous les attributs (20.529898ms)
+✔ une blessure et une décision importante arrêtent une avance longue (52.402355ms)
+✔ marché IA : distribution des talents après expiration simultanée, sans premier club privilégié (883.321197ms)
+✔ PWA : manifeste, icônes et ressources hors ligne présentes (1.986587ms)
+✔ worker : arrêt demandé après une période, état cohérent (211.6661ms)
+✔ IndexedDB : archives séparées, restauration, secours et écriture atomique (492.930327ms)
+✔ parcours interface : création, cinq sections, entraînement, match, sauvegarde et reprise (937.566029ms)
+ℹ tests 15
 ℹ suites 0
-ℹ pass 11
+ℹ pass 15
 ℹ fail 0
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 23483.765475
+ℹ duration_ms 6138.117628

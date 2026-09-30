@@ -1,6 +1,6 @@
-// Reference pack: opening rosters of CLUBS in 2025–26. Players are generated.
+// Reference pack: opening rosters of CLUBS in 2025–26. NBA player identities use a separate opening-night reference pack.
 // Counts are real regular-season counts. Fixture dates/opponent order are generated.
-export const REFERENCE={season:'2025–2026',date:'2026-09-28',baseYear:2025,players:'Joueurs générés — aucun effectif réel revendiqué'};
+export const REFERENCE={season:'2025–2026',date:'2026-09-28',baseYear:2025,players:'Identités NBA réelles au 21 octobre 2025 ; profils de jeu estimés ; autres joueurs fictifs'};
 const names=x=>x.split('|');
 const nba=names('Boston Celtics|Brooklyn Nets|New York Knicks|Philadelphia 76ers|Toronto Raptors|Chicago Bulls|Cleveland Cavaliers|Detroit Pistons|Indiana Pacers|Milwaukee Bucks|Atlanta Hawks|Charlotte Hornets|Miami Heat|Orlando Magic|Washington Wizards|Denver Nuggets|Minnesota Timberwolves|Oklahoma City Thunder|Portland Trail Blazers|Utah Jazz|Golden State Warriors|LA Clippers|Los Angeles Lakers|Phoenix Suns|Sacramento Kings|Dallas Mavericks|Houston Rockets|Memphis Grizzlies|New Orleans Pelicans|San Antonio Spurs');
 const elite=names('AS Monaco|Paris Basketball|ASVEL|JL Bourg|Cholet Basket|Le Mans Sarthe Basket|Saint-Quentin Basket-Ball|SIG Strasbourg|SLUC Nancy|JDA Dijon|Limoges CSP|Nanterre 92|Élan Chalon|Gravelines-Dunkerque|ESSM Le Portel|Boulazac Basket Dordogne');

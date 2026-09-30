@@ -1,65 +1,72 @@
-# HOOP LEGACY 2.0
+# HOOP LEGACY — V3.0.0
 
-Jeu de carrière de basket en français. Clubs professionnels réels, joueurs générés, calcul et sauvegardes sur l’appareil. Univers de référence fixe : ouverture de saison 2025–2026. Aucune clé API ni compte de jeu ; l’accès au site privé reste distinct.
+Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-## Jouer et développer
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.0.0)
 
-`npm start` sert `dist/` sur http://localhost:4173 ; `npm test` lance les tests Node.js. Aucune installation de dépendance requise. HTTPS ou localhost nécessaire au service worker.
+## Changements de cette version
 
-## Carrière
+- Matchs entièrement automatiques : possessions, tirs, passes, rebonds, pertes de balle et score collectif utilisent un seul moteur. Rapide, moments clés et suivi détaillé changent uniquement la présentation. Les anciennes commandes de possession et le Takeover sont retirés.
+- Six réserves d’XP : finition, tir, création, défense, rebond et physique. La production et l’efficacité individuelles, le temps joué et le niveau de la ligue déterminent les gains. Une pondération hebdomadaire commune limite l’avantage des calendriers plus chargés, notamment championnat + EuroLeague.
+- Plus de plafond propre au build : toutes les compétences peuvent atteindre 99. Les coûts augmentent à haut niveau. L’entraînement assisté se déroule selon le calendrier ; allocation manuelle de l’XP possible.
+- Cinq destinations : **Aujourd’hui, Joueur, Carrière, Vie, Monde**. Les sauvegardes et réglages se trouvent dans le menu ☰.
+- Parcours lycée → recrutement universitaire → choix de draft. Une carrière non draftée continue via des offres internationales. Départs à l’université ou directement en NBA également disponibles.
+- NBA : identités des effectifs d’ouverture du 21 octobre 2025, puis générations fictives. Les joueurs conservent leur identité, leurs saisons et leurs mouvements. Recrutement IA selon poste, âge, stratégie et budget simplifié.
+- Vie : relations, couple, projet d’enfant et naissance différée, médias, sponsors, train de vie, résidence, placements. Choix courants délégables ; décisions majeures conservées.
+- Blessures courtes ou longues, retour progressif et récupération des pertes physiques temporaires. Vieillissement physique distinct de la technique et de la lecture du jeu.
+- Intersaison avec programme de travail ou de repos. Journal complet interrogeable, saisons archivées, records personnels et résumé de retraite.
+- Chronologie quotidienne reproductible : l’ordre de simulation ne dépend pas de la taille du saut demandé. Arrêts sur les décisions importantes.
 
-Départs au lycée (16–17 ans), à l’université (18–21 ans) ou directement en NBA. Le lycéen joue des saisons complètes, progresse et reçoit des offres universitaires à 18 ans. Les études et le niveau influencent les propositions. Après une saison universitaire et à partir de 19 ans, le joueur peut tenter la draft ou poursuivre ses études, dans la limite de quatre saisons.
+## Références et périmètre des données
 
-Le rang de draft dépend du niveau, du potentiel, des performances, de l’exposition et de la promotion concurrente. Une seule franchise NBA propose un contrat au joueur sélectionné. Un non-drafté reçoit des possibilités à l’étranger selon son niveau ; une arrivée ultérieure en NBA reste possible. Ordre de sélection simplifié selon les résultats NBA précédents, sans loterie ni échanges de choix.
-
-Les demandes de transfert et fins de contrat ouvrent un marché international. Le joueur conserve son identité et ses attributs, rejoint le calendrier du club d’arrivée et les matchs déjà joués restent archivés. Effectif unique pour les clubs présents en championnat national et en EuroLeague. Les joueurs contrôlés par le jeu sont renouvelés à l’intersaison ; pas de marché complet de transferts entre clubs IA.
-
-## Compétitions
-
-| Compétition | Clubs | Matchs réguliers par équipe |
-| --- | ---: | ---: |
+| Compétition | Clubs / programmes | Matchs réguliers par équipe |
+|---|---:|---:|
 | NBA | 30 | 82 |
+| EuroLeague | 20 | 38 |
 | Betclic ÉLITE | 16 | 30 |
 | Liga ACB | 18 | 34 |
-| Basketball Bundesliga | 18 | 34 |
-| Lega Basket Serie A | 16 | 30 |
+| Bundesliga | 18 | 34 |
+| Serie A | 16 | 30 |
 | NBL | 10 | 33 |
-| EuroLeague | 20 | 38 |
-| Université NCAA, sélection représentative | 32 | 31 |
-| Lycée, circuit fictif | 12 | 24 |
+| NCAA, sélection de programmes | 32 | 31 |
+| Circuit lycée fictif | 12 | 24 |
 
-Calendriers générés avec les volumes de la saison de référence ; dates et ordre des adversaires simulés. NBA : 41 réceptions, conférences, play-in et séries en sept matchs. Formats de phases finales propres aux autres compétitions ; EuroLeague en séries puis Final Four. Les rencontres durent 48 minutes en NBA, 40 à l’université et dans les autres compétitions professionnelles, 32 au lycée. Prolongations de cinq minutes.
+Les formats sont figés sur la référence 2025–2026. Les dates et l’ordre des adversaires sont générés ; ce ne sont pas les calendriers officiels. Les clubs nationaux également engagés en EuroLeague partagent un effectif et ne jouent pas deux matchs le même jour. La NCAA représente un échantillon, avec un tournoi réduit ; les calendriers universitaires et lycéens réels varient.
 
-La NCAA est une sélection de 32 programmes avec tournoi réduit ; les calendriers réels varient et 31 correspond au plafond de référence 2025–26. Le lycée est un circuit fictif : pas de nombre universel de matchs aux États-Unis. Italie : format de début de saison, sans reproduction des exclusions disciplinaires ultérieures. EuroLeague : les clubs hors des cinq championnats nationaux intégrés ne disposent pas de leur championnat domestique.
+Sources des formats dans `dist/leagues.js`. Source NBA : [annonce officielle des effectifs](https://www.nba.com/news/nba-rosters-set-for-2025-26-regular-season), document d’ouverture reproduit dans le PDF indiqué par `ROSTER_SOURCE`, et [index officiel des joueurs](https://www.nba.com/players) pour les postes et tailles disponibles.
 
-Sources officielles et notices par compétition : `dist/leagues.js`. Formats et clubs fixes, sans actualisation automatique, sans effectifs réels ni fixtures officielles. Pas de coupes nationales, de relégation, de salary cap NBA réglementaire, de luxury tax ou de transactions à plusieurs équipes. Salaires et budgets sont des paramètres de jeu.
+Les **noms et clubs NBA** sont issus de la référence. Les **notes, contrats et certains âges** sont des estimations de jeu. Les âges estimés sont marqués ≈. Les positions précises MJ/AR/AI/AF/P sont adaptées au moteur. Les blessures historiques de l’ouverture ne sont pas reproduites. Les autres ligues utilisent des joueurs fictifs. Le tag two-way du document source n’implémente pas une G League ni les règles réelles des contrats two-way.
 
-## Progression et simulation
+## Sauvegardes et mise à jour
 
-22 attributs et allocation automatique activée par défaut, désactivable pour dépenser manuellement. 75 XP par point ; entraînement individuel à 90 XP, coûts d’amélioration réduits, gains de pratique liés aux matchs et plafonds conservés. 22 badges, 16 techniques, blessures, rotations et fatigue. Progression plus rapide chez les jeunes, ralentie au niveau élevé.
+- IndexedDB `hoop-legacy-v1`, version de base 2, état de carrière schéma 4.
+- Autosave et trois emplacements. Export JSON complet pour conserver une copie ou changer d’appareil.
+- Dernier autosave conservé en `rollback`. Copie avant chaque migration V1/V2.
+- Les archives annuelles sont stockées séparément, de manière atomique avec les références de l’emplacement ; l’export rassemble la carrière complète.
+- Migration V2 : joueur, attributs, argent, ligues, résultats et histoire conservés ; anciens crédits de progression convertis en XP de domaine. Les caps disparaissent. Un match ancien inachevé est archivé et rejoué par le nouveau moteur.
+- Migration V1 : ancienne saison conservée dans une archive, passage aux ligues réelles au début d’une nouvelle saison.
+- **Commencer une nouvelle carrière pour jouer avec les effectifs NBA réels.** Les joueurs des anciennes sauvegardes ne sont pas remplacés, afin de préserver leur histoire.
+- Les ressources V3 portent un numéro de version dans leur URL pour éviter le mélange avec un ancien cache PWA.
 
-Match rapide, moments clés ou possessions détaillées utilisent le même moteur déterministe. Avance par rencontre, semaine, dix étapes ou fin de saison. Les longues simulations utilisent un worker avec points de reprise et arrêt entre deux étapes cohérentes. Un match contient 200 possessions de durée fixe, sans moteur 3D ni timing de manette.
+Sur iPhone, ouvrir dans Safari, puis Partager → Sur l’écran d’accueil. Le stockage reste propre au navigateur et à l’appareil ; exportez la carrière avant de les changer.
 
-## Sauvegardes
+## Exécution et vérification
 
-IndexedDB `hoop-legacy-v1`, magasin `slots`, schéma 3. Autosave, trois emplacements et import/export JSON. Écritures sérialisées, validation avant remplacement, sauvegarde exacte du match en cours dans la V2.
+```sh
+npm ci
+npm start
+npm test
+npm run test:long
+```
 
-Les sauvegardes V1 sont migrées : joueur, attributs, points, argent et historique conservés. Une copie intégrale est gardée avant migration. L’ancienne saison et son éventuel match inachevé sont archivés, puis une nouvelle saison commence dans le monde réel avec choix de contrat. Ce match ancien n’est pas repris dans le nouveau calendrier. Les sauvegardes restent locales : exporter pour changer d’appareil.
+`npm start` expose `dist/` sur le port 4173. Aucun build ni serveur d’application n’est requis en production.
 
-## Fichiers
+Le banc long déroule 30 saisons sur les seeds 2026 et 973, contrôle chaque saison et enregistre les jalons 1, 5, 10, 20, 30. Les rapports sont dans `tests/long-run-*.json`.
 
-- `dist/engine.js` : moteur, calendrier, carrière, marché, validation et migration.
-- `dist/leagues.js` : clubs, formats, provenance et calendrier.
-- `dist/config.js` : attributs, progression, badges et paramètres.
-- `dist/app.js`, `dist/style.css` : interface adaptative.
-- `dist/storage.js`, `dist/worker.js` : stockage et simulation longue.
-- `dist/sw.js`, manifeste et icônes : ressources PWA.
-- `tests/` : tests du moteur, parcours, migration, worker et contrat d’interface.
+Pour le contrôle navigateur : installer Chromium avec `npx playwright-core install chromium`, puis `npm run test:browser`. Un binaire existant peut être fourni avec `CHROMIUM_EXECUTABLE_PATH`. Les captures de vérification sont écrites dans `test-results/`.
 
-Voir `TEST-REPORT.md`. Les tests de DOM/IndexedDB sont simulés ; aucune validation visuelle, mobile, installation ou fonctionnement hors ligne en navigateur réel n’a été effectuée dans cet environnement.
+## Limites assumées
 
-## Tester sur iPhone avec GitHub Pages
+Les marchés, budgets et règles de contrats sont des modèles simplifiés, pas une reproduction de la convention collective NBA. Pas de salary cap détaillé, de transactions de picks, de relégations, de coupes nationales ni de G League autonome dans cette version. Les systèmes tactiques, coachs, relations et sponsors restent moins détaillés qu’un jeu de management spécialisé. Les techniques sont encore des modificateurs contextuels. Le résumé de retraite reste consultatif.
 
-Dans Settings → Pages, sélectionner Deploy from a branch, branche main, dossier / (root), puis Save. Une fois le déploiement terminé, ouvrir https://stephaneflamand973-dot.github.io/HOOP-LEGACY/ dans Safari. Partager → Sur l’écran d’accueil pour installer le jeu. La page racine ouvre automatiquement dist/.
-
-Les sauvegardes du précédent site restent sur son domaine. Exporter le JSON depuis ce site puis l’importer dans la version GitHub Pages pour poursuivre la même carrière.
+La progression facilite volontairement l’accès à un joueur très fort. Les tests de simulation contrôlent la cohérence ; ils ne prouvent pas à eux seuls le plaisir sur plusieurs dizaines d’heures. Safari iOS sur appareil physique reste à tester.

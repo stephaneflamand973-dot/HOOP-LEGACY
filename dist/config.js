@@ -1,4 +1,4 @@
-export const VERSION='2.0.0';
+export const VERSION='3.0.0';
 export const GROUPS={Finition:['close','layup','dunk','standing','post'],Tir:['mid','three','free'],Création:['pass','handle','ballSpeed'],Défense:['interior','perimeter','steal','block'],Rebond:['offReb','defReb'],Physique:['speed','agility','strength','vertical','stamina']};
 export const LABELS={close:'Près du cercle',layup:'Lay-up',dunk:'Dunk en pénétration',standing:'Dunk sans élan',post:'Jeu au poste',mid:'Mi-distance',three:'Trois points',free:'Lancers francs',pass:'Passes',handle:'Contrôle du ballon',ballSpeed:'Vitesse avec ballon',interior:'Défense intérieure',perimeter:'Défense extérieure',steal:'Interception',block:'Contre',offReb:'Rebond offensif',defReb:'Rebond défensif',speed:'Vitesse',agility:'Agilité',strength:'Force',vertical:'Détente',stamina:'Endurance'};
 export const KEYS=Object.keys(LABELS);
