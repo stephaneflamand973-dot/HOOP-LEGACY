@@ -1,8 +1,8 @@
-import {KEYS,WEIGHTS} from './config.js?v=3.0.0';
-import {leagueDef} from './leagues.js?v=3.0.0';
-import {NBA_ROSTERS,ROSTER_SOURCE} from './nba-rosters.js?v=3.0.0';
-import {generatedPlayer,overall,getPlayer,team,rng,log,totals,clamp} from './engine.js?v=3.0.0';
-import {ageAttributes} from './progression.js?v=3.0.0';
+import {KEYS,WEIGHTS} from './config.js?v=3.1.0';
+import {leagueDef} from './leagues.js?v=3.1.0';
+import {NBA_ROSTERS,ROSTER_SOURCE} from './nba-rosters.js?v=3.1.0';
+import {generatedPlayer,overall,getPlayer,team,rng,log,totals,clamp} from './engine.js?v=3.1.0';
+import {ageAttributes} from './progression.js?v=3.1.0';
 // Bespoke game ratings, not an official or licensed ratings dataset.
 const STARS={
 'Nikola Jokic':[96,'P',30],'Shai Gilgeous-Alexander':[95,'MJ',27],'Giannis Antetokounmpo':[95,'AF',30],'Luka Doncic':[94,'MJ',26],'Stephen Curry':[92,'MJ',37],'Anthony Edwards':[90,'AR',24],'LeBron James':[90,'AI',40],'Kevin Durant':[90,'AI',37],'Victor Wembanyama':[91,'P',21],'Jayson Tatum':[91,'AI',27],'Jalen Brunson':[90,'MJ',29],'Donovan Mitchell':[89,'AR',29],'Anthony Davis':[90,'P',32],'Joel Embiid':[89,'P',31],'Devin Booker':[88,'AR',28],'Kawhi Leonard':[88,'AI',34],'James Harden':[88,'MJ',36],'Tyrese Haliburton':[88,'MJ',25],'Ja Morant':[87,'MJ',26],'Trae Young':[87,'MJ',27],'Cade Cunningham':[88,'MJ',24],'Paolo Banchero':[87,'AF',22],'Karl-Anthony Towns':[88,'P',29],'Domantas Sabonis':[87,'P',29],'Jimmy Butler III':[87,'AI',36],'Jaylen Brown':[88,'AR',29],'Jalen Williams':[87,'AI',24],'Chet Holmgren':[85,'P',23],'Jamal Murray':[85,'MJ',28],'Alperen Sengun':[86,'P',23],'Bam Adebayo':[86,'P',28],'Pascal Siakam':[86,'AF',31],'Scottie Barnes':[84,'AI',24],'Franz Wagner':[85,'AI',24],'LaMelo Ball':[85,'MJ',24],'Tyrese Maxey':[86,'MJ',24],'Kyrie Irving':[86,'MJ',33],'De\'Aaron Fox':[85,'MJ',27],'Derrick White':[84,'AR',31],'Evan Mobley':[86,'AF',24],'Jaren Jackson Jr.':[85,'AF',26],'Zion Williamson':[85,'AF',25],'Cooper Flagg':[79,'AF',18],'Damian Lillard':[84,'MJ',35],'Rudy Gobert':[83,'P',33],'Chris Paul':[74,'MJ',40],'Al Horford':[76,'P',39],'Kevin Love':[72,'AF',37],'Russell Westbrook':[76,'MJ',36],'Mike Conley':[75,'MJ',38],'Nicolas Batum':[75,'AI',36],'Joe Ingles':[69,'AI',38],'Kyle Lowry':[70,'MJ',39],'Garrett Temple':[65,'AR',39],'Jeff Green':[70,'AF',39]};
@@ -19,7 +19,7 @@ export function realRoster(s,t){let data=NBA_ROSTERS[t.name];if(!data)return nul
  });}
 export function initWorld(s){s.world??={transactions:[],retired:[],drafts:[],records:{},people:{}};s.rosterSource??=ROSTER_SOURCE;
  for(let t of s.teams){t.coachProfile??={name:t.coach,development:55+(hash(t.id)%35),patience:50+(hash(t.id)%40),since:s.season};t.strategy??=['Titre','Reconstruction','Développement','Playoffs'][hash(t.id)%4];}
- for(let p of s.players){p.history??=[];p.developmentRate??=.65+rng(s,'players')*.8;p.tendencyMode??='auto';}
+ for(let p of s.players){p.history??=[];p.developmentRate??=.65+rng(s,'players')*.8;p.developmentTiming??=(hash(p.id+'-timing')%1000)/1000;p.tendencyMode??='auto';}
 }
 const minRoster=t=>t.league==='nba'?15:10;
 const payroll=(s,t)=>t.roster.reduce((v,id)=>v+(getPlayer(s,id)?.contract.salary||0),0);
@@ -28,7 +28,7 @@ function remember(s,p){s.world.people[p.id]={id:p.id,name:p.name,pos:p.pos,real:
 export function refreshWorld(s){initWorld(s);s.lastDraft=[];let pool=new Set(s.freeAgents||[]),retired=new Set();
  for(let t of s.teams){let amateur=leagueDef(t.league).amateur;
  for(let id of [...t.roster]){if(id===s.hero)continue;let p=getPlayer(s,id);p.history.push({season:s.season-1,team:t.name,league:t.league,stats:p.season,ovr:overall(p)});p.history=p.history.slice(-3);p.age++;p.contract.years--;
- ageAttributes(p,{ai:true,random:()=>rng(s,'players')});let graduate=amateur&&p.age>(t.league==='highschool'?18:22),retire=!amateur&&(p.age>=42||p.age>=35&&overall(p)<leagueDef(t.league).level-12);
+ ageAttributes(p,{ai:true,coach:t.coachProfile.development,random:()=>rng(s,'players')});let graduate=amateur&&p.age>(t.league==='highschool'?18:22),retire=!amateur&&(p.age>=42||p.age>=35&&overall(p)<leagueDef(t.league).level-12);
  if(retire){t.roster=t.roster.filter(x=>x!==id);retired.add(id);remember(s,p);s.world.retired.push({id,name:p.name,season:s.season-1,age:p.age});}
  else if(graduate||!amateur&&p.contract.years<=0){t.roster=t.roster.filter(x=>x!==id);pool.add(id);p.lastLeague=t.league;}
  p.season=totals();p.byLeague={};
@@ -41,12 +41,12 @@ export function refreshWorld(s){initWorld(s);s.lastDraft=[];let pool=new Set(s.f
  // Age existing unsigned players once, without discarding their identities.
  for(let id of s.freeAgents||[]){let p=getPlayer(s,id);if(!p||retired.has(id))continue;p.age++;ageAttributes(p,{ai:true,random:()=>rng(s,'players')});if(p.age>40){pool.delete(id);retired.add(id);remember(s,p);}p.season=totals();p.byLeague={};}
  // A persistent fictional class joins the available graduating players each year.
- let template=s.teams.find(t=>t.league==='nba');for(let i=0;i<60;i++){let p=generatedPlayer(s,`rookie-${s.season}-${i}`,template,19+Math.floor(rng(s,'players')*3));let rating=60+rng(s,'players')*21;for(let k of KEYS)p.attrs[k]=Math.round(clamp(rating+(WEIGHTS[p.pos][k]?5:-5)+(rng(s,'players')-.5)*10,25,89));p.history=[];p.developmentRate=.65+rng(s,'players')*1.1;s.players.push(p);pool.add(p.id);}
+ let template=s.teams.find(t=>t.league==='nba');for(let i=0;i<60;i++){let p=generatedPlayer(s,`rookie-${s.season}-${i}`,template,19+Math.floor(rng(s,'players')*3));let quality=rng(s,'players'),rating=58+Math.pow(quality,1.7)*22+(quality>.975?7:quality>.94?2:0);for(let k of KEYS)p.attrs[k]=Math.round(clamp(rating+(WEIGHTS[p.pos][k]?3:-7)+(rng(s,'players')-.5)*10,25,94));p.history=[];p.developmentRate=.5+Math.pow(rng(s,'players'),2)*1.5+(quality>.96?1.15:0);p.developmentTiming=(hash(p.id+'-timing')%1000)/1000;s.players.push(p);pool.add(p.id);}
  const ratings=new Map(s.players.map(p=>[p.id,overall(p)])),rating=p=>ratings.get(p.id)??overall(p);
  let previous=s.archives.at(-1)?.competitions.find(c=>c.id==='nba')?.records||{};let nba=s.teams.filter(t=>t.league==='nba').sort((a,b)=>(previous[a.id]?.wins||0)-(previous[b.id]?.wins||0)||a.id.localeCompare(b.id));
- let prospects=[...pool].map(id=>getPlayer(s,id)).filter(p=>p.age<=22&&rating(p)>=65).sort((a,b)=>rating(b)-rating(a)||a.id.localeCompare(b.id)).slice(0,60);
+ let prospects=[...pool].map(id=>getPlayer(s,id)).filter(p=>p.age<=22&&!p.draft&&!p.real&&p.lastLeague!=='nba'&&rating(p)>=65).sort((a,b)=>rating(b)-rating(a)||a.id.localeCompare(b.id)).slice(0,60);
  s.world.draftPool=prospects.map(p=>({id:p.id,name:p.name,age:p.age,pos:p.pos,score:rating(p)}));
- for(let i=0;i<prospects.length;i++){let p=prospects[i],t=nba[i%30];if(t.roster.length>=18)continue;let pay=Math.min(salary(p,t),Math.max(1e6,t.budget-payroll(s,t)));p.contract={years:2,salary:pay,option:'Équipe',guarantee:1};t.roster.push(p.id);pool.delete(p.id);s.lastDraft.push({id:p.id,name:p.name,team:t.name,league:'nba',pos:p.pos,ovr:rating(p),age:p.age,pick:i+1});}
+ for(let i=0;i<prospects.length;i++){let p=prospects[i],t=nba[i%30];p.draft={season:s.season-1,pick:null,team:null};if(t.roster.length>=18)continue;p.draft={season:s.season-1,pick:i+1,team:t.id};let pay=Math.min(salary(p,t),Math.max(1e6,t.budget-payroll(s,t)));p.contract={years:2,salary:pay,option:'Équipe',guarantee:1};t.roster.push(p.id);pool.delete(p.id);s.lastDraft.push({id:p.id,name:p.name,team:t.name,league:'nba',pos:p.pos,ovr:rating(p),age:p.age,pick:i+1});}
  // Clubs recruit for role needs, finances and their current sporting strategy.
  const priority=new Map([...s.teams].sort((a,b)=>a.id.localeCompare(b.id)).map(t=>[t.id,rng(s,'players')]));
  const marketLevel=t=>Math.max(...t.competitions.map(id=>leagueDef(id).level));

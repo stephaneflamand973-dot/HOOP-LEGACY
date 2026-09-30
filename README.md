@@ -1,10 +1,19 @@
-# HOOP LEGACY — V3.0.0
+# HOOP LEGACY — V3.1.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.0.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.1.0)
 
-## Changements de cette version
+## Changements de la V3.1
+
+- Coût des derniers niveaux et entretien du physique rééquilibrés avec l’âge ; technique plus durable, sans perte de l’XP acquise ni plafond individuel.
+- Bilan d’évolution dans Joueur → Attributs : gains par domaine, XP des matchs et de l’entraînement, détail du vieillissement et comparaison annuelle.
+- Progression IA liée aux minutes, au staff, à la maîtrise et à la maturation. Générations moins uniformes avec quelques prospects exceptionnels.
+- Sélections de draft persistantes, y compris pour les anciennes carrières V3.
+- Migration V3.0 → V3.1 avec copie de secours et conservation du match en cours. Les nouvelles courbes ne réécrivent pas rétroactivement les joueurs existants.
+- Réouverture hors ligne également depuis le lien contenant le numéro de version.
+
+## Fondations de la V3
 
 - Matchs entièrement automatiques : possessions, tirs, passes, rebonds, pertes de balle et score collectif utilisent un seul moteur. Rapide, moments clés et suivi détaillé changent uniquement la présentation. Les anciennes commandes de possession et le Takeover sont retirés.
 - Six réserves d’XP : finition, tir, création, défense, rebond et physique. La production et l’efficacité individuelles, le temps joué et le niveau de la ligue déterminent les gains. Une pondération hebdomadaire commune limite l’avantage des calendriers plus chargés, notamment championnat + EuroLeague.
@@ -70,3 +79,5 @@ Pour le contrôle navigateur : installer Chromium avec `npx playwright-core inst
 Les marchés, budgets et règles de contrats sont des modèles simplifiés, pas une reproduction de la convention collective NBA. Pas de salary cap détaillé, de transactions de picks, de relégations, de coupes nationales ni de G League autonome dans cette version. Les systèmes tactiques, coachs, relations et sponsors restent moins détaillés qu’un jeu de management spécialisé. Les techniques sont encore des modificateurs contextuels. Le résumé de retraite reste consultatif.
 
 La progression facilite volontairement l’accès à un joueur très fort. Les tests de simulation contrôlent la cohérence ; ils ne prouvent pas à eux seuls le plaisir sur plusieurs dizaines d’heures. Safari iOS sur appareil physique reste à tester.
+
+La validation V3.1 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.

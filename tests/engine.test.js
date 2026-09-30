@@ -6,7 +6,7 @@ import {KEYS} from '../dist/config.js';
 import {LEAGUES} from '../dist/leagues.js';
 import {createGame,defaultBuild,hero,team,getPlayer,overall,allGames,competition,startMatch,stepMatch,simulate,finalizeMatch,next,continueMatch,decide,sign,enterDraft,requestTrade,upgrade,upgradeCost,validate} from '../dist/engine.js';
 import {DOMAINS,matchXP,ageAttributes} from '../dist/progression.js';
-import {refreshWorld} from '../dist/world.js?v=3.0.0';
+import {refreshWorld} from '../dist/world.js?v=3.1.0';
 import {lifeAction,resolveLife} from '../dist/life.js';
 import {parseSave} from '../dist/storage.js';
 const make=(path='young',seed=2026)=>createGame({...defaultBuild(),path,seed});
@@ -24,3 +24,32 @@ test('vieillissement différencié, aucune baisse identique imposée à tous les
 test('une blessure et une décision importante arrêtent une avance longue',()=>{let s=make();hero(s).injury=3;s.life.nextEvent=200;s.mode='quick';next(s,{interactive:false,untilDay:100});assert.equal(s.day,3);assert.equal(s.pending.type,'medical');assert.equal(hero(s).season.gp,0);let before=structuredClone(s);assert.equal(next(s,{interactive:false}),false);assert.deepEqual(s,before);assert.ok(decide(s,'rehab'));assert.equal(hero(s).returning,6);});
 
 test('marché IA : distribution des talents après expiration simultanée, sans premier club privilégié',()=>{let s=make();s.season=2;for(let p of s.players)if(p.id!==s.hero)p.contract.years=0;refreshWorld(s);let means=s.teams.filter(t=>t.league==='nba').map(t=>t.roster.reduce((n,id)=>n+overall(getPlayer(s,id)),0)/t.roster.length);assert.ok(Math.max(...means)-Math.min(...means)<12);validate(s);});
+
+import {v3Fixture} from './fixtures/v3-compatible.js';
+
+test('V3 → V3.1 : XP, attributs, décisions et RNG conservés, reprise du match',()=>{
+ const fixture=v3Fixture(),old=fixture.save,s=parseSave(JSON.stringify(old));assert.equal(s.engine,'3.1.0');
+ assert.deepEqual(s.rng,old.rng);assert.deepEqual(hero(s).attrs,hero(old).attrs);assert.deepEqual(s.development.xp,old.development.xp);assert.deepEqual(s.match,old.match);assert.deepEqual(s.history,old.history);assert.deepEqual(s.pending,old.pending);
+ continueMatch(s,null,10000);assert.deepEqual(JSON.parse(JSON.stringify(s.lastMatch)),fixture.finished);
+ const again=parseSave(JSON.stringify(s));assert.equal(again.journal.length,s.journal.length);assert.deepEqual(again.rng,s.rng);
+ assert.throws(()=>parseSave(JSON.stringify({...old,engine:'99.0.0'})));
+ const drafted=old.players.find(p=>!p.real&&p.id!==old.hero),club=old.teams.find(t=>t.roster.includes(drafted.id));
+ old.world.drafts=[{season:1,picks:[{id:drafted.id,pick:8,team:club.name}]}];
+ const restored=parseSave(JSON.stringify(old));assert.deepEqual(getPlayer(restored,drafted.id).draft,{season:1,pick:8,team:club.id});
+});
+test('entretien du vétéran : effort physique croissant, technique accessible et aucun plafond personnel',()=>{
+ const young=hero(make('rookie')),older=structuredClone(young);young.age=24;older.age=40;
+ assert.ok(upgradeCost(older,'speed')>upgradeCost(young,'speed')*20);assert.ok(upgradeCost(older,'speed')>upgradeCost(older,'three')*10);
+ let s=make('rookie'),p=hero(s);p.age=42;s.auto=false;p.attrs.speed=98;s.development.xp.Physique=upgradeCost(p,'speed');assert.ok(upgrade(s,'speed'));assert.equal(p.attrs.speed,99);assert.equal(s.development.xp.Physique,0);
+});
+test('développement IA : temps de jeu, accompagnement, maturité et développement tardif',()=>{
+ let base=hero(make('rookie'));base.age=21;base.developmentRate=1;for(let k of KEYS)base.attrs[k]=72;
+ const play=structuredClone(base),bench=structuredClone(base),late=structuredClone(base),steady=structuredClone(base);
+ play.season={gp:60,min:60*32};bench.season={gp:60,min:60*4};
+ for(let y=0;y<3;y++){play.age++;bench.age++;ageAttributes(play,{ai:true,coach:85});ageAttributes(bench,{ai:true,coach:55});}
+ assert.ok(overall(play)>overall(bench));late.age=steady.age=27;late.developmentTiming=.95;steady.developmentTiming=.2;late.season=steady.season={gp:60,min:60*24};
+ for(let y=0;y<3;y++){late.age++;steady.age++;ageAttributes(late,{ai:true});ageAttributes(steady,{ai:true});}assert.ok(overall(late)>overall(steady));
+});
+test('un joueur déjà drafté ne retourne pas dans une nouvelle draft',()=>{
+ const s=make();s.season=2;refreshWorld(s);let id=s.lastDraft[0].id,p=getPlayer(s,id);assert.ok(p.draft);p.age=19;p.contract.years=0;s.season++;refreshWorld(s);assert.ok(!s.lastDraft.some(q=>q.id===id));assert.ok(getPlayer(s,id).draft);
+});

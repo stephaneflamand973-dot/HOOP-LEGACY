@@ -1,0 +1,77 @@
+name: Valider HOOP LEGACY V3.1
+on:
+  push:
+    branches: [work/hoop-legacy-v3.1]
+permissions:
+  contents: write
+concurrency:
+  group: hoop-v31-validation
+  cancel-in-progress: true
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Tests fonctionnels
+        run: npm test | tee test-results.txt
+      - name: Préparer Chromium et la V3 originale
+        run: |
+          if command -v google-chrome >/dev/null; then
+            echo "CHROMIUM_EXECUTABLE_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright-core install --with-deps chromium
+          fi
+          mkdir -p .qa-previous
+          git archive 14feec00c981fe322ba3ec5f9f282ded578d33b8 | tar -x -C .qa-previous
+      - name: Deux campagnes de trente saisons
+        run: |
+          node tools/long-run.mjs 2026 > /tmp/hoop-2026.log 2>&1 &
+          first_pid=$!
+          node tools/long-run.mjs 973 > /tmp/hoop-973.log 2>&1 &
+          second_pid=$!
+          result=0
+          wait "$first_pid" || result=1
+          wait "$second_pid" || result=1
+          cat /tmp/hoop-2026.log /tmp/hoop-973.log
+          exit "$result"
+      - name: Reprise de trente saisons sur mobile
+        run: |
+          node --input-type=module -e "import fs from 'node:fs';fs.writeFileSync('/tmp/hoop-long-save.json',JSON.stringify(JSON.parse(fs.readFileSync('.qa-cache/state-2026.json')).state))"
+          QA_LONG_SAVE=/tmp/hoop-long-save.json npm run test:browser
+      - name: Migration réelle depuis V3
+        run: QA_PREVIOUS_ROOT="$PWD/.qa-previous/dist" npm run test:upgrade
+      - name: Rapport et archive de sources
+        run: |
+          node tools/qa-summary.mjs
+          python3 - <<'PY'
+          import subprocess,zipfile
+          paths=subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          with zipfile.ZipFile('dist/hoop-legacy-source.zip','w',zipfile.ZIP_DEFLATED) as archive:
+              for name in sorted(paths):
+                  if name and name!='dist/hoop-legacy-source.zip':
+                      archive.write(name,name)
+          PY
+      - name: Conserver les résultats vérifiés
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add TEST-REPORT.md test-results.txt tests/long-run-2026.json tests/long-run-973.json dist/hoop-legacy-source.zip
+          git commit -m "Record V3.1 validation and source archive"
+          git push origin HEAD:work/hoop-legacy-v3.1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validation-v31
+          path: |
+            test-results/
+            test-results.txt
+            tests/long-run-*.json
+            TEST-REPORT.md

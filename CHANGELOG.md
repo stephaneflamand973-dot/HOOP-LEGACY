@@ -1,3 +1,12 @@
+# 3.1.0 — Progression, longévité et générations
+
+- Entretien physique plus exigeant avec l’âge, coûts de haut niveau rééquilibrés et qualités techniques plus durables, sans plafond personnel.
+- Bilan d’évolution par domaine et source d’XP, comparaison annuelle et détail des effets de l’âge.
+- Maturation IA différenciée par temps de jeu et staff, talents exceptionnels rares et absence de doubles passages à la draft.
+- Migration V3.0 conservant les attributs, l’XP et le match en cours, avec copie de secours.
+- Reprise hors ligne depuis un lien versionné.
+- Validation de deux mondes de trente saisons, des migrations et du parcours mobile avant publication.
+
 # 3.0.0 — Refonte de carrière
 
 Remplace les plafonds individuels et les points universels par six domaines d’XP. Supprime les commandes de possession, réunit les présentations de match, rend la chronologie quotidienne indépendante de la granularité d’avance.

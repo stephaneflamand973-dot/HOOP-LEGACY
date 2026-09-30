@@ -1,4 +1,4 @@
-import {next} from './engine.js?v=3.0.0';
+import {next} from './engine.js?v=3.1.0';
 let stop=false;
 self.onmessage=async e=>{
  if(e.data.type==='stop'){stop=true;return}

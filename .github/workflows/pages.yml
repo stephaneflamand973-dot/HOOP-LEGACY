@@ -37,3 +37,20 @@ jobs:
       - name: Publier le jeu
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Vérifier le site publié
+        run: |
+          if command -v google-chrome >/dev/null; then
+            export CHROMIUM_EXECUTABLE_PATH="$(command -v google-chrome)"
+          else
+            npx playwright-core install --with-deps chromium
+          fi
+          for attempt in 1 2 3 4; do
+            if node tools/public-check.mjs; then exit 0; fi
+            sleep 15
+          done
+          exit 1
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: public-mobile-check
+          path: test-results/
