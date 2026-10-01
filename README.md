@@ -1,8 +1,17 @@
-# HOOP LEGACY — V3.1.0
+# HOOP LEGACY — V3.2.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.1.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.2.0)
+
+## Changements de la V3.2
+
+- Ambition de saison proposée automatiquement : gagner sa place, porter son équipe ou jouer le titre. Choix facultatif avant le premier match, suivi de trois objectifs sans pénalité ni validation répétitive.
+- Rivalités issues des vrais duels serrés et des phases finales : bilan des victoires, séries et dernier adversaire marquant. Les identités et confrontations restent après les transferts.
+- Enjeux du prochain match : revanche, élimination, balle de qualification ou balle de titre.
+- Totaux de carrière, accomplissements durables, records contextualisés, doubles-doubles et triples-doubles. Bilans annuels consultables et conservés.
+- Accueil plus direct : résultat du dernier match et faits marquants remontés ; journal repliable ; entraînement et contrats regroupés dans Carrière.
+- Migration V3.0/V3.1 avec copie de secours, sans interrompre le match en cours. Les totaux anciens sont repris ; les rivalités et performances détaillées commencent au jour de la mise à jour lorsque les archives ne permettent pas de les reconstruire.
 
 ## Changements de la V3.1
 
@@ -50,7 +59,7 @@ Les **noms et clubs NBA** sont issus de la référence. Les **notes, contrats et
 
 - IndexedDB `hoop-legacy-v1`, version de base 2, état de carrière schéma 4.
 - Autosave et trois emplacements. Export JSON complet pour conserver une copie ou changer d’appareil.
-- Dernier autosave conservé en `rollback`. Copie avant chaque migration V1/V2.
+- Dernier autosave conservé en `rollback`. Copie avant chaque migration, y compris V3.0/V3.1.
 - Les archives annuelles sont stockées séparément, de manière atomique avec les références de l’emplacement ; l’export rassemble la carrière complète.
 - Migration V2 : joueur, attributs, argent, ligues, résultats et histoire conservés ; anciens crédits de progression convertis en XP de domaine. Les caps disparaissent. Un match ancien inachevé est archivé et rejoué par le nouveau moteur.
 - Migration V1 : ancienne saison conservée dans une archive, passage aux ligues réelles au début d’une nouvelle saison.
@@ -80,4 +89,4 @@ Les marchés, budgets et règles de contrats sont des modèles simplifiés, pas 
 
 La progression facilite volontairement l’accès à un joueur très fort. Les tests de simulation contrôlent la cohérence ; ils ne prouvent pas à eux seuls le plaisir sur plusieurs dizaines d’heures. Safari iOS sur appareil physique reste à tester.
 
-La validation V3.1 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.
+La validation V3.2 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3.0 ou V3.1 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.

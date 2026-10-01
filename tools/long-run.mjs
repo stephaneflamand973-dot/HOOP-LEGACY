@@ -1,8 +1,9 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 const cache=new URL('../.qa-cache/',import.meta.url);fs.mkdirSync(cache,{recursive:true});
-const fingerprint=crypto.createHash('sha256').update(['engine','match','world','life','progression','config','leagues'].map(n=>fs.readFileSync(new URL('../dist/'+n+'.js',import.meta.url),'utf8')).join('')).digest('hex');
+const fingerprint=crypto.createHash('sha256').update(['engine','match','world','life','progression','config','leagues','legacy'].map(n=>fs.readFileSync(new URL('../dist/'+n+'.js',import.meta.url),'utf8')).join('')).digest('hex');
 import assert from 'node:assert/strict';
+import {careerTotals} from '../dist/legacy.js';
 import {createGame,defaultBuild,hero,overall,next,decide,sign,validate,competition,getPlayer,team} from '../dist/engine.js';
 const seeds=process.argv.slice(2).map(Number);if(!seeds.length)seeds.push(2026,973);
 let results=[];const target=Number(process.env.QA_SEASONS||30);
@@ -11,12 +12,12 @@ for(let seed of seeds){let checkpointFile=new URL('state-'+seed+'.json',cache),p
   if(s.pending){if(s.pending.type==='contract'){let i=s.offers.findIndex(o=>o.league==='nba');sign(s,i<0?0:i);}else if(s.pending.type==='draft-choice')decide(s,'draft');else decide(s,s.pending.type==='offseason'?'shoot':s.pending.choices[0][0]);}
   else next(s,{interactive:false});
   if(s.history.length>=(checkpoints.at(-1)?.season||0)+1){let yr=s.history.length;
-   validate(s);for(let c of s.archives.at(-1).competitions){assert.ok(c.champion);assert.ok(c.games.every(g=>g.score));}
+   validate(s);assert.equal(s.legacy.reviews.length,yr);assert.equal(s.legacy.rivals.reduce((n,r)=>n+r.gp,0),careerTotals(s).gp);assert.equal(new Set(s.legacy.milestones.map(m=>m.id)).size,s.legacy.milestones.length);for(let c of s.archives.at(-1).competitions){assert.ok(c.champion);assert.ok(c.games.every(g=>g.score));}
    const nba=s.teams.filter(t=>t.league==='nba'),players=nba.flatMap(t=>t.roster.map(id=>getPlayer(s,id))),ratings=players.map(overall),archive=s.archives.at(-1).competitions.find(c=>c.id==='nba');
    let reg=archive.games.filter(g=>g.stage==='regular'),averageScore=reg.reduce((n,g)=>n+g.score[0]+g.score[1],0)/reg.length/2;
    assert.ok(averageScore>80&&averageScore<150,`Score NBA moyen ${averageScore}`);assert.ok(ratings.every(n=>n>=25&&n<=99));
    for(let t of s.teams)assert.ok(t.roster.length>=10&&t.roster.length<=20);
-   let row={season:yr,hero:overall(hero(s)),heroTeam:team(s).name,age:hero(s).age,athletics:+(['speed','agility','vertical','ballSpeed','dunk'].reduce((n,k)=>n+hero(s).attrs[k],0)/5).toFixed(1),shooting:+(['three','mid','free'].reduce((n,k)=>n+hero(s).attrs[k],0)/3).toFixed(1),speed:hero(s).attrs.speed,three:hero(s).attrs.three,league:s.league,nbaMean:+(ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(1),nba90:ratings.filter(x=>x>=90).length,nbaAi90:players.filter(p=>p.id!==s.hero&&overall(p)>=90).length,nbaMax:Math.max(...ratings),score:+averageScore.toFixed(1),players:s.players.length,champion:team(s,archive.champion).name,draft:s.lastDraft.length,money:Math.round(s.money),injuries:s.health?.history.length||0};checkpoints.push(row);fs.writeFileSync(checkpointFile.pathname+'.tmp',JSON.stringify({fingerprint,state:s,steps,checkpoints}));fs.renameSync(checkpointFile.pathname+'.tmp',checkpointFile);
+   let row={season:yr,hero:overall(hero(s)),heroTeam:team(s).name,age:hero(s).age,athletics:+(['speed','agility','vertical','ballSpeed','dunk'].reduce((n,k)=>n+hero(s).attrs[k],0)/5).toFixed(1),shooting:+(['three','mid','free'].reduce((n,k)=>n+hero(s).attrs[k],0)/3).toFixed(1),speed:hero(s).attrs.speed,three:hero(s).attrs.three,league:s.league,nbaMean:+(ratings.reduce((a,b)=>a+b,0)/ratings.length).toFixed(1),nba90:ratings.filter(x=>x>=90).length,nbaAi90:players.filter(p=>p.id!==s.hero&&overall(p)>=90).length,nbaMax:Math.max(...ratings),score:+averageScore.toFixed(1),players:s.players.length,champion:team(s,archive.champion).name,draft:s.lastDraft.length,money:Math.round(s.money),injuries:s.health?.history.length||0,accomplishments:s.legacy.milestones.length,rivalries:s.legacy.rivals.filter(r=>r.emerged!==undefined).length,seasonObjectives:s.legacy.reviews.at(-1).goals.filter(g=>g.completed!==null).length};checkpoints.push(row);fs.writeFileSync(checkpointFile.pathname+'.tmp',JSON.stringify({fingerprint,state:s,steps,checkpoints}));fs.renameSync(checkpointFile.pathname+'.tmp',checkpointFile);
    if([1,5,10,20,30].includes(yr)){console.log(JSON.stringify({seed,...row,elapsed:Math.round((performance.now()-start)/1000)}));}
   }
  }

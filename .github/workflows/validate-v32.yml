@@ -1,0 +1,51 @@
+name: Valider HOOP LEGACY V3.2
+on:
+  push:
+    branches: [work/hoop-legacy-v3.2]
+permissions:
+  contents: read
+concurrency:
+  group: hoop-v32-validation
+  cancel-in-progress: true
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Vérifier les campagnes de trente saisons du code publié
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';import crypto from 'node:crypto';import assert from 'node:assert/strict';
+          const hash=crypto.createHash('sha256').update(['engine','match','world','life','progression','config','leagues','legacy'].map(n=>fs.readFileSync('dist/'+n+'.js','utf8')).join('')).digest('hex');
+          for(const seed of [2026,973]){const r=JSON.parse(fs.readFileSync('tests/long-run-'+seed+'.json'));assert.equal(r.fingerprint,hash);assert.equal(r.checkpoints.length,30);}
+          console.log('Campagnes locales : deux mondes de trente saisons, même code moteur.');
+          JS
+      - name: Préparer Chromium et les versions précédentes
+        run: |
+          if command -v google-chrome >/dev/null; then
+            echo "CHROMIUM_EXECUTABLE_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright-core install --with-deps chromium
+          fi
+          mkdir -p .qa-previous30 .qa-previous31
+          git archive 14feec00c981fe322ba3ec5f9f282ded578d33b8 dist | tar -x -C .qa-previous30
+          git archive 0e11ed97d9723180ed48b5a9e9f2a94670ed6add dist | tar -x -C .qa-previous31
+      - run: npm run test:browser
+      - name: Migration V3.0 avec ancien cache actif
+        run: QA_PREVIOUS_ROOT="$PWD/.qa-previous30/dist" npm run test:upgrade
+      - name: Migration V3.1 avec ancien cache actif
+        run: QA_PREVIOUS_ROOT="$PWD/.qa-previous31/dist" npm run test:upgrade
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validation-v32
+          path: test-results/

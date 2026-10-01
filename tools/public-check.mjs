@@ -13,10 +13,11 @@ try{
  await page.locator('[data-action="advance"]').click();await page.waitForSelector('[data-action="finish"]');
  await page.locator('[data-action="finish"]').click();await page.waitForSelector('text=Dernier match');
  const state=await page.evaluate(async version=>{
-  const s=await(await import('./storage.js?v='+version)).load();return {schema:s.schema,engine:s.engine,day:s.day,done:s.lastMatch?.done,round:s.round,realPlayers:s.players.filter(p=>p.real).length};
+  const s=await(await import('./storage.js?v='+version)).load();return {schema:s.schema,engine:s.engine,day:s.day,done:s.lastMatch?.done,round:s.round,realPlayers:s.players.filter(p=>p.real).length,goals:s.legacy?.season.goals.length,played:s.legacy?.season.metrics.gp};
  },VERSION);
- assert.equal(state.engine,VERSION);assert.equal(state.schema,4);assert.equal(state.done,true);assert.ok(state.realPlayers>500);assert.deepEqual(errors,[]);
+ assert.equal(state.engine,VERSION);assert.equal(state.schema,4);assert.equal(state.done,true);assert.ok(state.realPlayers>500);assert.equal(state.goals,3);assert.equal(state.played,1);assert.deepEqual(errors,[]);
  await page.locator('[data-action="tab:player"]:visible').first().click();await page.waitForSelector('.development-report');
+ await page.locator('[data-action="tab:career"]:visible').first().click();await page.waitForSelector('.legacy-panel');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  const output=new URL('../test-results/',import.meta.url).pathname;fs.mkdirSync(output,{recursive:true});
  await page.screenshot({path:output+'public-mobile.png',fullPage:true});

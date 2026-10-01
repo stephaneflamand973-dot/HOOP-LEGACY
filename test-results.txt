@@ -1,134 +1,41 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
-> hoop-legacy@3.1.0 test
+> hoop-legacy@3.2.0 test
 > node --test tests/*.test.js
 
-TAP version 13
-# Subtest: formats réels, 82 matchs NBA et calendriers sans double réservation
-ok 1 - formats réels, 82 matchs NBA et calendriers sans double réservation
-  ---
-  duration_ms: 112.484174
-  type: 'test'
-  ...
-# Subtest: points, tirs et minutes émergent des possessions en 32, 40 et 48 minutes
-ok 2 - points, tirs et minutes émergent des possessions en 32, 40 et 48 minutes
-  ---
-  duration_ms: 304.352957
-  type: 'test'
-  ...
-# Subtest: trois présentations, commandes ignorées et sauvegarde à mi-match donnent le même match
-ok 3 - trois présentations, commandes ignorées et sauvegarde à mi-match donnent le même match
-  ---
-  duration_ms: 260.25405
-  type: 'test'
-  ...
-# Subtest: jour, semaine et grand saut conservent chronologie, RNG, XP et blessures
-ok 4 - jour, semaine et grand saut conservent chronologie, RNG, XP et blessures
-  ---
-  duration_ms: 6224.438351
-  type: 'test'
-  ...
-# Subtest: XP par domaine, efficacité et maximum commun de 99
-ok 5 - XP par domaine, efficacité et maximum commun de 99
-  ---
-  duration_ms: 93.376823
-  type: 'test'
-  ...
-# Subtest: migration V1 et V2, historique conservé, plafonds retirés, formats invalides refusés
-ok 6 - migration V1 et V2, historique conservé, plafonds retirés, formats invalides refusés
-  ---
-  duration_ms: 219.51805
-  type: 'test'
-  ...
-# Subtest: choix de draft et marché international gardent la même identité et les résultats
-ok 7 - choix de draft et marché international gardent la même identité et les résultats
-  ---
-  duration_ms: 83.506266
-  type: 'test'
-  ...
-# Subtest: argent, placements et décisions personnelles ne se dupliquent pas
-ok 8 - argent, placements et décisions personnelles ne se dupliquent pas
-  ---
-  duration_ms: 30.587194
-  type: 'test'
-  ...
-# Subtest: vieillissement différencié, aucune baisse identique imposée à tous les attributs
-ok 9 - vieillissement différencié, aucune baisse identique imposée à tous les attributs
-  ---
-  duration_ms: 29.754347
-  type: 'test'
-  ...
-# Subtest: une blessure et une décision importante arrêtent une avance longue
-ok 10 - une blessure et une décision importante arrêtent une avance longue
-  ---
-  duration_ms: 70.510016
-  type: 'test'
-  ...
-# Subtest: marché IA : distribution des talents après expiration simultanée, sans premier club privilégié
-ok 11 - marché IA : distribution des talents après expiration simultanée, sans premier club privilégié
-  ---
-  duration_ms: 1177.045677
-  type: 'test'
-  ...
-# Subtest: V3 → V3.1 : XP, attributs, décisions et RNG conservés, reprise du match
-ok 12 - V3 → V3.1 : XP, attributs, décisions et RNG conservés, reprise du match
-  ---
-  duration_ms: 288.773911
-  type: 'test'
-  ...
-# Subtest: entretien du vétéran : effort physique croissant, technique accessible et aucun plafond personnel
-ok 13 - entretien du vétéran : effort physique croissant, technique accessible et aucun plafond personnel
-  ---
-  duration_ms: 59.609583
-  type: 'test'
-  ...
-# Subtest: développement IA : temps de jeu, accompagnement, maturité et développement tardif
-ok 14 - développement IA : temps de jeu, accompagnement, maturité et développement tardif
-  ---
-  duration_ms: 45.384443
-  type: 'test'
-  ...
-# Subtest: un joueur déjà drafté ne retourne pas dans une nouvelle draft
-ok 15 - un joueur déjà drafté ne retourne pas dans une nouvelle draft
-  ---
-  duration_ms: 400.860681
-  type: 'test'
-  ...
-# Subtest: PWA : manifeste, icônes et ressources hors ligne présentes
-ok 16 - PWA : manifeste, icônes et ressources hors ligne présentes
-  ---
-  duration_ms: 1.863154
-  type: 'test'
-  ...
-# Subtest: worker : arrêt demandé après une période, état cohérent
-ok 17 - worker : arrêt demandé après une période, état cohérent
-  ---
-  duration_ms: 272.73737
-  type: 'test'
-  ...
-# Subtest: IndexedDB : archives séparées, restauration, secours et écriture atomique
-ok 18 - IndexedDB : archives séparées, restauration, secours et écriture atomique
-  ---
-  duration_ms: 857.216148
-  type: 'test'
-  ...
-# Subtest: migration IndexedDB V3 : secours versionné et lecture idempotente
-ok 19 - migration IndexedDB V3 : secours versionné et lecture idempotente
-  ---
-  duration_ms: 766.946237
-  type: 'test'
-  ...
-# Subtest: parcours interface : création, cinq sections, entraînement, match, sauvegarde et reprise
-ok 20 - parcours interface : création, cinq sections, entraînement, match, sauvegarde et reprise
-  ---
-  duration_ms: 1942.583182
-  type: 'test'
-  ...
-1..20
-# tests 20
-# suites 0
-# pass 20
-# fail 0
-# cancelled 0
-# skipped 0
-# todo 0
-# duration_ms 9540.544318
+✔ formats réels, 82 matchs NBA et calendriers sans double réservation (68.725247ms)
+✔ points, tirs et minutes émergent des possessions en 32, 40 et 48 minutes (147.826068ms)
+✔ trois présentations, commandes ignorées et sauvegarde à mi-match donnent le même match (142.849954ms)
+✔ jour, semaine et grand saut conservent chronologie, RNG, XP et blessures (4836.814856ms)
+✔ XP par domaine, efficacité et maximum commun de 99 (57.405845ms)
+✔ migration V1 et V2, historique conservé, plafonds retirés, formats invalides refusés (177.757397ms)
+✔ choix de draft et marché international gardent la même identité et les résultats (95.63483ms)
+✔ argent, placements et décisions personnelles ne se dupliquent pas (31.158602ms)
+✔ vieillissement différencié, aucune baisse identique imposée à tous les attributs (38.381961ms)
+✔ une blessure et une décision importante arrêtent une avance longue (55.877041ms)
+✔ marché IA : distribution des talents après expiration simultanée, sans premier club privilégié (1177.914634ms)
+✔ V3 → V3.2 : XP, attributs, décisions et RNG conservés, reprise du match (242.526608ms)
+✔ entretien du vétéran : effort physique croissant, technique accessible et aucun plafond personnel (50.139981ms)
+✔ développement IA : temps de jeu, accompagnement, maturité et développement tardif (18.663392ms)
+✔ un joueur déjà drafté ne retourne pas dans une nouvelle draft (344.452956ms)
+✔ ambition facultative : choix avant le premier match, aucun bonus ni RNG (89.573773ms)
+✔ match officiel : un seul décompte malgré une nouvelle finalisation (87.99144ms)
+✔ absence : aucun duel, victoire ou double-double personnel crédité (52.122235ms)
+✔ rivalité : rencontres serrées, séries et identité conservées après transfert (46.416748ms)
+✔ enjeux des playoffs : élimination, balle de titre et match décisif (48.321984ms)
+✔ fin de saison : bilan figé, titre unique, pas de statistiques comptées deux fois (36.139951ms)
+✔ migration V3.1 : totaux récupérés, dates inconnues et aucun rival inventé (200.225518ms)
+✔ consultation mobile : mémoire et RNG strictement inchangés par les rendus (69.922837ms)
+✔ PWA : manifeste, icônes et ressources hors ligne présentes (1.933607ms)
+✔ worker : arrêt demandé après une période, état cohérent (241.632493ms)
+✔ IndexedDB : archives séparées, restauration, secours et écriture atomique (524.878714ms)
+✔ migration IndexedDB V3 : secours versionné et lecture idempotente (489.952051ms)
+✔ parcours interface : création, cinq sections, entraînement, match, sauvegarde et reprise (1074.559977ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7618.531021

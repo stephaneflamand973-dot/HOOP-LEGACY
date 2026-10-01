@@ -1,5 +1,5 @@
 {
-  "fingerprint": "796196906f4a7d47386f62cbea3bafe6af2d7c50bdf145125c5e753903f3a149",
+  "fingerprint": "68af0efa47dca693104b21d0583cb9aea5968f6027fa2d0c136cc7be8b9d5ac0",
   "champions": {
     "Los Angeles Lakers": 3,
     "Denver Nuggets": 1,
@@ -17,8 +17,8 @@
   },
   "seed": 2026,
   "steps": 3605,
-  "seconds": 280.3,
-  "saveMB": 38.22,
+  "seconds": 282.4,
+  "saveMB": 38.27,
   "checkpoints": [
     {
       "season": 1,
@@ -39,7 +39,10 @@
       "champion": "Los Angeles Lakers",
       "draft": 60,
       "money": 0,
-      "injuries": 0
+      "injuries": 0,
+      "accomplishments": 4,
+      "rivalries": 3,
+      "seasonObjectives": 3
     },
     {
       "season": 2,
@@ -60,7 +63,10 @@
       "champion": "Denver Nuggets",
       "draft": 57,
       "money": 0,
-      "injuries": 0
+      "injuries": 0,
+      "accomplishments": 9,
+      "rivalries": 9,
+      "seasonObjectives": 3
     },
     {
       "season": 3,
@@ -81,7 +87,10 @@
       "champion": "Houston Rockets",
       "draft": 30,
       "money": 0,
-      "injuries": 0
+      "injuries": 0,
+      "accomplishments": 9,
+      "rivalries": 9,
+      "seasonObjectives": 3
     },
     {
       "season": 4,
@@ -102,7 +111,10 @@
       "champion": "Sacramento Kings",
       "draft": 25,
       "money": 1431957,
-      "injuries": 0
+      "injuries": 0,
+      "accomplishments": 11,
+      "rivalries": 20,
+      "seasonObjectives": 3
     },
     {
       "season": 5,
@@ -123,7 +135,10 @@
       "champion": "Charlotte Hornets",
       "draft": 33,
       "money": 2866425,
-      "injuries": 1
+      "injuries": 1,
+      "accomplishments": 11,
+      "rivalries": 25,
+      "seasonObjectives": 1
     },
     {
       "season": 6,
@@ -144,7 +159,10 @@
       "champion": "Houston Rockets",
       "draft": 32,
       "money": 4303959,
-      "injuries": 1
+      "injuries": 1,
+      "accomplishments": 12,
+      "rivalries": 31,
+      "seasonObjectives": 3
     },
     {
       "season": 7,
@@ -165,7 +183,10 @@
       "champion": "Atlanta Hawks",
       "draft": 34,
       "money": 7554663,
-      "injuries": 1
+      "injuries": 1,
+      "accomplishments": 16,
+      "rivalries": 36,
+      "seasonObjectives": 3
     },
     {
       "season": 8,
@@ -186,7 +207,10 @@
       "champion": "Atlanta Hawks",
       "draft": 35,
       "money": 10797102,
-      "injuries": 1
+      "injuries": 1,
+      "accomplishments": 19,
+      "rivalries": 37,
+      "seasonObjectives": 3
     },
     {
       "season": 9,
@@ -207,7 +231,10 @@
       "champion": "Atlanta Hawks",
       "draft": 29,
       "money": 14054012,
-      "injuries": 1
+      "injuries": 1,
+      "accomplishments": 21,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 10,
@@ -228,7 +255,10 @@
       "champion": "Phoenix Suns",
       "draft": 24,
       "money": 17587301,
-      "injuries": 2
+      "injuries": 2,
+      "accomplishments": 21,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 11,
@@ -249,7 +279,10 @@
       "champion": "Atlanta Hawks",
       "draft": 27,
       "money": 21123966,
-      "injuries": 2
+      "injuries": 2,
+      "accomplishments": 23,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 12,
@@ -270,7 +303,10 @@
       "champion": "Atlanta Hawks",
       "draft": 28,
       "money": 24664619,
-      "injuries": 2
+      "injuries": 2,
+      "accomplishments": 23,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 13,
@@ -291,7 +327,10 @@
       "champion": "Memphis Grizzlies",
       "draft": 30,
       "money": 28193919,
-      "injuries": 4
+      "injuries": 4,
+      "accomplishments": 24,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 14,
@@ -312,7 +351,10 @@
       "champion": "New York Knicks",
       "draft": 23,
       "money": 31734573,
-      "injuries": 4
+      "injuries": 4,
+      "accomplishments": 25,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 15,
@@ -333,7 +375,10 @@
       "champion": "Boston Celtics",
       "draft": 28,
       "money": 35263873,
-      "injuries": 5
+      "injuries": 5,
+      "accomplishments": 26,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 16,
@@ -354,7 +399,10 @@
       "champion": "Miami Heat",
       "draft": 28,
       "money": 38804526,
-      "injuries": 5
+      "injuries": 5,
+      "accomplishments": 28,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 17,
@@ -375,7 +423,10 @@
       "champion": "Atlanta Hawks",
       "draft": 27,
       "money": 42334235,
-      "injuries": 5
+      "injuries": 5,
+      "accomplishments": 28,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 18,
@@ -396,7 +447,10 @@
       "champion": "Indiana Pacers",
       "draft": 26,
       "money": 45874480,
-      "injuries": 5
+      "injuries": 5,
+      "accomplishments": 28,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 19,
@@ -417,7 +471,10 @@
       "champion": "Phoenix Suns",
       "draft": 32,
       "money": 49415133,
-      "injuries": 5
+      "injuries": 5,
+      "accomplishments": 30,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 20,
@@ -438,7 +495,10 @@
       "champion": "Atlanta Hawks",
       "draft": 30,
       "money": 52944433,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 30,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 21,
@@ -459,7 +519,10 @@
       "champion": "Sacramento Kings",
       "draft": 30,
       "money": 56485086,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 30,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 22,
@@ -480,7 +543,10 @@
       "champion": "Houston Rockets",
       "draft": 21,
       "money": 60014387,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 30,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 23,
@@ -501,7 +567,10 @@
       "champion": "Phoenix Suns",
       "draft": 30,
       "money": 63555040,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 30,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 24,
@@ -522,7 +591,10 @@
       "champion": "Boston Celtics",
       "draft": 35,
       "money": 67084340,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 32,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 25,
@@ -543,7 +615,10 @@
       "champion": "Atlanta Hawks",
       "draft": 34,
       "money": 70529995,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 33,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 26,
@@ -564,7 +639,10 @@
       "champion": "Atlanta Hawks",
       "draft": 29,
       "money": 73972376,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 33,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 27,
@@ -585,7 +663,10 @@
       "champion": "Atlanta Hawks",
       "draft": 34,
       "money": 77409950,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 33,
+      "rivalries": 38,
+      "seasonObjectives": 3
     },
     {
       "season": 28,
@@ -606,7 +687,10 @@
       "champion": "San Antonio Spurs",
       "draft": 29,
       "money": 80760603,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 33,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 29,
@@ -627,7 +711,10 @@
       "champion": "Los Angeles Lakers",
       "draft": 31,
       "money": 84099902,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 33,
+      "rivalries": 38,
+      "seasonObjectives": 2
     },
     {
       "season": 30,
@@ -648,7 +735,10 @@
       "champion": "Los Angeles Lakers",
       "draft": 33,
       "money": 87450555,
-      "injuries": 6
+      "injuries": 6,
+      "accomplishments": 33,
+      "rivalries": 38,
+      "seasonObjectives": 2
     }
   ]
 }

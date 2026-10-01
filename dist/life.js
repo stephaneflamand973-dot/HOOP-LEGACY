@@ -1,4 +1,4 @@
-import {hero,log,clamp,rng,team} from './engine.js?v=3.1.0';
+import {hero,log,clamp,rng,team} from './engine.js?v=3.2.0';
 export function initLife(s){s.life??={fame:5,morale:70,partner:null,children:[],family:70,delegated:false,agent:'Équilibré',lifestyle:'simple',investments:0,property:null,sponsors:[],nextEvent:s.day+35,ledger:[],history:[]};s.relationships??={coach:55,team:55,agent:50,mentor:50,family:60};}
 function receipt(s,label,amount){if(!amount)return;s.life.ledger.unshift({day:s.day,label,amount:Math.round(amount)});s.life.ledger=s.life.ledger.slice(0,60);}
 export function lifeDay(s){initLife(s);let p=hero(s),l=s.life;

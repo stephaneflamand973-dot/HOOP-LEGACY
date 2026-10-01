@@ -1,3 +1,12 @@
+# 3.2.0 — Une carrière qui laisse une trace
+
+- Trois ambitions et objectifs automatiques de saison, sans bonus artificiel ni clic obligatoire.
+- Rivalités organiques entre clubs, confrontations et séries mémorisées malgré les transferts.
+- Enjeux du prochain match : revanche, élimination, qualification et titre.
+- Accomplissements de carrière, records contextualisés et bilans annuels persistants.
+- Accueil resserré sur le dernier résultat, les faits marquants et la suite ; journal et détails de gestion repliables.
+- Reprise des V3.0/V3.1 avec secours versionné et match en cours conservé.
+
 # 3.1.0 — Progression, longévité et générations
 
 - Entretien physique plus exigeant avec l’âge, coûts de haut niveau rééquilibrés et qualités techniques plus durables, sans plafond personnel.
