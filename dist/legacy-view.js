@@ -1,12 +1,13 @@
-import {AMBITIONS,careerTotals,goalProgress,rivalries,nextStakes} from './legacy.js?v=3.2.0';
-import {leagueDef} from './leagues.js?v=3.2.0';
+import {seasonTitles} from './career-ledger.js?v=3.3.0';
+import {AMBITIONS,careerTotals,goalProgress,rivalries,nextStakes} from './legacy.js?v=3.3.0';
+import {leagueDef} from './leagues.js?v=3.3.0';
 
 const esc = value => String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => Math.round(n).toLocaleString('fr-FR');
 const club = (s,id) => s.teams.find(t=>t.id===id)?.name || 'Club';
 const goals = s => s.legacy.season.goals.map(g=>{
   const value=goalProgress(s,g), complete=g.completed!==null;
-  return `<article class="season-goal ${complete?'achieved':''}"><div><strong>${esc(g.title)}</strong><span>${complete?'✓ Atteint':`${fmt(value)} / ${fmt(g.target)}`}</span></div><progress max="${g.target}" value="${Math.min(g.target,value)}" aria-label="${esc(g.title)}"></progress><small>${{gp:'Matchs avec du temps de jeu',pts:'Points marqués',ast:'Passes décisives',reb:'Rebonds',wins:'Victoires lorsque vous jouez',impact:'Matchs notés 75/100 ou plus',postWins:'Victoires en playoffs ou play-in',titles:'Titres avec votre club · bilan de fin de saison'}[g.metric]}</small></article>`;
+  return `<article class="season-goal ${complete?'achieved':''}"><div><strong>${esc(g.title)}</strong><span>${complete?'✓ Atteint':`${fmt(value)} / ${fmt(g.target)}`}</span></div><progress max="${g.target}" value="${Math.min(g.target,value)}" aria-label="${esc(g.title)}"></progress><small>${{gp:'Matchs avec du temps de jeu',pts:'Points marqués',ast:'Passes décisives',reb:'Rebonds',wins:'Victoires lorsque vous jouez',impact:'Matchs notés 75/100 ou plus',postWins:'Victoires en playoffs ou play-in',titles:'Titres acquis · enregistrés dès le sacre'}[g.metric]}</small></article>`;
 }).join('');
 
 export function ambitionPanel(s, full=false) {
@@ -21,7 +22,7 @@ export function stakesPanel(s,g) {
 }
 
 export function highlightsPanel(s) {
-  const lines=[...s.competitions.filter(c=>c.champion===s.team).map(c=>'Champion · '+leagueDef(c.id).name+' · saison '+s.season),...s.legacy.lastHighlights];
+  const lines=[...seasonTitles(s).map(t=>'Champion · '+t.name+' · saison '+s.season),...s.legacy.lastHighlights];
   return lines.length?`<div class="match-highlights" role="status">${lines.map(line=>`<p>✦ ${esc(line)}</p>`).join('')}</div>`:'';
 }
 
@@ -29,7 +30,7 @@ export function reviewPanel(s,full=false,season=null) {
   const r=season===null?s.legacy.reviews.at(-1):s.legacy.reviews.find(r=>r.season===season);
   if(!r || !full && s.players.find(p=>p.id===s.hero).season.gp>=3)return '';
   const complete=r.goals.filter(g=>g.completed!==null).length;
-  return `<section class="panel season-review"><p class="eyebrow">BILAN · SAISON ${r.season}</p><h3>${esc(r.title)}</h3><p>${esc(club(s,r.team))} · ${esc(leagueDef(r.league).name)}</p><div class="review-numbers"><span><b>${r.stats.gp}</b> matchs</span><span><b>${r.stats.gp?(r.stats.pts/r.stats.gp).toFixed(1):'—'}</b> pts / match</span><span><b>${complete}/3</b> objectifs</span></div>${r.titles.length?`<p class="achievement-line">Champion · ${r.titles.map(id=>esc(leagueDef(id).name)).join(' · ')}</p>`:''}${r.mvp?'<p class="achievement-line">MVP de votre championnat</p>':''}${full?`<details><summary>Ce qui a marqué cette saison</summary>${r.goals.map(g=>`<p>${g.completed!==null?'✓':'○'} ${esc(g.title)} · ${fmt(g.value)} / ${fmt(g.target)}</p>`).join('')}${r.moments.map(id=>s.legacy.milestones.find(m=>m.id===id)).filter(Boolean).map(m=>`<p>✦ ${esc(m.title)}</p>`).join('')}${r.partial?'<p>Suivi détaillé commencé en cours de saison.</p>':''}</details>`:''}${full&&season===null&&s.legacy.reviews.length>1?`<details><summary>Les bilans précédents · ${s.legacy.reviews.length-1}</summary>${s.legacy.reviews.slice(0,-1).reverse().map(r=>reviewPanel(s,true,r.season)).join('')}</details>`:''}</section>`;
+  return `<section class="panel season-review"><p class="eyebrow">BILAN · SAISON ${r.season}</p><h3>${esc(r.title)}</h3><p>${esc((r.teams?.length?r.teams:[r.team]).map(id=>club(s,id)).join(' → '))} · ${esc(leagueDef(r.league).name)}</p><div class="review-numbers"><span><b>${r.stats.gp}</b> matchs</span><span><b>${r.stats.gp?(r.stats.pts/r.stats.gp).toFixed(1):'—'}</b> pts / match</span><span><b>${complete}/3</b> objectifs</span></div>${r.titles.length?`<p class="achievement-line">Champion · ${r.titles.map(id=>esc(leagueDef(id)?.name||id)).join(' · ')}</p>`:''}${r.mvp?'<p class="achievement-line">MVP de votre championnat</p>':''}${full?`<details><summary>Ce qui a marqué cette saison</summary>${r.goals.map(g=>`<p>${g.completed!==null?'✓':'○'} ${esc(g.title)} · ${fmt(g.value)} / ${fmt(g.target)}</p>`).join('')}${r.moments.map(id=>s.legacy.milestones.find(m=>m.id===id)).filter(Boolean).map(m=>`<p>✦ ${esc(m.title)}</p>`).join('')}${r.partial?'<p>Suivi détaillé commencé en cours de saison.</p>':''}</details>`:''}${full&&season===null&&s.legacy.reviews.length>1?`<details><summary>Les bilans précédents · ${s.legacy.reviews.length-1}</summary>${s.legacy.reviews.slice(0,-1).reverse().map(r=>reviewPanel(s,true,r.season)).join('')}</details>`:''}</section>`;
 }
 
 function rivalCard(s,r) {

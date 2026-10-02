@@ -1,8 +1,20 @@
-# HOOP LEGACY — V3.2.0
+# HOOP LEGACY — V3.3.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.2.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.3.0)
+
+## Changements de la V3.3
+
+- Préférence de simulation conservée par carrière. La destination d’une semaine ou d’une fin de saison survit aux décisions, pauses, rechargements et imports. Reprise explicite ; aucune simulation automatique à la réouverture.
+- Centre des playoffs dans Monde et accès direct depuis Aujourd’hui : tours conservés, filtres de saison/conférence/tour, scores des séries, matchs datés, domicile/extérieur et enjeux. Consultation possible après élimination, sans qualification ou pendant une blessure.
+- Têtes de série et identifiants persistants ; alternance NBA 2-2-1-1-1 ; formats de domicile configurés par ligue. Arrêts brefs sur qualification, changement de tour, élimination et titre, regroupés sans faux choix.
+- Maîtrise du système gagnée avec les minutes jouées, les séances et la vidéo. Gains expliqués dans Profil & santé, effet sportif modeste, conservation annuelle et rétention de 85 % ou 65 % lors d’un transfert selon le système.
+- Les 22 badges et 16 techniques ont un effet contextuel testé. Réceptions, passes, lancers, écrans, rebonds, appuis et jeu collectif sont reliés au moteur. Avoir 99 en lay-up ne supprime plus les dunks.
+- Titres attribués au sacre avec photographie de l’effectif et de l’éligibilité. Passages par club, compétition et phase conservés ; le titre reste acquis après un transfert et n’est pas accordé en rejoignant le champion après coup.
+- Sauvegardes identifiées par joueur, club, saison et date ; remplacement confirmé, suppression avec conservation des archives encore utilisées. Retraite consultative, commandes bloquées au niveau du moteur et de l’interface.
+- Migrations V3.0/V3.1/V3.2 avec copie de secours. Les matchs en cours terminent avec leur moteur d’origine ; scores passés, RNG et XP conservés. Les éléments historiques non documentés ne sont pas inventés.
+- Résumé du match avec score collectif ; tendance récente présentée comme descriptive ; jauges inactives retirées. Résidence revalorisée même sans placements, montants mensuels réels et plafond de placement affiché.
 
 ## Changements de la V3.2
 
@@ -57,9 +69,9 @@ Les **noms et clubs NBA** sont issus de la référence. Les **notes, contrats et
 
 ## Sauvegardes et mise à jour
 
-- IndexedDB `hoop-legacy-v1`, version de base 2, état de carrière schéma 4.
+- IndexedDB `hoop-legacy-v1`, version de base 3, état de carrière schéma 4.
 - Autosave et trois emplacements. Export JSON complet pour conserver une copie ou changer d’appareil.
-- Dernier autosave conservé en `rollback`. Copie avant chaque migration, y compris V3.0/V3.1.
+- Dernier autosave conservé en `rollback`. Copie avant chaque migration, y compris V3.0/V3.1/V3.2.
 - Les archives annuelles sont stockées séparément, de manière atomique avec les références de l’emplacement ; l’export rassemble la carrière complète.
 - Migration V2 : joueur, attributs, argent, ligues, résultats et histoire conservés ; anciens crédits de progression convertis en XP de domaine. Les caps disparaissent. Un match ancien inachevé est archivé et rejoué par le nouveau moteur.
 - Migration V1 : ancienne saison conservée dans une archive, passage aux ligues réelles au début d’une nouvelle saison.
@@ -89,4 +101,6 @@ Les marchés, budgets et règles de contrats sont des modèles simplifiés, pas 
 
 La progression facilite volontairement l’accès à un joueur très fort. Les tests de simulation contrôlent la cohérence ; ils ne prouvent pas à eux seuls le plaisir sur plusieurs dizaines d’heures. Safari iOS sur appareil physique reste à tester.
 
-La validation V3.2 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3.0 ou V3.1 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.
+La validation V3.3 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3.0, V3.1 ou V3.2 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.
+
+`npm run test:v33-browser` contrôle les playoffs réels, les pauses/reprises, les préférences, les emplacements et la retraite sur mobile. Le poids et l’envergure restent descriptifs dans cette version. Les formats de terrain des playoffs sont des paramètres de simulation ; les matchs NCAA et le Final Four sont traités comme neutres.

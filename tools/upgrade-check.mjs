@@ -8,11 +8,11 @@ import {VERSION} from '../dist/config.js';
 const previous=process.env.QA_PREVIOUS_ROOT;
 assert.ok(previous,'Définir QA_PREVIOUS_ROOT vers le dossier dist de la version précédente.');
 const oldVersion=(await import(pathToFileURL(path.join(previous,'config.js')))).VERSION;
-assert.ok(['3.0.0','3.1.0'].includes(oldVersion));
+assert.ok(['3.0.0','3.1.0','3.2.0'].includes(oldVersion));
 const legacy=await import(pathToFileURL(path.join(previous,'engine.js')));
 const old=legacy.createGame(legacy.defaultBuild()),game=legacy.competition(old).schedule[0];
 old.day=game.day;old.match=legacy.startMatch(old,game);legacy.continueMatch(old,null,60);
-const fixture={save:structuredClone(old)};legacy.continueMatch(old,null,10000);fixture.finished=JSON.parse(JSON.stringify(old.lastMatch));
+const fixture={save:structuredClone(old)};legacy.continueMatch(old,null,10000);fixture.finished=JSON.parse(JSON.stringify(old.lastMatch));fixture.finishedRng=structuredClone(old.rng);
 const current=new URL('../dist/',import.meta.url).pathname,output=new URL('../test-results/',import.meta.url).pathname;
 fs.mkdirSync(output,{recursive:true});let served=previous;
 const server=http.createServer((req,res)=>{
@@ -41,7 +41,7 @@ try{
  assert.deepEqual(migrated.players.find(p=>p.id===migrated.hero).attrs,fixture.save.players.find(p=>p.id===fixture.save.hero).attrs);
  assert.equal(migrated.legacy.rivals.length,0);
  const backup=await page.evaluate(version=>new Promise((resolve,reject)=>{
-  const r=indexedDB.open('hoop-legacy-v1',2);r.onerror=()=>reject(r.error);r.onsuccess=()=>{
+  const r=indexedDB.open('hoop-legacy-v1');r.onerror=()=>reject(r.error);r.onsuccess=()=>{
    const q=r.result.transaction('slots').objectStore('slots').get('backup-before-'+version+'-auto');
    q.onsuccess=()=>{resolve({engine:q.result?.engine,match:q.result?.match});r.result.close();};q.onerror=()=>reject(q.error);
   };
@@ -52,7 +52,7 @@ try{
  },VERSION);
  await page.locator('[data-action="finish"]').click();await page.waitForSelector('text=Dernier match');
  const finished=await page.evaluate(async v=>await(await import('./storage.js?v='+v)).load(),VERSION);
- assert.deepEqual(JSON.parse(JSON.stringify(finished.lastMatch)),fixture.finished);
+ assert.deepEqual(JSON.parse(JSON.stringify(finished.lastMatch)),fixture.finished);assert.deepEqual(finished.rng,fixture.finishedRng);
  assert.equal(finished.legacy.season.metrics.gp,1);
  await context.setOffline(true);await page.reload();await page.waitForSelector('text=Dernier match');
  await page.locator('[data-action="tab:career"]:visible').first().click();await page.waitForSelector('.legacy-panel');

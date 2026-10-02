@@ -1,3 +1,4 @@
+import {awardTitle} from '../dist/career-ledger.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createGame,defaultBuild,hero,team,competition,simulate,finalizeMatch,totals,sign,validate} from '../dist/engine.js';
@@ -45,7 +46,7 @@ test('enjeux des playoffs : élimination, balle de titre et match décisif',()=>
 });
 test('fin de saison : bilan figé, titre unique, pas de statistiques comptées deux fois',()=>{
  const s=make();chooseAmbition(s,'contend');hero(s).season={...totals(),gp:60,pts:600};s.history.push({season:1,stats:{...hero(s).season}});
- competition(s).champion=s.team;s.trophies.push('NBA · champion saison 1');finishLegacySeason(s,s.hero);finishLegacySeason(s,s.hero);
+ competition(s).champion=s.team;awardTitle(s,competition(s));finishLegacySeason(s,s.hero);finishLegacySeason(s,s.hero);
  assert.equal(s.legacy.reviews.length,1);assert.equal(s.legacy.reviews[0].goals.find(g=>g.id==='title').completed,0);
  assert.equal(s.legacy.milestones.filter(m=>m.id==='titles-1').length,1);assert.ok(!s.legacy.milestones.some(m=>m.id==='career-pts-1000'));
  s.season=2;hero(s).season=totals();beginLegacySeason(s);assert.equal(careerTotals(s).pts,600);assert.equal(s.legacy.reviews[0].stats.pts,600);

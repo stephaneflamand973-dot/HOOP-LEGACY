@@ -1,6 +1,7 @@
+import {seasonTitles,seasonStints} from './career-ledger.js?v=3.3.0';
 // Career memory is driven only by completed games and seasons. No random draws,
 // attribute bonuses or blocking decisions are made by this module.
-import {leagueDef} from './leagues.js?v=3.2.0';
+import {leagueDef} from './leagues.js?v=3.3.0';
 
 const player = s => s.players.find(p => p.id === s.hero);
 const club = (s, id = s.team) => s.teams.find(t => t.id === id);
@@ -144,10 +145,15 @@ export function recordLegacySeries(s,c,pair) {
   r.lastSeries = {season:s.season,league:c.id,won:pair.winner===s.team};
 }
 
+export function recordLegacyTitle(s) {
+  s.legacy.season.metrics.titles=seasonTitles(s).length;
+  syncMilestones(s);checkGoals(s);
+}
+
 export function finishLegacySeason(s, mvpId) {
   const l = s.legacy, y = l.season;
   if (l.reviews.some(r => r.season === s.season)) return;
-  const titles = s.competitions.filter(c => c.champion === s.team).map(c => c.id);
+  const titles = seasonTitles(s).map(t=>t.league||t.name);
   y.metrics.titles = titles.length; checkGoals(s);
   // history already contains this season; count the completed history only.
   const live = player(s).season;
@@ -155,7 +161,7 @@ export function finishLegacySeason(s, mvpId) {
   const primary = s.competitions.find(c => c.id === s.league);
   const elimination = primary.schedule.filter(g => g.stage!=='regular' && g.result && (g.home===s.team||g.away===s.team)).at(-1);
   const outcome = titles.length ? 'Une saison couronnée' : elimination ? 'La course au titre s’arrête ici' : 'Une saison pour construire';
-  l.reviews.push({season:s.season,team:s.team,league:s.league,ambition:y.ambition,partial:y.partial,
+  l.reviews.push({season:s.season,teams:[...new Set(seasonStints(s).map(t=>t.team))],team:s.team,league:s.league,ambition:y.ambition,partial:y.partial,
     title:outcome,titles,mvp:mvpId===s.hero,stats:{...live},goals:y.goals.map(g=>({...g,value:goalProgress(s,g)})),
     moments:[...y.moments],wins:y.metrics.wins,losses:y.metrics.gp-y.metrics.wins});
   l.seriesSeen = [];

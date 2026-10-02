@@ -1,3 +1,4 @@
+import {acknowledgeSport,hasSportPause} from '../dist/sport-events.js';
 import {beginLegacySeason} from '../dist/legacy.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -7,12 +8,12 @@ import {KEYS} from '../dist/config.js';
 import {LEAGUES} from '../dist/leagues.js';
 import {createGame,defaultBuild,hero,team,getPlayer,overall,allGames,competition,startMatch,stepMatch,simulate,finalizeMatch,next,continueMatch,decide,sign,enterDraft,requestTrade,upgrade,upgradeCost,validate} from '../dist/engine.js';
 import {DOMAINS,matchXP,ageAttributes} from '../dist/progression.js';
-import {refreshWorld} from '../dist/world.js?v=3.2.0';
+import {refreshWorld} from '../dist/world.js?v=3.3.0';
 import {lifeAction,resolveLife} from '../dist/life.js';
 import {parseSave} from '../dist/storage.js';
 const make=(path='young',seed=2026)=>createGame({...defaultBuild(),path,seed});
 const answer=s=>s.pending?.type==='contract'?sign(s,0):s.pending?.type==='draft-choice'?decide(s,'draft'):decide(s,s.pending?.choices?.[0][0]);
-function advanceTo(s,day,granularity){let steps=0;while(s.day<day&&steps++<1000){if(s.pending)answer(s);else next(s,{interactive:false,untilDay:Math.min(day,s.day+granularity)});}while(s.pending)answer(s);next(s,{interactive:false,untilDay:day});return s;}
+function advanceTo(s,day,granularity){let steps=0;while(s.day<day&&steps++<1000){if(hasSportPause(s))acknowledgeSport(s);else if(s.pending)answer(s);else next(s,{interactive:false,untilDay:Math.min(day,s.day+granularity)});}acknowledgeSport(s);while(s.pending)answer(s);next(s,{interactive:false,untilDay:day});return s;}
 test('formats réels, 82 matchs NBA et calendriers sans double réservation',()=>{let s=make(),used=new Set();validate(s);for(let def of LEAGUES)for(let id of Object.keys(competition(s,def.id).records)){let games=competition(s,def.id).schedule;assert.equal(games.filter(g=>g.home===id||g.away===id).length,def.games);if(def.id==='nba')assert.equal(games.filter(g=>g.home===id).length,41);}for(let g of allGames(s))for(let id of [g.home,g.away]){let key=id+':'+g.day;assert.ok(!used.has(key));used.add(key);}assert.ok(s.players.filter(p=>p.real).length>500);assert.equal(new Set(s.players.map(p=>p.id)).size,s.players.length);assert.ok(s.players.find(p=>p.name==='Victor Wembanyama'&&p.real));});
 test('points, tirs et minutes émergent des possessions en 32, 40 et 48 minutes',()=>{for(let lid of ['highschool','ncaa','nba']){let s=make(),g=competition(s,lid).schedule[0],m=simulate(s,g);for(let [i,tid] of [g.home,g.away].entries()){let rows=team(s,tid).roster.map(id=>m.box[id]);assert.equal(rows.reduce((n,b)=>n+b.pts,0),m.score[i]);assert.ok(Math.abs(rows.reduce((n,b)=>n+b.min,0)-(m.duration*5+m.ot*25))<1e-6);for(let b of rows){assert.equal(b.pts,2*b.fgm+b.tpm+b.ftm);assert.ok(b.fgm<=b.fga&&b.tpm<=b.tpa&&b.ftm<=b.fta);}}assert.equal(finalizeMatch(s,g,m),false);}});
 test('trois présentations, commandes ignorées et sauvegarde à mi-match donnent le même match',()=>{let a=make(),g=competition(a).schedule[0];a.day=g.day;let fast=structuredClone(a),manual=structuredClone(a),restored;let m=simulate(fast,competition(fast).schedule[0]);manual.match=startMatch(manual,competition(manual).schedule[0]);continueMatch(manual,'attack',83);assert.equal(upgrade(manual,'three'),false);restored=parseSave(JSON.stringify(manual));while(manual.match)continueMatch(manual,'pass',10);continueMatch(restored,'screen',20000);assert.deepEqual(manual.lastMatch,m);assert.deepEqual(restored.lastMatch,m);assert.deepEqual(hero(manual).attrs,hero(fast).attrs);assert.deepEqual(manual.rng,fast.rng);assert.deepEqual(restored.rng,fast.rng);});
@@ -22,14 +23,14 @@ test('migration V1 et V2, historique conservé, plafonds retirés, formats inval
 test('choix de draft et marché international gardent la même identité et les résultats',()=>{for(let score of [100,20]){let s=make('prospect');hero(s).age=19;s.career.collegeYears=1;s.lastSeasonScouting={score,projection:'Test'};assert.ok(enterDraft(s));let nba=s.offers.filter(o=>o.league==='nba');assert.equal(nba.length,score===100?1:0);assert.ok(s.offers.length);let p=hero(s);assert.ok(sign(s,0));assert.equal(hero(s),p);assert.equal(s.teams.flatMap(t=>t.roster).filter(id=>id==='hero').length,1);validate(s);}});
 test('argent, placements et décisions personnelles ne se dupliquent pas',()=>{let s=make('rookie');s.money=300000;assert.ok(lifeAction(s,'property'));assert.equal(s.money,50000);assert.equal(lifeAction(s,'property'),false);assert.ok(lifeAction(s,'invest'));assert.equal(s.money,40000);assert.equal(s.life.investments,10000);s.pending={type:'life',title:'Famille',choices:[['child','Un enfant']]};assert.ok(resolveLife(s,'child'));assert.equal(resolveLife(s,'child'),false);assert.equal(s.life.expecting,s.day+270);assert.equal(s.life.children.length,0);validate(s);});
 test('vieillissement différencié, aucune baisse identique imposée à tous les attributs',()=>{let p=hero(make('rookie'));p.age=36;for(let k of KEYS)p.attrs[k]=85;ageAttributes(p,{care:1});assert.ok(p.attrs.speed<p.attrs.pass);assert.equal(p.attrs.three,85);});
-test('une blessure et une décision importante arrêtent une avance longue',()=>{let s=make();hero(s).injury=3;s.life.nextEvent=200;s.mode='quick';next(s,{interactive:false,untilDay:100});assert.equal(s.day,3);assert.equal(s.pending.type,'medical');assert.equal(hero(s).season.gp,0);let before=structuredClone(s);assert.equal(next(s,{interactive:false}),false);assert.deepEqual(s,before);assert.ok(decide(s,'rehab'));assert.equal(hero(s).returning,6);});
+test('une blessure et une décision importante arrêtent une avance longue',()=>{let s=make();hero(s).injury=3;s.life.nextEvent=200;s.mode='quick';next(s,{interactive:false,untilDay:100});assert.equal(s.day,3);assert.equal(hasSportPause(s),true);assert.match(s.sportEvents.notice.items[0].title,/retour/);assert.equal(hero(s).season.gp,0);let before=structuredClone(s);assert.equal(next(s,{interactive:false}),false);assert.deepEqual(s,before);assert.ok(acknowledgeSport(s));assert.equal(hero(s).returning,6);});
 
 test('marché IA : distribution des talents après expiration simultanée, sans premier club privilégié',()=>{let s=make();s.season=2;for(let p of s.players)if(p.id!==s.hero)p.contract.years=0;refreshWorld(s);beginLegacySeason(s);let means=s.teams.filter(t=>t.league==='nba').map(t=>t.roster.reduce((n,id)=>n+overall(getPlayer(s,id)),0)/t.roster.length);assert.ok(Math.max(...means)-Math.min(...means)<12);validate(s);});
 
 import {v3Fixture} from './fixtures/v3-compatible.js';
 
-test('V3 → V3.2 : XP, attributs, décisions et RNG conservés, reprise du match',()=>{
- const fixture=v3Fixture(),old=fixture.save,s=parseSave(JSON.stringify(old));assert.equal(s.engine,'3.2.0');
+test('V3 → V3.3 : XP, attributs, décisions et RNG conservés, reprise du match',()=>{
+ const fixture=v3Fixture(),old=fixture.save,s=parseSave(JSON.stringify(old));assert.equal(s.engine,'3.3.0');
  assert.deepEqual(s.rng,old.rng);assert.deepEqual(hero(s).attrs,hero(old).attrs);assert.deepEqual(s.development.xp,old.development.xp);assert.deepEqual(s.match,old.match);assert.deepEqual(s.history,old.history);assert.deepEqual(s.pending,old.pending);
  continueMatch(s,null,10000);assert.deepEqual(JSON.parse(JSON.stringify(s.lastMatch)),fixture.finished);
  const again=parseSave(JSON.stringify(s));assert.equal(again.journal.length,s.journal.length);assert.deepEqual(again.rng,s.rng);

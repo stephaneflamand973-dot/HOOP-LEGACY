@@ -1,4 +1,6 @@
-import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.2.0';
+import {canChange} from './commands.js?v=3.3.0';
+import {masteryTraining} from './system.js?v=3.3.0';
+import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.3.0';
 export const DOMAINS=Object.keys(GROUPS);
 export const domainOf=k=>DOMAINS.find(d=>GROUPS[d].includes(k));
 export const LEAGUE_XP={highschool:.5,ncaa:.72,nba:1.15,euroleague:1.08,acb:1,elite:.92,bbl:.9,lba:.94,nbl:.92};
@@ -20,7 +22,7 @@ export function initDevelopment(s){
  s.trainingPlan??={mode:'assisted',domain:domainOf(s.training)||'Tir',intensity:'normal'};
  const p=s.players?.find(p=>p.id===s.hero);if(p)d.year??={season:s.season,start:{...p.attrs},sources:{match:0,training:0},gains:0};
 }
-export function spendXP(s,p,k,internal=false){initDevelopment(s);let d=domainOf(k),cost=costFor(p,k);if(s.match&&!internal||!d||p.attrs[k]>=99||s.development.xp[d]<cost)return false;
+export function spendXP(s,p,k,internal=false){initDevelopment(s);let d=domainOf(k),cost=costFor(p,k);if(!internal&&!canChange(s)||!d||p.attrs[k]>=99||s.development.xp[d]<cost)return false;
  s.development.xp[d]-=cost;p.attrs[k]=Math.min(99,p.attrs[k]+1);s.development.gained++;s.development.year.gains++;s.development.last.push(k);s.development.last=s.development.last.slice(-22);return true;
 }
 export function autoSpend(s,p){if(!s.auto)return;for(let domain of DOMAINS){for(let i=0;i<100;i++){
@@ -52,7 +54,7 @@ export function trainingDay(s,p){initDevelopment(s);if(p.injury)return;
  if(s.activity==='video'){raw.Création+=9;raw.Défense+=9;s.iq=Math.min(99,s.iq+.1);}
  if(s.activity==='etudes'){s.career.academics=Math.min(100,s.career.academics+.6);for(let d of DOMAINS)raw[d]*=.8;}
  if(s.activity==='famille')for(let d of DOMAINS)raw[d]*=.8;
- p.fatigue=Math.min(100,p.fatigue+intensity*3);awardXP(s,p,raw,'training');
+ masteryTraining(s,intensity);p.fatigue=Math.min(100,p.fatigue+intensity*3);awardXP(s,p,raw,'training');
 }
 export function ageAttributes(p,{care=1,ai=false,coach=65,random=()=>.5}={}){
  const changes={},minutes=p.season?.gp?p.season.min/p.season.gp:0;
