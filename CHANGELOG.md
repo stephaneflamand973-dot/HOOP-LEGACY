@@ -1,3 +1,16 @@
+# 3.4.0 — Statistiques, distinctions et trajectoire
+
+- Statistiques enregistrées par joueur, club, compétition et phase ; recherche, tri, pourcentages et volumes.
+- Dossiers des joueurs actuels et anciens, records, blessures importantes et mémoire des saisons.
+- Éligibilité et classements explicables pour MVP, rookie, défenseur, équipes de saison et MVP des finales ; les playoffs ne changent plus la récompense régulière.
+- Évaluations du coach sur trois semaines, objectifs concrets, report pour blessure et bilan durable.
+- Offres classées selon la préférence du joueur, concurrence, collectif et continuité du système.
+- Chapitres contextuels : titre à défendre, revanche, retour, longévité, fidélité et records.
+- Effets physiques ciblés et aide défensive autour d’une menace majeure, appliquée aux deux équipes.
+- Archives à la demande, messages de simulation allégés, navigation mobile et focus conservés.
+- Migration V3.0 à V3.3 : copie de secours, match commencé inchangé, données inconnues signalées. Aucune nouvelle distinction calculée sur une saison migrée incomplète.
+- Limite conservée : un héros à 99 peut encore installer une longue domination collective ; résultats chiffrés dans le rapport de validation.
+
 # 3.3.0 — Continuité, playoffs et maîtrise
 
 - Préférence de simulation conservée par carrière. La destination d’une semaine ou d’une fin de saison survit aux décisions, pauses, rechargements et imports. Reprise explicite ; aucune simulation automatique à la réouverture.

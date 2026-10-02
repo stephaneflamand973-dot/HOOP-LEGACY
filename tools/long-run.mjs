@@ -2,7 +2,7 @@ import {acknowledgeSport,hasSportPause} from '../dist/sport-events.js';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 const cache=new URL('../.qa-cache/',import.meta.url);fs.mkdirSync(cache,{recursive:true});
-const fingerprint=crypto.createHash('sha256').update(['engine','match','match-v32','match-effects','world','life','progression','config','leagues','legacy','system','postseason','career-ledger','simulation','sport-events','commands'].map(n=>fs.readFileSync(new URL('../dist/'+n+'.js',import.meta.url),'utf8')).join('')).digest('hex');
+const fingerprint=crypto.createHash('sha256').update(['statistics','career-plan','chapters','physical','engine','match','match-v33','match-v32','match-effects','world','life','progression','config','leagues','legacy','system','postseason','career-ledger','simulation','sport-events','commands'].map(n=>fs.readFileSync(new URL('../dist/'+n+'.js',import.meta.url),'utf8')).join('')).digest('hex');
 import assert from 'node:assert/strict';
 import {careerTotals} from '../dist/legacy.js';
 import {createGame,defaultBuild,hero,overall,next,decide,sign,validate,competition,getPlayer,team} from '../dist/engine.js';

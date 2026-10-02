@@ -1,8 +1,8 @@
-import {KEYS,WEIGHTS} from './config.js?v=3.3.0';
-import {leagueDef} from './leagues.js?v=3.3.0';
-import {NBA_ROSTERS,ROSTER_SOURCE} from './nba-rosters.js?v=3.3.0';
-import {generatedPlayer,overall,getPlayer,team,rng,log,totals,clamp} from './engine.js?v=3.3.0';
-import {ageAttributes} from './progression.js?v=3.3.0';
+import {KEYS,WEIGHTS} from './config.js?v=3.4.0';
+import {leagueDef} from './leagues.js?v=3.4.0';
+import {NBA_ROSTERS,ROSTER_SOURCE} from './nba-rosters.js?v=3.4.0';
+import {generatedPlayer,overall,getPlayer,team,rng,log,totals,clamp} from './engine.js?v=3.4.0';
+import {ageAttributes} from './progression.js?v=3.4.0';
 // Bespoke game ratings, not an official or licensed ratings dataset.
 const STARS={
 'Nikola Jokic':[96,'P',30],'Shai Gilgeous-Alexander':[95,'MJ',27],'Giannis Antetokounmpo':[95,'AF',30],'Luka Doncic':[94,'MJ',26],'Stephen Curry':[92,'MJ',37],'Anthony Edwards':[90,'AR',24],'LeBron James':[90,'AI',40],'Kevin Durant':[90,'AI',37],'Victor Wembanyama':[91,'P',21],'Jayson Tatum':[91,'AI',27],'Jalen Brunson':[90,'MJ',29],'Donovan Mitchell':[89,'AR',29],'Anthony Davis':[90,'P',32],'Joel Embiid':[89,'P',31],'Devin Booker':[88,'AR',28],'Kawhi Leonard':[88,'AI',34],'James Harden':[88,'MJ',36],'Tyrese Haliburton':[88,'MJ',25],'Ja Morant':[87,'MJ',26],'Trae Young':[87,'MJ',27],'Cade Cunningham':[88,'MJ',24],'Paolo Banchero':[87,'AF',22],'Karl-Anthony Towns':[88,'P',29],'Domantas Sabonis':[87,'P',29],'Jimmy Butler III':[87,'AI',36],'Jaylen Brown':[88,'AR',29],'Jalen Williams':[87,'AI',24],'Chet Holmgren':[85,'P',23],'Jamal Murray':[85,'MJ',28],'Alperen Sengun':[86,'P',23],'Bam Adebayo':[86,'P',28],'Pascal Siakam':[86,'AF',31],'Scottie Barnes':[84,'AI',24],'Franz Wagner':[85,'AI',24],'LaMelo Ball':[85,'MJ',24],'Tyrese Maxey':[86,'MJ',24],'Kyrie Irving':[86,'MJ',33],'De\'Aaron Fox':[85,'MJ',27],'Derrick White':[84,'AR',31],'Evan Mobley':[86,'AF',24],'Jaren Jackson Jr.':[85,'AF',26],'Zion Williamson':[85,'AF',25],'Cooper Flagg':[79,'AF',18],'Damian Lillard':[84,'MJ',35],'Rudy Gobert':[83,'P',33],'Chris Paul':[74,'MJ',40],'Al Horford':[76,'P',39],'Kevin Love':[72,'AF',37],'Russell Westbrook':[76,'MJ',36],'Mike Conley':[75,'MJ',38],'Nicolas Batum':[75,'AI',36],'Joe Ingles':[69,'AI',38],'Kyle Lowry':[70,'MJ',39],'Garrett Temple':[65,'AR',39],'Jeff Green':[70,'AF',39]};
@@ -11,7 +11,7 @@ export function realRoster(s,t){let data=NBA_ROSTERS[t.name];if(!data)return nul
  let h=hash(row.name),star=STARS[row.name],p=generatedPlayer(s,`nba-${row.nbaId||h}`,t),height=row.height?Number(row.height.split('-')[0])*30.48+Number(row.height.split('-')[1])*2.54:195+h%17;
  let position=row.position||'',pos=star?.[1]||(position.startsWith('C')?'P':position.startsWith('G')?(height<194?'MJ':'AR'):(height>=205?'AF':'AI'));
  let age=star?.[2]||(Number(row.draftYear)>1980?clamp(2025-Number(row.draftYear)+20,19,39):23+h%7),base=star?.[0]||(row.twoWay?62+h%8:71+h%9);
- p.name=row.name;p.real=true;p.age=age;p.ageEstimated=!star;p.pos=pos;p.height=Math.round(height);p.nation='';p.twoWayReference=row.twoWay;
+ p.name=row.name;p.real=true;p.referenceRookie=Number(row.draftYear)===2025;p.age=age;p.ageEstimated=!star;p.pos=pos;p.height=Math.round(height);p.nation='';p.twoWayReference=row.twoWay;
  p.attrs=Object.fromEntries(KEYS.map((k,j)=>[k,clamp(base+(WEIGHTS[pos][k]?1:-7)+((h>>>j%16)%9)-4,25,99)]));
  if(['P','AF'].includes(pos)){p.attrs.handle-=9;p.attrs.speed-=8;if(!['Nikola Jokic','Karl-Anthony Towns','Victor Wembanyama','Chet Holmgren'].includes(row.name))p.attrs.three-=15;}
  if(row.name==='Stephen Curry'){p.attrs.three=99;p.attrs.free=94;}if(row.name==='Nikola Jokic')p.attrs.pass=97;if(row.name==='Victor Wembanyama')p.attrs.block=98;if(row.name==='Rudy Gobert'){p.attrs.block=91;p.attrs.defReb=92;p.attrs.three=25;}

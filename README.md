@@ -1,8 +1,21 @@
-# HOOP LEGACY — V3.3.0
+# HOOP LEGACY — V3.4.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.3.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.4.0)
+
+## Changements de la V3.4
+
+- **Statistiques explorables** : saison régulière, play-in, playoffs ou total ; année, compétition, club, recherche, tri et ligne du héros épinglée. Les pourcentages affichent le nombre de tirs tentés et réussis.
+- **Dossiers persistants** : saisons, clubs, records datés, blessures importantes, titres et distinctions, y compris pour les joueurs retirés du monde actif. Les anciennes données partielles restent identifiées.
+- **Distinctions justifiées** : MVP, rookie, défenseur, cinq de la saison et MVP des finales. La saison régulière exige 60 % du calendrier et un temps de jeu suffisant ; les finales ont leur propre périmètre. Candidats, éligibilité et formule sont consultables.
+- **Suivi du coach** : évaluation de 21 jours, au moins trois matchs et une note moyenne attendue de 65. Bilan fondé sur la disponibilité, le niveau et la concurrence ; report limité en cas de blessure, clôture après transfert ou retraite.
+- **Offres comparables** : priorité personnelle, salaire, rôle, fourchette de minutes, concurrents directs, niveau collectif et continuité du système. Les clubs conservent leur décision sur le rôle réel.
+- **Chapitres de carrière** : retour, défense d’un titre, revanche contre un adversaire rencontré, fidélité, finale, longévité et caps personnels. Deux ou trois enjeux actifs, fondés sur les faits, sans nouvelle jauge de puissance.
+- **Profil physique** : agilité sur les appuis, détente sur les actions aériennes, envergure sur contestation et rebonds ; effets modestes et ciblés. Le poids reste descriptif. Les défenses peuvent concentrer leur aide sur une menace majeure, avec davantage d’espace pour ses coéquipiers.
+- **Mobile et archives** : chargement des anciennes saisons à la demande, historique immuable retiré des messages du worker, filtres et focus préservés, décision résumée lors de la consultation des autres écrans.
+
+Les matchs commencés sous V3.3 se terminent avec leurs règles d’origine ; les moteurs antérieurs restent aussi disponibles pour la migration. Un suivi incomplet ne produit pas de nouvelles distinctions rétroactives. L’accès à 99 et la progression rapide sont conservés. La domination d’un héros complet reste une limite mesurée : cette version enrichit la carrière sans prétendre avoir entièrement réglé son équilibre au sommet.
 
 ## Changements de la V3.3
 
@@ -101,6 +114,10 @@ Les marchés, budgets et règles de contrats sont des modèles simplifiés, pas 
 
 La progression facilite volontairement l’accès à un joueur très fort. Les tests de simulation contrôlent la cohérence ; ils ne prouvent pas à eux seuls le plaisir sur plusieurs dizaines d’heures. Safari iOS sur appareil physique reste à tester.
 
-La validation V3.3 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3.0, V3.1 ou V3.2 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.
+La validation V3.4 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3.0, V3.1, V3.2 ou V3.3 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.
 
 `npm run test:v33-browser` contrôle les playoffs réels, les pauses/reprises, les préférences, les emplacements et la retraite sur mobile. Le poids et l’envergure restent descriptifs dans cette version. Les formats de terrain des playoffs sont des paramètres de simulation ; les matchs NCAA et le Final Four sont traités comme neutres.
+
+`npm run test:v34-browser` vérifie les nouveaux écrans avec `.qa-cache/state-2026.json`, généré par `node tools/long-run.mjs 2026`. `npm run test:balance` compare 480 matchs appariés entre les règles V3.3 et V3.4. Les mesures Chromium ne remplacent pas un essai Safari sur téléphone physique.
+
+Le rapport `tests/long-run-2026-control.json` est le témoin historique de V3.3, décrit dans `docs/validation-v3.3.md` ; il ne sert pas de preuve pour le moteur V3.4.

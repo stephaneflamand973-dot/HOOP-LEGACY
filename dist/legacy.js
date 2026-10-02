@@ -1,7 +1,7 @@
-import {seasonTitles,seasonStints} from './career-ledger.js?v=3.3.0';
+import {seasonTitles,seasonStints} from './career-ledger.js?v=3.4.0';
 // Career memory is driven only by completed games and seasons. No random draws,
 // attribute bonuses or blocking decisions are made by this module.
-import {leagueDef} from './leagues.js?v=3.3.0';
+import {leagueDef} from './leagues.js?v=3.4.0';
 
 const player = s => s.players.find(p => p.id === s.hero);
 const club = (s, id = s.team) => s.teams.find(t => t.id === id);
@@ -82,7 +82,7 @@ export function syncMilestones(s, recovered = false, totals = careerTotals(s)) {
   for (const value of [30,40,50,60,70]) if ((s.records?.pts || 0) >= value) addMoment(s,{id:'score-'+value,title:`Un match à ${value} points ou plus`,kind:'performance'},recovered);
   for (const [metric, title] of [['doubleDoubles','Premier double-double'],['tripleDoubles','Premier triple-double']]) if (l[metric] > 0) addMoment(s,{id:metric,title,kind:'performance'},recovered);
   const titles = (s.trophies || []).filter(t => t.includes('champion saison')).length;
-  const mvps = (s.trophies || []).filter(t => t.startsWith('MVP ')).length;
+  const mvps = (s.trophies || []).filter(t => t.startsWith('MVP ')&&!t.startsWith('MVP des finales ')).length;
   for (const value of [1,3,5,10]) if (titles >= value) addMoment(s,{id:'titles-'+value,title:value===1?'Premier titre':`${value} titres remportés`,kind:'title'},recovered);
   for (const value of [1,3,5]) if (mvps >= value) addMoment(s,{id:'mvp-'+value,title:value===1?'Premier trophée de MVP':`${value} trophées de MVP`,kind:'title'},recovered);
 }

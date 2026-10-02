@@ -18,10 +18,11 @@ try{
  assert.equal(state.engine,VERSION);assert.equal(state.schema,4);assert.equal(state.done,true);assert.ok(state.realPlayers>500);assert.equal(state.goals,3);assert.equal(state.played,1);assert.deepEqual(errors,[]);
  await page.locator('#advance-size').selectOption('40');const preference=await page.evaluate(async v=>(await(await import('./storage.js?v='+v)).load()).simulation.mode,VERSION);assert.equal(preference,'40');await page.reload();await page.waitForSelector('#advance-size');assert.equal(await page.locator('#advance-size').inputValue(),'40');
  await page.locator('[data-action="tab:league"]:visible').first().click();await page.locator('[data-action="league:Playoffs"]').click();await page.waitForSelector('#playoff-season');
+ await page.locator('[data-action="league:Statistiques"]').click();await page.waitForSelector('.v34-statistics');await page.locator('[data-action="profile:hero"]').click();await page.waitForSelector('.player-dossier');await page.locator('[data-action="close-profile"]').click();await page.locator('[data-action="league:Distinctions"]').click();await page.waitForSelector('.awards-view');
  await page.locator('[data-action="tab:player"]:visible').first().click();await page.waitForSelector('.development-report');
- await page.locator('[data-action="tab:career"]:visible').first().click();await page.waitForSelector('.legacy-panel');
+ await page.locator('[data-action="tab:career"]:visible').first().click();await page.waitForSelector('.legacy-panel');await page.waitForSelector('.chapters-panel');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  const output=new URL('../test-results/',import.meta.url).pathname;fs.mkdirSync(output,{recursive:true});
  await page.screenshot({path:output+'public-mobile.png',fullPage:true});
- const result={url:page.url(),state,errors,mobileViewport:true,persistentSimulation:true,playoffCenter:true};fs.writeFileSync(output+'public-result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+ const result={url:page.url(),state,errors,mobileViewport:true,persistentSimulation:true,playoffCenter:true,statistics:true,playerDossier:true,awards:true,chapters:true};fs.writeFileSync(output+'public-result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
 }finally{await browser.close();}

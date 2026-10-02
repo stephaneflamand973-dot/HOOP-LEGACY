@@ -8,7 +8,7 @@ import {VERSION} from '../dist/config.js';
 const previous=process.env.QA_PREVIOUS_ROOT;
 assert.ok(previous,'Définir QA_PREVIOUS_ROOT vers le dossier dist de la version précédente.');
 const oldVersion=(await import(pathToFileURL(path.join(previous,'config.js')))).VERSION;
-assert.ok(['3.0.0','3.1.0','3.2.0'].includes(oldVersion));
+assert.ok(['3.0.0','3.1.0','3.2.0','3.3.0'].includes(oldVersion));
 const legacy=await import(pathToFileURL(path.join(previous,'engine.js')));
 const old=legacy.createGame(legacy.defaultBuild()),game=legacy.competition(old).schedule[0];
 old.day=game.day;old.match=legacy.startMatch(old,game);legacy.continueMatch(old,null,60);

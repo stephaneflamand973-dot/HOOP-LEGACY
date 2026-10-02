@@ -1,1 +1,1 @@
-export {LEAGUES,REFERENCE,clubCatalog,makeCalendar} from './leagues.js?v=3.3.0';
+export {LEAGUES,REFERENCE,clubCatalog,makeCalendar} from './leagues.js?v=3.4.0';

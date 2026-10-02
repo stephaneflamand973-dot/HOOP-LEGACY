@@ -1,0 +1,60 @@
+name: Valider HOOP LEGACY V3.4
+on:
+  push:
+    branches: [work/hoop-legacy-v3.4]
+permissions:
+  contents: read
+concurrency:
+  group: hoop-v34-validation
+  cancel-in-progress: true
+jobs:
+  validation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
+      - name: Vérifier les deux campagnes de trente saisons du code publié
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';import crypto from 'node:crypto';import assert from 'node:assert/strict';
+          const hash=crypto.createHash('sha256').update(['statistics','career-plan','chapters','physical','engine','match','match-v33','match-v32','match-effects','world','life','progression','config','leagues','legacy','system','postseason','career-ledger','simulation','sport-events','commands'].map(n=>fs.readFileSync('dist/'+n+'.js','utf8')).join('')).digest('hex');
+          for(const id of [2026,973]){const r=JSON.parse(fs.readFileSync('tests/long-run-'+id+'.json'));assert.equal(r.fingerprint,hash);assert.equal(r.checkpoints.length,30);}
+          console.log('Deux campagnes de trente saisons, même code moteur. Alertes de domination conservées.');
+          JS
+      - name: Reconstituer la carrière de trente saisons pour le test navigateur
+        run: node tools/long-run.mjs 2026
+      - name: Préparer Chromium et les versions précédentes
+        run: |
+          if command -v google-chrome >/dev/null; then
+            echo "CHROMIUM_EXECUTABLE_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright-core install --with-deps chromium
+          fi
+          mkdir -p .qa-previous30 .qa-previous31 .qa-previous32 .qa-previous33
+          git archive 14feec00c981fe322ba3ec5f9f282ded578d33b8 dist | tar -x -C .qa-previous30
+          git archive 0e11ed97d9723180ed48b5a9e9f2a94670ed6add dist | tar -x -C .qa-previous31
+          git archive b2c13b45d698480fae5c4b6d1da5982f514037da dist | tar -x -C .qa-previous32
+          git archive 1277a72d6ec10ed366ecbf0e1a417f4f6832f7f0 dist | tar -x -C .qa-previous33
+      - run: npm run test:browser
+      - run: npm run test:v33-browser
+      - run: npm run test:v34-browser
+      - name: Migrations avec ancien cache actif
+        run: |
+          for version in 30 31 32 33; do
+            QA_PREVIOUS_ROOT="$PWD/.qa-previous$version/dist" npm run test:upgrade
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validation-v34
+          path: |
+            test-results/
+            tests/long-run-2026.json
