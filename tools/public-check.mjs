@@ -16,7 +16,7 @@ try{
   const s=await(await import('./storage.js?v='+version)).load();return {schema:s.schema,engine:s.engine,day:s.day,done:s.lastMatch?.done,round:s.round,realPlayers:s.players.filter(p=>p.real).length,goals:s.legacy?.season.goals.length,played:s.legacy?.season.metrics.gp};
  },VERSION);
  assert.equal(state.engine,VERSION);assert.equal(state.schema,4);assert.equal(state.done,true);assert.ok(state.realPlayers>500);assert.equal(state.goals,3);assert.equal(state.played,1);assert.deepEqual(errors,[]);
- await page.locator('#advance-size').selectOption('40');await page.reload();await page.waitForSelector('#advance-size');assert.equal(await page.locator('#advance-size').inputValue(),'40');
+ await page.locator('#advance-size').selectOption('40');const preference=await page.evaluate(async v=>(await(await import('./storage.js?v='+v)).load()).simulation.mode,VERSION);assert.equal(preference,'40');await page.reload();await page.waitForSelector('#advance-size');assert.equal(await page.locator('#advance-size').inputValue(),'40');
  await page.locator('[data-action="tab:league"]:visible').first().click();await page.locator('[data-action="league:Playoffs"]').click();await page.waitForSelector('#playoff-season');
  await page.locator('[data-action="tab:player"]:visible').first().click();await page.waitForSelector('.development-report');
  await page.locator('[data-action="tab:career"]:visible').first().click();await page.waitForSelector('.legacy-panel');
