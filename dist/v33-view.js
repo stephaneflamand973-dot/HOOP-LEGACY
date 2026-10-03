@@ -1,7 +1,7 @@
-import {ADVANCE_MODES,destinationLabel} from './simulation.js?v=3.4.0';
-import {archivedRounds,seriesStakes} from './postseason.js?v=3.4.0';
-import {seasonStints} from './career-ledger.js?v=3.4.0';
-import {leagueDef,REFERENCE} from './leagues.js?v=3.4.0';
+import {ADVANCE_MODES,destinationLabel} from './simulation.js?v=3.5.0';
+import {archivedRounds,seriesStakes} from './postseason.js?v=3.5.0';
+import {seasonStints} from './career-ledger.js?v=3.5.0';
+import {leagueDef,REFERENCE} from './leagues.js?v=3.5.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const club=(s,id)=>s.teams.find(t=>t.id===id)?.name||'Club';
 const date=day=>new Date(Date.UTC(REFERENCE.baseYear,8,1+day)).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});

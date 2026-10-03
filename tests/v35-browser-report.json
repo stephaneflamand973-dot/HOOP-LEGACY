@@ -1,0 +1,15 @@
+{
+  "engine": "3.5.0",
+  "errors": [],
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "policiesPersist": true,
+  "exactInvestment": 75000,
+  "propertyPurchaseSale": true,
+  "majorDecisionReload": true,
+  "clubProject": true,
+  "offline": true
+}

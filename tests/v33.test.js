@@ -92,7 +92,7 @@ test('retraite : commandes sportives et financières sans mutation',()=>{
 });
 test('finances : résidence sans placement et journal basé sur les montants effectivement encaissés',()=>{
  const s=make();s.money=1e6;s.life.property={value:250000};s.life.investments=0;s.day=365;s.life.nextEvent=9999;lifeDay(s);assert.equal(s.life.property.value,253750);
- s.life.month={income:0,expense:0,days:0};s.life.ledger=[];for(let day=1;day<=30;day++){s.day=day;hero(s).contract.salary=day<=15?36500:73000;lifeDay(s);}assert.equal(s.life.ledger.find(e=>e.label.startsWith('Salaire')).amount,3420);
+ s.life.month={income:0,expense:0,days:0};s.life.ledger=[];for(let day=1;day<=30;day++){s.day=day;hero(s).contract.salary=day<=15?36500:73000;lifeDay(s);}assert.equal(s.life.ledger.filter(e=>e.label.startsWith('Salaire')).reduce((n,e)=>n+e.amount,0),3420);
 });
 test('emplacements identifiés, suppression et archives partagées non effacées prématurément',async()=>{
  const s=make();s.archives=[{season:9,players:[],competitions:[]}];await save(s,'gc-a');await save(s,'gc-b');const meta=(await listSlots()).find(m=>m.key==='gc-a');assert.equal(meta.name,hero(s).name);assert.equal(meta.club,team(s).name);assert.ok(meta.savedAt);

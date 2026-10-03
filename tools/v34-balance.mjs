@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {createGame,defaultBuild,hero,competition} from '../dist/engine.js';
 import {KEYS} from '../dist/config.js';
-import * as current from '../dist/match.js';
+import * as current from '../dist/match-v34.js';
 import * as previous from '../dist/match-v33.js';
 const report=[];
 for(const pos of ['MJ','AR','AI','AF','P'])for(const level of [65,80,99]){

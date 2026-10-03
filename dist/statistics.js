@@ -1,6 +1,6 @@
 // All observations are recorded at finalization. Reading a table never changes state.
-import {getPlayer,team} from './engine.js?v=3.4.0';
-import {leagueDef} from './leagues.js?v=3.4.0';
+import {getPlayer,team} from './engine.js?v=3.5.0';
+import {leagueDef} from './leagues.js?v=3.5.0';
 const keys=['gp','pts','reb','oreb','ast','stl','blk','tov','fgm','fga','tpm','tpa','ftm','fta','min'];
 export const emptyStats=()=>Object.fromEntries(keys.map(k=>[k,0]));
 const add=(a,b)=>{for(const k of keys)a[k]+=(b[k]||0);return a;};

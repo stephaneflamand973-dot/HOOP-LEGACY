@@ -1,10 +1,11 @@
-import {stepMatch as legacyStepMatch} from './match-v33.js?v=3.4.0';
-import {physicalContest,aerialFinish,physicalBlock,physicalRebound,coveragePlan,coverageEffect} from './physical.js?v=3.4.0';
-import {playerReading} from './system.js?v=3.4.0';
-import {shotBoost,finishKind,reboundWeight,freeChance,stealChance} from './match-effects.js?v=3.4.0';
-import {KEYS,BADGES,TECHNIQUES} from './config.js?v=3.4.0';
-import {leagueDef} from './leagues.js?v=3.4.0';
-import {clamp,rng,team,getPlayer,overall,hero,badgeLevel} from './engine.js?v=3.4.0';
+import {developmentBonus} from './club-project.js?v=3.5.0';
+import {stepMatch as legacyStepMatch} from './match-v34.js?v=3.5.0';
+import {physicalContest,aerialFinish,physicalBlock,physicalRebound,coveragePlan,coverageEffect} from './physical.js?v=3.5.0';
+import {playerReading} from './system.js?v=3.5.0';
+import {shotBoost,finishKind,reboundWeight,freeChance,stealChance} from './match-effects.js?v=3.5.0';
+import {KEYS,BADGES,TECHNIQUES} from './config.js?v=3.5.0';
+import {leagueDef} from './leagues.js?v=3.5.0';
+import {clamp,rng,team,getPlayer,overall,hero,badgeLevel} from './engine.js?v=3.5.0';
 const line=p=>({id:p.id,name:p.name,pts:0,reb:0,oreb:0,ast:0,stl:0,blk:0,tov:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,pf:0,min:0});
 function weighted(s,list,value){let weights=list.map(value),r=rng(s,'match')*weights.reduce((a,b)=>a+b,0);for(let i=0;i<list.length;i++){r-=weights[i];if(r<=0)return list[i]}return list.at(-1)}
 export function tendencies(p){let a=p.attrs;return {three:Math.max(5,(a.three-30)*1.8),drive:Math.max(5,a.layup+a.ballSpeed-70),post:Math.max(5,a.post+a.strength-80),mid:Math.max(5,a.mid-35),pass:Math.max(10,a.pass),...(p.tendencyMode==='manual'?p.tendencies:{})};}
@@ -15,13 +16,13 @@ function used(p,context){for(let b of byContext[context]||[])if(p.attrs[b.attr]>
 export function startMatch(s,g){if(g.result)throw Error('Match déjà résolu');let clubs=[team(s,g.home),team(s,g.away)],players=clubs.flatMap(t=>t.roster.map(id=>getPlayer(s,id)));
  let duration=leagueDef(g.league).minutes;
  let total=Math.round((duration===48?198:duration===40?146:128)+(clubs.filter(t=>t.system==='pace').length*8-clubs.filter(t=>t.system==='defense').length*5));total+=total%2;
- return {rulesVersion:'3.4.0',id:g.id,league:g.league,home:g.home,away:g.away,duration,regulation:total,total,n:0,ot:0,score:[0,0],done:false,box:Object.fromEntries(players.map(p=>[p.id,line(p)])),ratings:Object.fromEntries(players.map(p=>[p.id,overall(p)])),bonuses:Object.fromEntries(players.map(p=>[p.id,Object.fromEntries(Object.keys(byContext).map(c=>[c,rawBonus(p,c)]))])),tendencies:Object.fromEntries(players.map(p=>[p.id,tendencies(p)])),events:[],grade:50,reasons:{},retain:g.home===s.team||g.away===s.team};
+ return {rulesVersion:'3.5.0',id:g.id,league:g.league,home:g.home,away:g.away,duration,regulation:total,total,n:0,ot:0,score:[0,0],done:false,box:Object.fromEntries(players.map(p=>[p.id,line(p)])),ratings:Object.fromEntries(players.map(p=>[p.id,overall(p)])),bonuses:Object.fromEntries(players.map(p=>[p.id,Object.fromEntries(Object.keys(byContext).map(c=>[c,rawBonus(p,c)]))])),tendencies:Object.fromEntries(players.map(p=>[p.id,tendencies(p)])),events:[],grade:50,reasons:{},retain:g.home===s.team||g.away===s.team};
 }
 function lineup(s,m,tid){let all=team(s,tid).roster.map(id=>getPlayer(s,id)).filter(p=>!p.injury);let eligible=all.filter(p=>m.box[p.id].pf<(m.duration===48?6:5));if(eligible.length<5)eligible=all; // Emergency last eligible player rule; no injured player takes the floor.
  let chosen=[],phase=Math.floor(m.n/12)%5;
  for(let pos of ['MJ','AR','AI','AF','P']){
  let options=eligible.filter(p=>!chosen.includes(p));if(!options.length)break;
- const score=p=>m.ratings[p.id]+(p.pos===pos?12:p.secondary===pos?6:0)-m.box[p.id].min*.48-p.fatigue*.09+(phase===3&&m.box[p.id].min<4?15:0)+(p.id===s.hero?(s.trust-50)*.08:0);
+ const score=p=>m.ratings[p.id]+developmentBonus(team(s,tid),p)+(p.pos===pos?12:p.secondary===pos?6:0)-m.box[p.id].min*.48-p.fatigue*.09+(phase===3&&m.box[p.id].min<4?15:0)+(p.id===s.hero?(s.trust-50)*.08:0);
  options.sort((a,b)=>score(b)-score(a)||a.id.localeCompare(b.id));chosen.push(options[0]);
  }
  // Coaching allocates the user's minutes; presentation and UI have no sporting effect.
@@ -30,7 +31,7 @@ function lineup(s,m,tid){let all=team(s,tid).roster.map(id=>getPlayer(s,id)).fil
  if(!want&&chosen.includes(h)){let q=eligible.find(p=>p!==h&&!chosen.includes(p));if(q)chosen[chosen.indexOf(h)]=q;}}
  return chosen;
 }
-export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.4.0')return legacyStepMatch(s,m,count);if(Object.getPrototypeOf(m.box)!==null)for(let key of ['box','ratings','bonuses','tendencies'])m[key]=Object.assign(Object.create(null),m[key]);for(let n=0;n<count&&!m.done;n++){
+export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.5.0')return legacyStepMatch(s,m,count);if(Object.getPrototypeOf(m.box)!==null)for(let key of ['box','ratings','bonuses','tendencies'])m[key]=Object.assign(Object.create(null),m[key]);for(let n=0;n<count&&!m.done;n++){
  const side=m.n%2,tid=side?m.away:m.home,opp=side?m.home:m.away;
  // Recompute rotations every 12 actions, but immediately replace a fouled-out player.
  if(!m.lineups||m.n%12===0||Object.values(m.lineups).flat().some(id=>m.box[id].pf>=(m.duration===48?6:5))){m.lineups={[m.home]:lineup(s,m,m.home).map(p=>p.id),[m.away]:lineup(s,m,m.away).map(p=>p.id)};}

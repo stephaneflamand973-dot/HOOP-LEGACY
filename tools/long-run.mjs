@@ -2,13 +2,13 @@ import {acknowledgeSport,hasSportPause} from '../dist/sport-events.js';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 const cache=new URL('../.qa-cache/',import.meta.url);fs.mkdirSync(cache,{recursive:true});
-const fingerprint=crypto.createHash('sha256').update(['statistics','career-plan','chapters','physical','engine','match','match-v33','match-v32','match-effects','world','life','progression','config','leagues','legacy','system','postseason','career-ledger','simulation','sport-events','commands'].map(n=>fs.readFileSync(new URL('../dist/'+n+'.js',import.meta.url),'utf8')).join('')).digest('hex');
+const fingerprint=crypto.createHash('sha256').update(['finance','life-context','club-project','match-v34','statistics','career-plan','chapters','physical','engine','match','match-v33','match-v32','match-effects','world','life','progression','config','leagues','legacy','system','postseason','career-ledger','simulation','sport-events','commands'].map(n=>fs.readFileSync(new URL('../dist/'+n+'.js',import.meta.url),'utf8')).join('')).digest('hex');
 import assert from 'node:assert/strict';
 import {careerTotals} from '../dist/legacy.js';
 import {createGame,defaultBuild,hero,overall,next,decide,sign,validate,competition,getPlayer,team} from '../dist/engine.js';
 const seeds=process.argv.slice(2).map(Number);if(!seeds.length)seeds.push(2026,973);
 let results=[];const target=Number(process.env.QA_SEASONS||30),control=process.env.QA_CONTROL==='1';
-for(let seed of seeds){let checkpointFile=new URL('state-'+seed+(control?'-control':'')+'.json',cache),previous=fs.existsSync(checkpointFile)?JSON.parse(fs.readFileSync(checkpointFile)):null;if(previous?.fingerprint!==fingerprint)previous=null;let s=previous?.state||createGame({...defaultBuild(),seed}),steps=previous?.steps||0,start=performance.now(),checkpoints=previous?.checkpoints||[];s.life.delegated=true;if(control&&!previous)hero(s).injury=100000;
+for(let seed of seeds){let checkpointFile=new URL('state-'+seed+(control?'-control':'')+'.json',cache),previous=fs.existsSync(checkpointFile)?JSON.parse(fs.readFileSync(checkpointFile)):null;if(previous?.fingerprint!==fingerprint)previous=null;let s=previous?.state||createGame({...defaultBuild(),seed}),steps=previous?.steps||0,start=performance.now(),checkpoints=previous?.checkpoints||[];s.life.delegated=true;s.life.policies={routine:'family',media:'team',agent:'local'};if(control&&!previous)hero(s).injury=100000;
  while(s.season<=target&&!s.retired&&steps++<30000){
   if(hasSportPause(s))acknowledgeSport(s);
   else if(s.pending){if(s.pending.type==='contract'){let i=s.offers.findIndex(o=>o.league==='nba');sign(s,i<0?0:i);}else if(s.pending.type==='draft-choice')decide(s,'draft');else decide(s,s.pending.type==='offseason'?'shoot':s.pending.choices[0][0]);}

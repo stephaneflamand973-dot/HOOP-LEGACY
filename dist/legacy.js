@@ -1,7 +1,7 @@
-import {seasonTitles,seasonStints} from './career-ledger.js?v=3.4.0';
+import {seasonTitles,seasonStints} from './career-ledger.js?v=3.5.0';
 // Career memory is driven only by completed games and seasons. No random draws,
 // attribute bonuses or blocking decisions are made by this module.
-import {leagueDef} from './leagues.js?v=3.4.0';
+import {leagueDef} from './leagues.js?v=3.5.0';
 
 const player = s => s.players.find(p => p.id === s.hero);
 const club = (s, id = s.team) => s.teams.find(t => t.id === id);

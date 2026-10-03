@@ -1,8 +1,21 @@
-# HOOP LEGACY — V3.4.0
+# HOOP LEGACY — V3.5.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.4.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.5.0)
+
+## Changements de la V3.5
+
+- **Des proches persistants** : partenaire, enfants, agent, mentor et proche ont un nom et une identité. Les noms, liens et dates déjà présents sont conservés à la migration.
+- **Des histoires qui ont une suite** : changement de club, blessure d’au moins quatorze jours ou titre ouvrent un échange puis un suivi après trois semaines. Le journal garde les choix ; une histoire terminée ne recommence pas.
+- **Consignes durables** : routine, médias, partenariats locaux et finances. Un récapitulatif explique chaque décision déléguée. Rencontre, famille, nouvelle ville, engagement national et contrats sportifs restent des décisions personnelles.
+- **Clubs autonomes** : projet fondé sur la force de l’effectif, l’âge et les besoins au poste. Recrutement adapté, échanges possibles dans le club du héros, staff expliqué et priorité modérée aux jeunes en développement/reconstruction.
+- **Contrats respectés** : les budgets n’entraînent plus de réduction rétroactive des salaires. Les offres futures sont contraintes ; une exception minimale permet de compléter les effectifs. Ce budget cible est une règle de simulation, sans reproduction de la convention collective NBA.
+- **Finances exactes** : revenus et dépenses réellement appliqués chaque jour, mouvements de placements et immobilier séparés. Règle de 0 à 50 % du disponible au-delà d’une réserve, tous les 30 ou 90 jours ; montant annoncé avant action, sans plafond caché.
+- **Résidence et sponsors** : vente avec 5 % de frais, déménagement vers le club actuel pour 5 000 € sans recréer la valeur du bien. Partenariats liés à la notoriété, aux titres, au championnat et à l’exposition choisie ; obligations mensuelles modestes et visibles.
+- **Sauvegardes** : secours avant migration V3.0–V3.4, ancien match terminé avec ses règles, solde de départ repris dans le suivi financier des sauvegardes V1/V2.
+
+Ces histoires sont des chaînes courtes de deux étapes. Les relations restent une simulation simple ; les grands choix de vie et de carrière ne sont jamais délégués automatiquement. Les préférences de simulation, les playoffs et la maîtrise du système de V3.3 restent disponibles.
 
 ## Changements de la V3.4
 
@@ -114,10 +127,12 @@ Les marchés, budgets et règles de contrats sont des modèles simplifiés, pas 
 
 La progression facilite volontairement l’accès à un joueur très fort. Les tests de simulation contrôlent la cohérence ; ils ne prouvent pas à eux seuls le plaisir sur plusieurs dizaines d’heures. Safari iOS sur appareil physique reste à tester.
 
-La validation V3.4 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3.0, V3.1, V3.2 ou V3.3 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.
+La validation V3.5 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tester un export de trente saisons ; `QA_PREVIOUS_ROOT=/chemin/vers/v3/dist npm run test:upgrade` contrôle la transition réelle depuis V3.0, V3.1, V3.2, V3.3 ou V3.4 avec son ancien cache actif. Le suivi annuel commence au chargement de la V3.1 pour une carrière existante.
 
-`npm run test:v33-browser` contrôle les playoffs réels, les pauses/reprises, les préférences, les emplacements et la retraite sur mobile. Le poids et l’envergure restent descriptifs dans cette version. Les formats de terrain des playoffs sont des paramètres de simulation ; les matchs NCAA et le Final Four sont traités comme neutres.
+`npm run test:v33-browser` contrôle les playoffs réels, les pauses/reprises, les préférences, les emplacements et la retraite sur mobile. Le poids reste descriptif ; l’envergure intervient depuis V3.4. Les formats de terrain des playoffs sont des paramètres de simulation ; les matchs NCAA et le Final Four sont traités comme neutres.
 
 `npm run test:v34-browser` vérifie les nouveaux écrans avec `.qa-cache/state-2026.json`, généré par `node tools/long-run.mjs 2026`. `npm run test:balance` compare 480 matchs appariés entre les règles V3.3 et V3.4. Les mesures Chromium ne remplacent pas un essai Safari sur téléphone physique.
 
-Le rapport `tests/long-run-2026-control.json` est le témoin historique de V3.3, décrit dans `docs/validation-v3.3.md` ; il ne sert pas de preuve pour le moteur V3.4.
+Le rapport `tests/long-run-2026-control.json` est le témoin historique de V3.3, décrit dans `docs/validation-v3.3.md` ; il ne sert pas de preuve pour le moteur V3.5.
+
+`npm run test:v35-browser` vérifie les consignes, les montants de placement, la vente, les décisions familiales, la réouverture et le hors ligne aux largeurs 320/390/1440. Le banc `test:balance` reste une comparaison historique des règles V3.3 et V3.4, distincte des campagnes V3.5.

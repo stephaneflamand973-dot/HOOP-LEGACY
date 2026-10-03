@@ -1,3 +1,14 @@
+# 3.5.0 — Entourage, clubs et finances
+
+- Identités durables pour les proches, événements contextuels avec choix et suivi.
+- Consignes séparées de routine, médias, agent et placements ; décisions majeures manuelles.
+- Projets de clubs fondés sur les effectifs ; mouvements valides dans le club du héros, suivi du staff et des concurrents.
+- Engagements salariaux préservés en cas de dépassement du budget cible.
+- Relevé quotidien exact distinguant liquidités, placements et immobilier ; règle de placement au-delà d’une réserve.
+- Vente et déménagement de résidence à coût annoncé ; sponsors selon accomplissements et exposition.
+- Migration depuis V3.4 ajoutée au stockage et à la copie de secours ; moteur V3.4 figé pour les matchs commencés.
+- Correctifs de revue : solde financier V1/V2, histoire de blessure dès quatorze jours, suivi d’un transfert même sans couple.
+
 # 3.4.0 — Statistiques, distinctions et trajectoire
 
 - Statistiques enregistrées par joueur, club, compétition et phase ; recherche, tri, pourcentages et volumes.

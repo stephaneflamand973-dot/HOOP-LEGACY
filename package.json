@@ -1,7 +1,7 @@
 {
   "name": "hoop-legacy",
   "private": true,
-  "version": "3.4.0",
+  "version": "3.5.0",
   "type": "module",
   "scripts": {
     "test": "node --test tests/*.test.js",
@@ -11,7 +11,8 @@
     "test:upgrade": "node tools/upgrade-check.mjs",
     "test:v33-browser": "node tools/v33-browser.mjs",
     "test:v34-browser": "node tools/v34-browser.mjs",
-    "test:balance": "node tools/v34-balance.mjs"
+    "test:balance": "node tools/v34-balance.mjs",
+    "test:v35-browser": "node tools/v35-browser.mjs"
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.5",

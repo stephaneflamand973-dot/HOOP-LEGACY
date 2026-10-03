@@ -1,4 +1,4 @@
-import {leagueDef} from './leagues.js?v=3.4.0';
+import {leagueDef} from './leagues.js?v=3.5.0';
 const keys=['gp','pts','reb','ast','stl','blk','tov','fgm','fga','tpm','tpa','ftm','fta','min'];
 const zero=()=>Object.fromEntries(keys.map(k=>[k,0]));
 const hero=s=>s.players.find(p=>p.id===s.hero);

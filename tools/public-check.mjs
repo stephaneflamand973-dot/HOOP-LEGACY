@@ -21,8 +21,9 @@ try{
  await page.locator('[data-action="league:Statistiques"]').click();await page.waitForSelector('.v34-statistics');await page.locator('[data-action="profile:hero"]').click();await page.waitForSelector('.player-dossier');await page.locator('[data-action="close-profile"]').click();await page.locator('[data-action="league:Distinctions"]').click();await page.waitForSelector('.awards-view');
  await page.locator('[data-action="tab:player"]:visible').first().click();await page.waitForSelector('.development-report');
  await page.locator('[data-action="tab:career"]:visible').first().click();await page.waitForSelector('.legacy-panel');await page.waitForSelector('.chapters-panel');
+ await page.locator('[data-action="tab:life"]:visible').first().click();await page.waitForSelector('#policy-routine');await page.waitForSelector('#finance-percent');await page.locator('#policy-routine').selectOption('family');assert.equal(await page.evaluate(async v=>(await(await import('./storage.js?v='+v)).load()).life.policies.routine,VERSION),'family');
  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);
  const output=new URL('../test-results/',import.meta.url).pathname;fs.mkdirSync(output,{recursive:true});
  await page.screenshot({path:output+'public-mobile.png',fullPage:true});
- const result={url:page.url(),state,errors,mobileViewport:true,persistentSimulation:true,playoffCenter:true,statistics:true,playerDossier:true,awards:true,chapters:true};fs.writeFileSync(output+'public-result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+ const result={url:page.url(),state,errors,mobileViewport:true,persistentSimulation:true,playoffCenter:true,statistics:true,playerDossier:true,awards:true,chapters:true,lifePolicies:true,financeRules:true};fs.writeFileSync(output+'public-result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
 }finally{await browser.close();}
