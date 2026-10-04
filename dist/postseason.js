@@ -1,4 +1,4 @@
-import {leagueDef} from './leagues.js?v=3.5.0';
+import {leagueDef} from './leagues.js?v=3.6.0';
 export const editionId=(season,league)=>`s${season}-${league}`;
 export function roundName(league,index) {
   const def=leagueDef(league),left=def.series.length-index;

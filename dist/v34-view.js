@@ -1,7 +1,7 @@
-import {statisticsRows,awardRanking,AWARD_NAMES} from './statistics.js?v=3.5.0';
-import {orderedOffers,PREFERENCES} from './career-plan.js?v=3.5.0';
-import {hero,team,overall} from './engine.js?v=3.5.0';
-import {leagueDef} from './leagues.js?v=3.5.0';
+import {statisticsRows,awardRanking,AWARD_NAMES} from './statistics.js?v=3.6.0';
+import {orderedOffers,PREFERENCES} from './career-plan.js?v=3.6.0';
+import {hero,team,overall} from './engine.js?v=3.6.0';
+import {leagueDef} from './leagues.js?v=3.6.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const button=(text,action,disabled=false)=>`<button class="link" data-action="${esc(action)}" ${disabled?'disabled':''}>${esc(text)}</button>`;
 const options=(values,value)=>values.map(([v,l])=>`<option value="${esc(v)}" ${String(v)===String(value)?'selected':''}>${esc(l)}</option>`).join('');

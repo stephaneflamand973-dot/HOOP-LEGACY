@@ -1,6 +1,6 @@
-import {hero,team,overall} from './engine.js?v=3.5.0';
-import {leagueDef} from './leagues.js?v=3.5.0';
-import {careerTotals} from './legacy.js?v=3.5.0';
+import {hero,team,overall} from './engine.js?v=3.6.0';
+import {leagueDef} from './leagues.js?v=3.6.0';
+import {careerTotals} from './legacy.js?v=3.6.0';
 export function beginChapters(s){
  s.chapters??={version:1,current:null,history:[]};
  if(s.chapters.current?.season===s.season)return;

@@ -1,11 +1,11 @@
-import {developmentBonus} from './club-project.js?v=3.5.0';
-import {stepMatch as legacyStepMatch} from './match-v34.js?v=3.5.0';
-import {physicalContest,aerialFinish,physicalBlock,physicalRebound,coveragePlan,coverageEffect} from './physical.js?v=3.5.0';
-import {playerReading} from './system.js?v=3.5.0';
-import {shotBoost,finishKind,reboundWeight,freeChance,stealChance} from './match-effects.js?v=3.5.0';
-import {KEYS,BADGES,TECHNIQUES} from './config.js?v=3.5.0';
-import {leagueDef} from './leagues.js?v=3.5.0';
-import {clamp,rng,team,getPlayer,overall,hero,badgeLevel} from './engine.js?v=3.5.0';
+import {developmentBonus} from './club-project.js?v=3.6.0';
+import {stepMatch as legacyStepMatch} from './match-v34.js?v=3.6.0';
+import {physicalContest,aerialFinish,physicalBlock,physicalRebound,coveragePlan,coverageEffect} from './physical.js?v=3.6.0';
+import {playerReading} from './system.js?v=3.6.0';
+import {shotBoost,finishKind,reboundWeight,freeChance,stealChance} from './match-effects.js?v=3.6.0';
+import {KEYS,BADGES,TECHNIQUES} from './config.js?v=3.6.0';
+import {leagueDef} from './leagues.js?v=3.6.0';
+import {clamp,rng,team,getPlayer,overall,hero,badgeLevel} from './engine.js?v=3.6.0';
 const line=p=>({id:p.id,name:p.name,pts:0,reb:0,oreb:0,ast:0,stl:0,blk:0,tov:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,pf:0,min:0});
 function weighted(s,list,value){let weights=list.map(value),r=rng(s,'match')*weights.reduce((a,b)=>a+b,0);for(let i=0;i<list.length;i++){r-=weights[i];if(r<=0)return list[i]}return list.at(-1)}
 export function tendencies(p){let a=p.attrs;return {three:Math.max(5,(a.three-30)*1.8),drive:Math.max(5,a.layup+a.ballSpeed-70),post:Math.max(5,a.post+a.strength-80),mid:Math.max(5,a.mid-35),pass:Math.max(10,a.pass),...(p.tendencyMode==='manual'?p.tendencies:{})};}

@@ -1,5 +1,5 @@
-import {getPlayer,overall,hero,log} from './engine.js?v=3.5.0';
-import {leagueDef} from './leagues.js?v=3.5.0';
+import {getPlayer,overall,hero,log} from './engine.js?v=3.6.0';
+import {leagueDef} from './leagues.js?v=3.6.0';
 const positions=['MJ','AR','AI','AF','P'];
 export const payroll=(s,t)=>t.roster.reduce((n,id)=>n+(getPlayer(s,id)?.contract.salary||0),0);
 export function projectSnapshot(s,t){const players=t.roster.map(id=>getPlayer(s,id)).filter(Boolean),best=players.map(overall).sort((a,b)=>b-a).slice(0,8),strength=best.reduce((n,v)=>n+v,0)/Math.max(1,best.length),age=players.reduce((n,p)=>n+p.age,0)/Math.max(1,players.length),level=leagueDef(t.league).level;
