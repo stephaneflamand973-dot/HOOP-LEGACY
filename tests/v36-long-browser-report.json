@@ -1,0 +1,20 @@
+{
+  "engine": "3.6.0",
+  "errors": [],
+  "archives": 30,
+  "lazyArchives": 29,
+  "startupMs": 373.8,
+  "renderP95Ms": 13.3,
+  "viewRngUnchanged": true,
+  "statisticsFilters": true,
+  "retiredDossiers": true,
+  "awards": true,
+  "coachReload": true,
+  "marketComparison": true,
+  "offlineArchive": true,
+  "widths": [
+    320,
+    390,
+    1440
+  ]
+}

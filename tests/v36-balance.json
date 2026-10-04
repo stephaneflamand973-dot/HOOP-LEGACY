@@ -1,0 +1,564 @@
+{
+  "engine": "3.6.0",
+  "rules": "3.5.0",
+  "seeds": 32,
+  "matches": 1440,
+  "notes": "Synthetic paired initial seeds; changing context changes subsequent draws. Heroes plan 32 minutes; AI decides its minutes. Uniform attributes and no equipped techniques. Not a test of long-term championship balance.",
+  "profiles": [
+    {
+      "pos": "MJ",
+      "level": 65,
+      "neutral": {
+        "pts": 5.5,
+        "min": 31.223,
+        "fga": 5.688,
+        "fgm": 2.344,
+        "tov": 0.688,
+        "wins": 0.563,
+        "teamPoints": 120.375,
+        "pointsPer36": 6.34,
+        "fieldGoalPercent": 41.21
+      },
+      "maximal": {
+        "pts": 6.219,
+        "min": 31.38,
+        "fga": 5.594,
+        "fgm": 2.656,
+        "tov": 0.625,
+        "wins": 0.594,
+        "teamPoints": 122.219,
+        "pointsPer36": 7.13,
+        "fieldGoalPercent": 47.49
+      },
+      "ai": {
+        "pts": 0.938,
+        "min": 2.796,
+        "fga": 0.813,
+        "fgm": 0.375,
+        "tov": 0.094,
+        "wins": 0.719,
+        "teamPoints": 120.969,
+        "pointsPer36": 12.07,
+        "fieldGoalPercent": 46.15
+      }
+    },
+    {
+      "pos": "MJ",
+      "level": 80,
+      "neutral": {
+        "pts": 15.406,
+        "min": 31.536,
+        "fga": 11.688,
+        "fgm": 6.25,
+        "tov": 1.031,
+        "wins": 0.813,
+        "teamPoints": 124.531,
+        "pointsPer36": 17.59,
+        "fieldGoalPercent": 53.48
+      },
+      "maximal": {
+        "pts": 16.938,
+        "min": 31.223,
+        "fga": 11.813,
+        "fgm": 7,
+        "tov": 1,
+        "wins": 0.875,
+        "teamPoints": 125.125,
+        "pointsPer36": 19.53,
+        "fieldGoalPercent": 59.26
+      },
+      "ai": {
+        "pts": 6.906,
+        "min": 14.676,
+        "fga": 5.594,
+        "fgm": 2.813,
+        "tov": 0.688,
+        "wins": 0.688,
+        "teamPoints": 121.531,
+        "pointsPer36": 16.94,
+        "fieldGoalPercent": 50.28
+      }
+    },
+    {
+      "pos": "MJ",
+      "level": 99,
+      "neutral": {
+        "pts": 27.688,
+        "min": 31.005,
+        "fga": 19.281,
+        "fgm": 11.031,
+        "tov": 1.75,
+        "wins": 0.938,
+        "teamPoints": 130.688,
+        "pointsPer36": 32.15,
+        "fieldGoalPercent": 57.21
+      },
+      "maximal": {
+        "pts": 28.688,
+        "min": 30.976,
+        "fga": 19,
+        "fgm": 11.719,
+        "tov": 1.313,
+        "wins": 0.938,
+        "teamPoints": 132.031,
+        "pointsPer36": 33.34,
+        "fieldGoalPercent": 61.68
+      },
+      "ai": {
+        "pts": 35.531,
+        "min": 41.738,
+        "fga": 25.281,
+        "fgm": 13.969,
+        "tov": 2.625,
+        "wins": 0.813,
+        "teamPoints": 127.125,
+        "pointsPer36": 30.65,
+        "fieldGoalPercent": 55.25
+      }
+    },
+    {
+      "pos": "AR",
+      "level": 65,
+      "neutral": {
+        "pts": 5.719,
+        "min": 31.223,
+        "fga": 6,
+        "fgm": 2.438,
+        "tov": 0.594,
+        "wins": 0.563,
+        "teamPoints": 120.219,
+        "pointsPer36": 6.59,
+        "fieldGoalPercent": 40.63
+      },
+      "maximal": {
+        "pts": 6.281,
+        "min": 31.38,
+        "fga": 5.969,
+        "fgm": 2.656,
+        "tov": 0.5,
+        "wins": 0.594,
+        "teamPoints": 122.906,
+        "pointsPer36": 7.21,
+        "fieldGoalPercent": 44.5
+      },
+      "ai": {
+        "pts": 0.938,
+        "min": 2.796,
+        "fga": 0.813,
+        "fgm": 0.375,
+        "tov": 0.094,
+        "wins": 0.719,
+        "teamPoints": 120.969,
+        "pointsPer36": 12.07,
+        "fieldGoalPercent": 46.15
+      }
+    },
+    {
+      "pos": "AR",
+      "level": 80,
+      "neutral": {
+        "pts": 15.156,
+        "min": 31.38,
+        "fga": 12,
+        "fgm": 5.906,
+        "tov": 0.938,
+        "wins": 0.781,
+        "teamPoints": 123.875,
+        "pointsPer36": 17.39,
+        "fieldGoalPercent": 49.22
+      },
+      "maximal": {
+        "pts": 16.313,
+        "min": 31.223,
+        "fga": 11.969,
+        "fgm": 6.563,
+        "tov": 0.875,
+        "wins": 0.781,
+        "teamPoints": 124.406,
+        "pointsPer36": 18.81,
+        "fieldGoalPercent": 54.83
+      },
+      "ai": {
+        "pts": 10.219,
+        "min": 22.913,
+        "fga": 7.906,
+        "fgm": 4.156,
+        "tov": 0.688,
+        "wins": 0.75,
+        "teamPoints": 122.75,
+        "pointsPer36": 16.06,
+        "fieldGoalPercent": 52.57
+      }
+    },
+    {
+      "pos": "AR",
+      "level": 99,
+      "neutral": {
+        "pts": 29.469,
+        "min": 31.092,
+        "fga": 20.281,
+        "fgm": 11.781,
+        "tov": 1.313,
+        "wins": 0.844,
+        "teamPoints": 130.719,
+        "pointsPer36": 34.12,
+        "fieldGoalPercent": 58.09
+      },
+      "maximal": {
+        "pts": 31.594,
+        "min": 31.38,
+        "fga": 20.406,
+        "fgm": 12.594,
+        "tov": 1.063,
+        "wins": 0.938,
+        "teamPoints": 134.188,
+        "pointsPer36": 36.25,
+        "fieldGoalPercent": 61.72
+      },
+      "ai": {
+        "pts": 39.656,
+        "min": 44.976,
+        "fga": 28.813,
+        "fgm": 15.969,
+        "tov": 2.188,
+        "wins": 0.875,
+        "teamPoints": 127.875,
+        "pointsPer36": 31.74,
+        "fieldGoalPercent": 55.42
+      }
+    },
+    {
+      "pos": "AI",
+      "level": 65,
+      "neutral": {
+        "pts": 5.563,
+        "min": 31.223,
+        "fga": 5.781,
+        "fgm": 2.375,
+        "tov": 0.625,
+        "wins": 0.563,
+        "teamPoints": 120.125,
+        "pointsPer36": 6.41,
+        "fieldGoalPercent": 41.08
+      },
+      "maximal": {
+        "pts": 6.281,
+        "min": 31.38,
+        "fga": 5.844,
+        "fgm": 2.688,
+        "tov": 0.594,
+        "wins": 0.594,
+        "teamPoints": 122.219,
+        "pointsPer36": 7.21,
+        "fieldGoalPercent": 45.99
+      },
+      "ai": {
+        "pts": 0.938,
+        "min": 2.796,
+        "fga": 0.844,
+        "fgm": 0.375,
+        "tov": 0.094,
+        "wins": 0.688,
+        "teamPoints": 120.844,
+        "pointsPer36": 12.07,
+        "fieldGoalPercent": 44.44
+      }
+    },
+    {
+      "pos": "AI",
+      "level": 80,
+      "neutral": {
+        "pts": 15.125,
+        "min": 31.536,
+        "fga": 11.938,
+        "fgm": 6.156,
+        "tov": 1.281,
+        "wins": 0.656,
+        "teamPoints": 121.938,
+        "pointsPer36": 17.27,
+        "fieldGoalPercent": 51.57
+      },
+      "maximal": {
+        "pts": 16.969,
+        "min": 31.536,
+        "fga": 12.281,
+        "fgm": 6.906,
+        "tov": 1.188,
+        "wins": 0.656,
+        "teamPoints": 122.094,
+        "pointsPer36": 19.37,
+        "fieldGoalPercent": 56.23
+      },
+      "ai": {
+        "pts": 9.063,
+        "min": 19.573,
+        "fga": 7.25,
+        "fgm": 3.625,
+        "tov": 0.969,
+        "wins": 0.719,
+        "teamPoints": 122.188,
+        "pointsPer36": 16.67,
+        "fieldGoalPercent": 50
+      }
+    },
+    {
+      "pos": "AI",
+      "level": 99,
+      "neutral": {
+        "pts": 29.063,
+        "min": 31.38,
+        "fga": 20.75,
+        "fgm": 11.75,
+        "tov": 1.5,
+        "wins": 0.969,
+        "teamPoints": 130.344,
+        "pointsPer36": 33.34,
+        "fieldGoalPercent": 56.63
+      },
+      "maximal": {
+        "pts": 29.531,
+        "min": 31.165,
+        "fga": 19.906,
+        "fgm": 12.031,
+        "tov": 1.281,
+        "wins": 0.906,
+        "teamPoints": 131.938,
+        "pointsPer36": 34.11,
+        "fieldGoalPercent": 60.44
+      },
+      "ai": {
+        "pts": 41.469,
+        "min": 45.282,
+        "fga": 28.875,
+        "fgm": 16.5,
+        "tov": 2.469,
+        "wins": 0.875,
+        "teamPoints": 129.813,
+        "pointsPer36": 32.97,
+        "fieldGoalPercent": 57.14
+      }
+    },
+    {
+      "pos": "AF",
+      "level": 65,
+      "neutral": {
+        "pts": 5.625,
+        "min": 31.223,
+        "fga": 5.813,
+        "fgm": 2.406,
+        "tov": 0.625,
+        "wins": 0.563,
+        "teamPoints": 120.063,
+        "pointsPer36": 6.49,
+        "fieldGoalPercent": 41.4
+      },
+      "maximal": {
+        "pts": 5.281,
+        "min": 31.223,
+        "fga": 5.313,
+        "fgm": 2.219,
+        "tov": 0.469,
+        "wins": 0.625,
+        "teamPoints": 123.625,
+        "pointsPer36": 6.09,
+        "fieldGoalPercent": 41.76
+      },
+      "ai": {
+        "pts": 0.938,
+        "min": 8.388,
+        "fga": 1,
+        "fgm": 0.344,
+        "tov": 0.156,
+        "wins": 0.625,
+        "teamPoints": 120.156,
+        "pointsPer36": 4.02,
+        "fieldGoalPercent": 34.38
+      }
+    },
+    {
+      "pos": "AF",
+      "level": 80,
+      "neutral": {
+        "pts": 14.156,
+        "min": 31.536,
+        "fga": 11.75,
+        "fgm": 5.438,
+        "tov": 1.281,
+        "wins": 0.719,
+        "teamPoints": 122.563,
+        "pointsPer36": 16.16,
+        "fieldGoalPercent": 46.28
+      },
+      "maximal": {
+        "pts": 14.813,
+        "min": 31.38,
+        "fga": 11.313,
+        "fgm": 5.656,
+        "tov": 1.031,
+        "wins": 0.813,
+        "teamPoints": 125.25,
+        "pointsPer36": 16.99,
+        "fieldGoalPercent": 50
+      },
+      "ai": {
+        "pts": 15.219,
+        "min": 34.019,
+        "fga": 11.563,
+        "fgm": 5.781,
+        "tov": 1.156,
+        "wins": 0.719,
+        "teamPoints": 123.031,
+        "pointsPer36": 16.1,
+        "fieldGoalPercent": 50
+      }
+    },
+    {
+      "pos": "AF",
+      "level": 99,
+      "neutral": {
+        "pts": 29.094,
+        "min": 31.223,
+        "fga": 20.594,
+        "fgm": 11.719,
+        "tov": 1.719,
+        "wins": 0.906,
+        "teamPoints": 126.313,
+        "pointsPer36": 33.54,
+        "fieldGoalPercent": 56.9
+      },
+      "maximal": {
+        "pts": 30.844,
+        "min": 31.223,
+        "fga": 19.844,
+        "fgm": 12.219,
+        "tov": 1.344,
+        "wins": 0.969,
+        "teamPoints": 132.719,
+        "pointsPer36": 35.56,
+        "fieldGoalPercent": 61.57
+      },
+      "ai": {
+        "pts": 44,
+        "min": 48,
+        "fga": 31.5,
+        "fgm": 17.531,
+        "tov": 2.313,
+        "wins": 0.875,
+        "teamPoints": 130.344,
+        "pointsPer36": 33,
+        "fieldGoalPercent": 55.65
+      }
+    },
+    {
+      "pos": "P",
+      "level": 65,
+      "neutral": {
+        "pts": 5.375,
+        "min": 31.223,
+        "fga": 5.75,
+        "fgm": 2.281,
+        "tov": 0.656,
+        "wins": 0.563,
+        "teamPoints": 119.719,
+        "pointsPer36": 6.2,
+        "fieldGoalPercent": 39.67
+      },
+      "maximal": {
+        "pts": 6.063,
+        "min": 31.38,
+        "fga": 5.938,
+        "fgm": 2.594,
+        "tov": 0.594,
+        "wins": 0.594,
+        "teamPoints": 122.031,
+        "pointsPer36": 6.96,
+        "fieldGoalPercent": 43.68
+      },
+      "ai": {
+        "pts": 1.438,
+        "min": 5.592,
+        "fga": 1.375,
+        "fgm": 0.594,
+        "tov": 0.094,
+        "wins": 0.719,
+        "teamPoints": 121.063,
+        "pointsPer36": 9.25,
+        "fieldGoalPercent": 43.18
+      }
+    },
+    {
+      "pos": "P",
+      "level": 80,
+      "neutral": {
+        "pts": 15.063,
+        "min": 31.38,
+        "fga": 11.938,
+        "fgm": 6.156,
+        "tov": 0.938,
+        "wins": 0.75,
+        "teamPoints": 123.406,
+        "pointsPer36": 17.28,
+        "fieldGoalPercent": 51.57
+      },
+      "maximal": {
+        "pts": 17.375,
+        "min": 31.536,
+        "fga": 12.688,
+        "fgm": 6.938,
+        "tov": 0.906,
+        "wins": 0.781,
+        "teamPoints": 125.656,
+        "pointsPer36": 19.83,
+        "fieldGoalPercent": 54.68
+      },
+      "ai": {
+        "pts": 10.688,
+        "min": 22.369,
+        "fga": 8.281,
+        "fgm": 4.531,
+        "tov": 0.75,
+        "wins": 0.719,
+        "teamPoints": 122.813,
+        "pointsPer36": 17.2,
+        "fieldGoalPercent": 54.72
+      }
+    },
+    {
+      "pos": "P",
+      "level": 99,
+      "neutral": {
+        "pts": 29.469,
+        "min": 31.536,
+        "fga": 21.375,
+        "fgm": 11.938,
+        "tov": 1.406,
+        "wins": 0.813,
+        "teamPoints": 128.75,
+        "pointsPer36": 33.64,
+        "fieldGoalPercent": 55.85
+      },
+      "maximal": {
+        "pts": 30.563,
+        "min": 31.223,
+        "fga": 19.969,
+        "fgm": 12.063,
+        "tov": 1.188,
+        "wins": 0.969,
+        "teamPoints": 132.844,
+        "pointsPer36": 35.24,
+        "fieldGoalPercent": 60.41
+      },
+      "ai": {
+        "pts": 44.906,
+        "min": 48.156,
+        "fga": 31.313,
+        "fgm": 17.844,
+        "tov": 2.344,
+        "wins": 0.844,
+        "teamPoints": 129.844,
+        "pointsPer36": 33.57,
+        "fieldGoalPercent": 56.99
+      }
+    }
+  ]
+}

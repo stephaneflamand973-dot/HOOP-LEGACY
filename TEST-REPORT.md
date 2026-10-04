@@ -1,54 +1,22 @@
-# HOOP LEGACY V3.5 — validation
+# HOOP LEGACY V3.6 — validation
 
-La V3.5 livre le lot LIFE01–02, WORLD01–02 et ECO01 décrit dans `docs/v3.5-spec.md`.
+76 scénarios fonctionnels, dont 14 nouveaux, passent sur la copie restaurée. Les 14 couvrent délais partagés, priorité agent, commandes interdites, absence de RNG/jour caché, prime unique, blessure, transfert, départ, coach, retraite, migration, import invalide, historique borné, échappement, moteur réel et échéance.
 
-## Tests fonctionnels
+La revue indépendante avait identifié la clôture trop précoce au dernier jour, la retraite automatique laissant des engagements ouverts et le départ annuel du référent traité tardivement. Les trois corrections sont restaurées et couvertes par les tests dédiés.
 
-62 scénarios dans huit fichiers, dont treize nouveaux scénarios V3.5. La suite locale complète passe. Les anciens contrôles de chronologie, playoffs, XP, maîtrise, statistiques, coach et sauvegardes restent actifs.
+Le bilan collectif intervient le lendemain de l'échéance pour compter tous les matchs du dernier jour. Les règles de match 3.5, physique, maîtrise et progression sont conservées : seuls leurs liens de cache changent.
 
-- Proches conservés lors de la migration, identité stable et match V3.4 terminé sans changer résultat ni RNG.
-- Transfert réel avec discussion majeure, suivi différé, reprise de contexte et clôture unique.
-- Une saison de décisions courantes déléguées, consignes persistantes et pause sur projet familial.
-- Pourcentage exact au-delà de la réserve, sans plafond caché ; achat et vente non duplicables.
-- Revenus réellement reçus après changement de salaire à mi-mois ; liquidités et patrimoine séparés ; échéance automatique idempotente.
-- Salaire actif préservé sous déficit budgétaire ; effectifs complets.
-- Échange admissible dans le club du héros, identités et contrats conservés, exclusion du héros et motif visible.
-- Projet déterministe, priorité jeune modérée et consultation sans mutation.
-- Import refusé pour une consigne financière ou personnelle invalide.
-- Copie de secours V3.4 créée avant remplacement de la sauvegarde automatique.
-- Solde de départ correct après migration d’une ancienne carrière V1/V2 disposant d’argent.
-- Histoire déclenchée dès une blessure de quatorze jours et lors d’un transfert sans couple.
-- Joueur libéré puis réaffecté conservant son contrat tant qu’il n’est pas expiré.
+## Navigateur
+Le parcours V3.6 repasse à 320/390/1440 : échanges, priorité, suivi en worker, délais, sauvegarde/rechargement, hors ligne et boutons bloqués pendant une décision. Aucune erreur JavaScript. Chromium mobile simulé, pas téléphone physique ni Safari iOS.
 
-Les défauts de migration et de contrat découverts pendant la validation ont été reproduits par des tests en échec avant correction. La revue indépendante a validé les correctifs de migration et d’histoires ; le dernier correctif de contrat a été vérifié par son test de régression et la suite complète.
+## Diagnostic
+1 440 matchs reproductibles dans `tests/v36-balance.json`. Le même joueur uniformément 99 domine aussi sous contrôle IA ; les rotations et contextes diffèrent. Voir `docs/v3.6-diagnostic.md`. Aucune preuve d'une résolution des dynasties, aucun résultat forcé.
 
-## Deux carrières de trente saisons
+## Campagnes et migrations
+Deux campagnes de 30 saisons terminées sur l'empreinte `1bdd924fe7f033fe9310dc033cd1179ea8bdf9e47cbbac7a819480fc744eb3fe` : graine 2026, Toronto 14 titres (10 franchises championnes) ; graine 973, Charlotte 17 titres (11 franchises championnes). L'alerte 17/30 reste ouverte ; seuil inchangé à plus de 15/30. Les trajectoires sportives sans nouvelles discussions restent identiques à V3.5. Les interactions sont exercées par les tests dédiés et le navigateur.
 
-Empreinte exacte des modules de simulation : `c64b1e29129a0df491064673cea0d6b618f771da92778302a52c5ecfe8008d5b`.
+Contrôles : calendriers, séries, champions, effectifs, statistiques, vieillissement, plafonds, titres, archives et comptes de carrière. Le héros atteint 99 puis termine à 95 à 46 ans. Exports complets : environ 104,8–104,9 millions de caractères.
 
-| Mesure | Graine 2026 | Graine 973 |
-|---|---:|---:|
-| Saisons complètes | 30 | 30 |
-| Franchises championnes différentes | 10 | 11 |
-| Maximum de titres NBA par franchise | 14 | 17 |
-| Franchise dominante | Toronto | Charlotte |
-| Export final, millions de caractères | 104.8 | 104.87 |
-| Âge final du héros | 46 | 46 |
+Les six migrations V3.0–V3.5 repassent avec ancien cache actif, copie de secours, match/RNG exacts, réouverture hors ligne et idempotence. Les parcours antérieurs (playoffs, arrêt/reprise, finances, famille, projets) passent sans erreur. La CI vérifie les empreintes des deux rapports complets, puis répète une simulation indépendante de deux saisons et les parcours navigateur ; le test navigateur sur 30 saisons est exécuté localement.
 
-Contrôles annuels : champions des neuf compétitions, scores, effectifs, attributs, tableaux et domicile des playoffs, absence de match après une série remportée, passages par club et agrégats. Les deux rapports correspondent au code livré.
-
-**L’alerte de domination reste ouverte pour la graine 973 : 17 titres sur 30.** Le seuil de quinze n’a pas été modifié. Le résultat de Toronto (14) ne démontre pas un équilibrage général. La progression rapide et l’accès à 99 demandés sont conservés. La V3.5 améliore la cohérence des contrats et des projets, sans prétendre résoudre la domination d’un héros complet.
-
-## Navigateur et migrations
-
-Les migrations V3.0, V3.1, V3.2, V3.3 et V3.4 passent avec leur ancien cache actif : secours conservé, match et RNG identiques après reprise, réouverture hors ligne et migration idempotente. `match-v34.js` fige le moteur précédent.
-
-Le parcours V3.5 contrôle consignes, placement exact de 75 000 €, achat/vente, décision familiale conservée après fermeture, projet du club, hors ligne et absence de débordement aux largeurs 320/390/1440. Les captures ont été inspectées.
-
-Les parcours de non-régression V3.3 et V3.4 contrôlent les quinze séries NBA, l’avance interrompue puis reprise, l’arrêt manuel, les sauvegardes nommées, la retraite, les statistiques, distinctions et dossiers.
-
-La carrière V3.5 de trente saisons est chargée dans Chromium : 29 archives différées, consultation hors ligne, filtres conservés et aucun changement du RNG par navigation. Démarrage mesuré à 349.6 ms ; rendu au 95e percentile à 7.5 ms sur l’hôte de test. Ces mesures ne sont pas celles d’un téléphone physique.
-
-## Limites
-
-Trois familles d’histoires contextuelles de deux étapes. Budgets, minimums de signature, montants nets, frais et rendements sont des règles simplifiées de jeu. Le poids demeure descriptif. Les archives anciennes incomplètes ne permettent pas de reconstruire tous les faits. Safari et l’installation iOS sur téléphone physique restent à tester. Les rapports V3.4 et sa comparaison de 480 matchs sont des preuves historiques, distinctes du moteur V3.5.
+Carrière de 30 saisons ouverte dans Chromium : 29 archives différées, dossiers/statistiques/distinctions, filtres, coach, marché et consultation hors ligne validés ; RNG inchangé par navigation. Démarrage 373.8ms, rendu au 95e percentile 13.3ms sur cet hôte. Ce ne sont pas des mesures sur téléphone physique.

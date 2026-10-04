@@ -1,3 +1,13 @@
+# 3.6.0 — Échanges et engagements sportifs
+
+- Coach : niveau, concurrence, disponibilité, projection et évaluation expliqués.
+- Agent : mandat persistant équilibre, minutes, titre ou salaire, sans transfert forcé.
+- Coéquipier : engagement collectif de 21 jours, compteurs, échéance, bilan et cohésion plafonnée.
+- Historique, délais et protection des actions pendant match/décision/simulation/retraite.
+- Dernier jour inclus ; clôture lors des changements d'interlocuteur et de la retraite automatique.
+- Migration V3.5 avec secours et match exact ; règles de match et potentiel 99 conservés.
+- Diagnostic reproductible sur 1 440 matchs, sans prétendre résoudre les dynasties.
+
 # 3.5.0 — Entourage, clubs et finances
 
 - Identités durables pour les proches, événements contextuels avec choix et suivi.

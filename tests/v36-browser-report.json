@@ -1,0 +1,18 @@
+{
+  "engine": "3.6.0",
+  "errors": [],
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "coachReply": true,
+  "agentPriority": true,
+  "teamCommitment": true,
+  "cooldowns": true,
+  "noHiddenDayOrRng": true,
+  "workerFollowup": true,
+  "reload": true,
+  "offline": true,
+  "pendingGuard": true
+}

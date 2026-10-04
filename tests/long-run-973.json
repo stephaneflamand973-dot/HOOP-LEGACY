@@ -1,5 +1,5 @@
 {
-  "fingerprint": "c64b1e29129a0df491064673cea0d6b618f771da92778302a52c5ecfe8008d5b",
+  "fingerprint": "1bdd924fe7f033fe9310dc033cd1179ea8bdf9e47cbbac7a819480fc744eb3fe",
   "champions": {
     "Los Angeles Lakers": 1,
     "Boston Celtics": 3,
@@ -29,7 +29,7 @@
   "dominanceWarning": true,
   "seed": 973,
   "steps": 3833,
-  "seconds": 536,
+  "seconds": 350,
   "saveMB": 104.87,
   "checkpoints": [
     {
