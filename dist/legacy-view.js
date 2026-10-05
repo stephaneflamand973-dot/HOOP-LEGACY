@@ -1,6 +1,6 @@
-import {seasonTitles} from './career-ledger.js?v=3.6.0';
-import {AMBITIONS,careerTotals,goalProgress,rivalries,nextStakes} from './legacy.js?v=3.6.0';
-import {leagueDef} from './leagues.js?v=3.6.0';
+import {seasonTitles} from './career-ledger.js?v=3.7.0';
+import {AMBITIONS,careerTotals,goalProgress,rivalries,nextStakes} from './legacy.js?v=3.7.0';
+import {leagueDef} from './leagues.js?v=3.7.0';
 
 const esc = value => String(value??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fmt = n => Math.round(n).toLocaleString('fr-FR');

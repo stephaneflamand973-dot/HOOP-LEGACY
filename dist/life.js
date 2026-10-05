@@ -1,7 +1,7 @@
-import {initFinance,financeDay,financeAction} from './finance.js?v=3.6.0';
-import {initContext,newPerson,observeLife,contextEvent,delegateChoice,rememberChoice} from './life-context.js?v=3.6.0';
-import {canChange} from './commands.js?v=3.6.0';
-import {hero,log,clamp,rng,team} from './engine.js?v=3.6.0';
+import {initFinance,financeDay,financeAction} from './finance.js?v=3.7.0';
+import {initContext,newPerson,observeLife,contextEvent,delegateChoice,rememberChoice} from './life-context.js?v=3.7.0';
+import {canChange} from './commands.js?v=3.7.0';
+import {hero,log,clamp,rng,team} from './engine.js?v=3.7.0';
 export function initLife(s){s.life??={fame:5,morale:70,partner:null,children:[],family:70,delegated:false,agent:'Équilibré',lifestyle:'simple',investments:0,property:null,sponsors:[],nextEvent:s.day+35,ledger:[],history:[]};s.relationships??={coach:55,team:55,agent:50,mentor:50,family:60};initContext(s);initFinance(s);}
 export function lifeDay(s){initLife(s);let p=hero(s),l=s.life;
  financeDay(s);observeLife(s);

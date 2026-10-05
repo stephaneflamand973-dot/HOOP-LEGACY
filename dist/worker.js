@@ -1,6 +1,6 @@
-import {next} from './engine.js?v=3.6.0';
-import {destinationReached,settleAdvance} from './simulation.js?v=3.6.0';
-import {hasSportPause} from './sport-events.js?v=3.6.0';
+import {next} from './engine.js?v=3.7.0';
+import {destinationReached,settleAdvance} from './simulation.js?v=3.7.0';
+import {hasSportPause} from './sport-events.js?v=3.7.0';
 let stop=false;
 self.onmessage=async e=>{
  if(e.data.type==='stop'){stop=true;return}

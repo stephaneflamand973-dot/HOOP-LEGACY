@@ -1,0 +1,18 @@
+{
+  "engine": "3.7.0",
+  "reference": "ce85a69df13a294be685555122ce4f2b5c09bf9e",
+  "reports": [
+    {
+      "seed": 2026,
+      "seasons": 2,
+      "steps": 149,
+      "identical": true
+    },
+    {
+      "seed": 973,
+      "seasons": 2,
+      "steps": 152,
+      "identical": true
+    }
+  ]
+}

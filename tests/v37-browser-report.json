@@ -1,0 +1,17 @@
+{
+  "engine": "3.7.0",
+  "errors": [],
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "quoteAndCancel": true,
+  "payment": true,
+  "renewOptIn": true,
+  "programAndFinanceLinks": true,
+  "workerTraining": true,
+  "reload": true,
+  "offline": true,
+  "pendingGuard": true
+}

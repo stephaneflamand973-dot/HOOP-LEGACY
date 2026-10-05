@@ -1,6 +1,7 @@
-import {canChange} from './commands.js?v=3.6.0';
-import {masteryTraining} from './system.js?v=3.6.0';
-import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.6.0';
+import {canChange} from './commands.js?v=3.7.0';
+import {initEnvironment,coachTraining} from './environment.js?v=3.7.0';
+import {masteryTraining} from './system.js?v=3.7.0';
+import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.7.0';
 export const DOMAINS=Object.keys(GROUPS);
 export const domainOf=k=>DOMAINS.find(d=>GROUPS[d].includes(k));
 export const LEAGUE_XP={highschool:.5,ncaa:.72,nba:1.15,euroleague:1.08,acb:1,elite:.92,bbl:.9,lba:.94,nbl:.92};
@@ -44,17 +45,19 @@ export function matchXP(s,p,b,league){if(!b?.min)return null;initDevelopment(s);
  let out=awardXP(s,p,raw,'match');s.development.weekXP={[week]:already+Object.values(out).reduce((a,b)=>a+b,0)};
  s.development.performance={efficiency:+efficiency.toFixed(2),coefficient:coef,normalizer,minutes:+b.min.toFixed(1),amounts:out};return out;
 }
-export function trainingDay(s,p){initDevelopment(s);if(p.injury)return;
+export function trainingDay(s,p){initDevelopment(s);initEnvironment(s);if(p.injury||s.environment.lastTrainingDay===s.day)return;
  let plan=s.trainingPlan,rest=s.activity==='repos'||p.fatigue>65;
  if(rest){p.fatigue=Math.max(0,p.fatigue-7);return;}
  if(s.day%2!==0)return; // Fixed dates: clicking or splitting time cannot farm a session.
+ s.environment.lastTrainingDay=s.day;
  let intensity=plan.intensity==='light'?.7:plan.intensity==='hard'?1.25:1;
  if(plan.mode==='assisted'&&p.fatigue>40)intensity=.65;intensity*=Math.max(.85,1-(s.life?.sponsors.reduce((n,c)=>n+c.obligation,0)||0)*.025-(s.life?.children.length||0)*.015);
  const focus=plan.domain,raw=Object.fromEntries(DOMAINS.map(d=>[d,(d===focus?29:12)*intensity*(s.career.stage==='highschool'?.25:s.career.stage==='college'?.45:.8)]));
  if(s.activity==='video'){raw.Création+=9;raw.Défense+=9;s.iq=Math.min(99,s.iq+.1);}
  if(s.activity==='etudes'){s.career.academics=Math.min(100,s.career.academics+.6);for(let d of DOMAINS)raw[d]*=.8;}
  if(s.activity==='famille')for(let d of DOMAINS)raw[d]*=.8;
- masteryTraining(s,intensity);p.fatigue=Math.min(100,p.fatigue+intensity*3);awardXP(s,p,raw,'training');
+ const coached=coachTraining(s,p,raw);
+ masteryTraining(s,intensity);p.fatigue=Math.min(100,p.fatigue+intensity*3);awardXP(s,p,coached.amounts,'training');
 }
 export function ageAttributes(p,{care=1,ai=false,coach=65,random=()=>.5}={}){
  const changes={},minutes=p.season?.gp?p.season.min/p.season.gp:0;
