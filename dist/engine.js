@@ -235,14 +235,14 @@ export function migrateLegacy(old){
  if(old.schema===4){
   if(old.engine===VERSION)return validate(old);
   if(!['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0'].includes(old.engine))throw Error('Version de moteur incompatible');
-  let s=structuredClone(old);s.engine=VERSION;initDevelopment(s);
+  let s=structuredClone(old);delete s.environment;s.engine=VERSION;initDevelopment(s);
   // Recover prior selections from V3 archives so an existing rookie cannot be drafted again.
   for(let year of s.world?.drafts||[])for(let pick of year.picks||[]){let p=getPlayer(s,pick.id);if(p&&!p.draft&&Number.isInteger(pick.pick)&&pick.pick>0)p.draft={season:year.season,pick:pick.pick,team:s.teams.find(t=>t.name===pick.team)?.id||null};}
   initLegacy(s,true);initV33(s,true);initV34(s,true);initLife(s);initWorld(s);log(s,'Mise à jour 3.7','Mon environnement : un coach individuel facultatif et un bilan des gains réels. Aucun achat automatique. Votre match commencé et les résultats déjà joués restent inchangés.');return validate(s);
  }
  let s=old.schema===3?structuredClone(old):migrateV1(old),p=hero(s);
  if(!p)throw Error('Joueur principal absent');
- s.schema=4;s.engine=VERSION;s.pack='world-2025-v3';s.rng.life??=((s.rng.career+1777)>>>0)||1777;
+ delete s.environment;s.schema=4;s.engine=VERSION;s.pack='world-2025-v3';s.rng.life??=((s.rng.career+1777)>>>0)||1777;
  for(let q of s.players){q.caps=limits();q.absolute=limits();q.tendencyMode??='auto';}
  initDevelopment(s);initLife(s);initWorld(s);s.health??={rehab:'active',history:[]};s.journal??=structuredClone(s.log||[]).reverse();
  let credit=Math.max(0,Number(s.points)||0)*75+Math.max(0,Number(s.xp)||0);for(let d of DOMAINS)s.development.xp[d]+=Math.floor(credit/DOMAINS.length);s.points=0;s.xp=0;

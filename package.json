@@ -14,7 +14,10 @@
     "test:balance": "node tools/v34-balance.mjs",
     "test:v35-browser": "node tools/v35-browser.mjs",
     "test:v36-browser": "node tools/v36-browser.mjs",
-    "test:v36-balance": "node tools/v36-balance.mjs"
+    "test:v36-balance": "node tools/v36-balance.mjs",
+    "test:v37-browser": "node tools/v37-browser.mjs",
+    "test:v37-balance": "node tools/v37-balance.mjs",
+    "test:v37-neutrality": "node tools/v37-neutrality.mjs"
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.5",

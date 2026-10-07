@@ -155,4 +155,4 @@ Couverture : objectifs et limites → contraintes globales ; parcours et prix �
 
 Mode recommandé : **exécution directe dans cette session**, tâches successives avec tests et commits, puis revue indépendante de l’ensemble. Les interfaces sont fortement liées ; six transferts d’implémentation n’apportent pas ici un gain évident. Alternative : implémentation par sous-agents avec revue de chaque tâche, plus coûteuse en contexte.
 
-Statut : plan prêt à relire ; attente de validation du plan et de choix du mode avant toute modification du produit.
+Statut : plan approuvé, exécution directe sur la branche courante choisie par l’utilisateur. Tâches 1 à 5 terminées, revue indépendante et corrections terminées. Tâche 6 : documentation et archive préparées ; CI, déploiement et contrôle public restent les conditions de livraison.

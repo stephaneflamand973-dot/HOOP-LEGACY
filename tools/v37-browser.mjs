@@ -17,5 +17,21 @@ try{
  await page.locator('[data-action="tab:home"]:visible').first().click();await page.locator('#advance-size').selectOption('2');await page.locator('[data-action="advance"]:visible').first().click();await page.waitForFunction(()=>{const b=document.querySelector('[data-action="advance"]');return b&&!b.disabled;});s=await load();assert.ok(s.environment.totals.sessions>0);assert.ok(s.environment.totals.extraXP>0);
  await page.reload();await page.waitForSelector('#advance-size');await nav();assert.deepEqual((await load()).environment,s.environment);await page.evaluate(()=>navigator.serviceWorker.ready);await context.setOffline(true);await page.reload();await page.waitForSelector('#advance-size');await nav();await page.waitForSelector('.environment-panel');await context.setOffline(false);
  await page.evaluate(async v=>{const store=await import('./storage.js?v='+v),s=await store.load();s.pending={type:'sport',title:'Test',text:'Décision',choices:[['accept','Continuer']]};await store.save(s);},VERSION);await page.reload();await page.waitForSelector('#advance-size');await nav();assert.equal(await page.locator('.environment-panel [data-action="coach-renew"]:not([disabled])').count(),0);
- assert.deepEqual(errors,[]);const result={engine:VERSION,errors,widths:[320,390,1440],quoteAndCancel:true,payment:true,renewOptIn:true,programAndFinanceLinks:true,workerTraining:true,reload:true,offline:true,pendingGuard:true};fs.writeFileSync('tests/v37-browser-report.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
+ const simulation=await page.evaluate(async v=>{
+  const engine=await import('./engine.js?v='+v),env=await import('./environment.js?v='+v),sim=await import('./simulation.js?v='+v),sport=await import('./sport-events.js?v='+v);
+  const s=engine.createGame({...engine.defaultBuild(),path:'rookie',seed:2026});s.money=100000;s.trainingPlan.domain='Tir';env.hireCoach(s,'local','Tir');env.setCoachRenewal(s,true);sim.setAdvanceMode(s,'40');sim.beginAdvance(s);
+  const direct=structuredClone(s),worker=new Worker('./worker.js?v='+v,{type:'module'});
+  const output=new Promise((resolve,reject)=>{worker.onmessage=e=>{if(e.data.type==='done'){worker.terminate();resolve(e.data.state);}if(e.data.type==='error'){worker.terminate();reject(Error(e.data.message));}};worker.onerror=e=>{worker.terminate();reject(Error(e.message));};});worker.postMessage({state:structuredClone(s),steps:40});
+  for(let i=0;i<40;i++){if(direct.pending||direct.retired||direct.match||sport.hasSportPause(direct)||sim.destinationReached(direct))break;engine.next(direct,{interactive:false,untilDay:direct.day+1});}sim.settleAdvance(direct);
+  const remote=await output,workerIdentical=JSON.stringify(remote)===JSON.stringify(direct),cursor=JSON.stringify(s.simulation.cursor);let decisions=0,steps=0;
+  while(s.day<80&&steps++<1200){
+   if(sport.hasSportPause(s))sport.acknowledgeSport(s);
+   else if(s.pending){decisions++;if(s.pending.type==='contract')engine.sign(s,0);else engine.decide(s,s.pending.type==='draft-choice'?'draft':s.pending.type==='offseason'?'shoot':s.pending.choices[0][0]);}
+   else engine.next(s,{interactive:false,untilDay:s.day+1});
+   if(s.simulation.mode!=='40'||JSON.stringify(s.simulation.cursor)!==cursor)throw Error('Destination perdue');
+  }
+  engine.validate(s);return {workerIdentical,decisions,day:s.day,paid:s.environment.totals.paid,periods:s.environment.history.length,mode:s.simulation.mode,target:s.simulation.cursor.targetSeason};
+ },VERSION);
+ assert.equal(simulation.workerIdentical,true);assert.ok(simulation.decisions>0);assert.equal(simulation.day,80);assert.equal(simulation.paid,900);assert.equal(simulation.periods,2);assert.equal(simulation.mode,'40');assert.equal(simulation.target,2);
+ assert.deepEqual(errors,[]);const result={engine:VERSION,errors,widths:[320,390,1440],quoteAndCancel:true,payment:true,renewOptIn:true,programAndFinanceLinks:true,workerTraining:true,reload:true,offline:true,pendingGuard:true,simulation};fs.writeFileSync('tests/v37-browser-report.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
 }finally{await browser.close();await new Promise(r=>server.close(r));}

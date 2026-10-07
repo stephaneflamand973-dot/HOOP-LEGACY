@@ -4,7 +4,7 @@ const open=()=>new Promise((resolve,reject)=>{let r=indexedDB.open('hoop-legacy-
 let writes=Promise.resolve();const archiveKeys=new WeakMap();
 function archiveKey(a){if(a.deferred&&a.archiveRef)return a.archiveRef;let key=archiveKeys.get(a);if(key)return key;let str=JSON.stringify(a),h=2166136261;for(let i=0;i<str.length;i++)h=Math.imul(h^str.charCodeAt(i),16777619);key='season-'+a.season+'-'+(h>>>0)+'-'+str.length;archiveKeys.set(a,key);return key;}
 export function save(state,slot='auto'){
- if(!state)return Promise.resolve();if(state.schema===4)validate(['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0'].includes(state.engine)?migrateLegacy(state):state);const refs=(state.archives||[]).map(archiveKey),snapshot=structuredClone({...state,archives:[]}),archives=[...(state.archives||[])];snapshot.archiveRefs=refs;snapshot.archiveIndex=archives.map((a,i)=>({season:a.season,team:a.team,league:a.league,archiveRef:refs[i],deferred:true}));
+ if(!state)return Promise.resolve();if(state.schema===4)validate(needsMigration(state)?migrateLegacy(state):state);const refs=(state.archives||[]).map(archiveKey),snapshot=structuredClone({...state,archives:[]}),archives=[...(state.archives||[])];snapshot.archiveRefs=refs;snapshot.archiveIndex=archives.map((a,i)=>({season:a.season,team:a.team,league:a.league,archiveRef:refs[i],deferred:true}));
  writes=writes.catch(()=>{}).then(()=>write(snapshot,archives,slot));return writes;
 }
 async function write(state,archives,slot){let db=await open();return new Promise((res,rej)=>{let tx=db.transaction(['slots','archives','slotMeta'],'readwrite'),slots=tx.objectStore('slots'),store=tx.objectStore('archives');

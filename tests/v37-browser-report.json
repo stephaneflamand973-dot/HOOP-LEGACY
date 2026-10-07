@@ -13,5 +13,14 @@
   "workerTraining": true,
   "reload": true,
   "offline": true,
-  "pendingGuard": true
+  "pendingGuard": true,
+  "simulation": {
+    "workerIdentical": true,
+    "decisions": 2,
+    "day": 80,
+    "paid": 900,
+    "periods": 2,
+    "mode": "40",
+    "target": 2
+  }
 }

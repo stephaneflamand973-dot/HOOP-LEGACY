@@ -1,8 +1,21 @@
-# HOOP LEGACY — V3.6.0
+# HOOP LEGACY — V3.7.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.6.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.7.0)
+
+## V3.7-A — Mon environnement
+
+Dans **Vie → Mon environnement**, réservez un coach individuel pour un domaine d’entraînement. Consultez le devis avant de confirmer : 300 € / +10 %, 1 200 € / +15 % ou 4 000 € / +20 % d’XP bruts ciblés, pour 30 jours de jeu. Il s’agit exclusivement d’argent gagné dans la simulation.
+
+- Un seul coach ; activation le lendemain de l’achat. Le programme reste votre choix : sa priorité doit correspondre à la spécialité du coach.
+- Le supplément s’applique aux vraies séances admissibles. Aucun bonus pendant une blessure, au repos ou sans séance ; plafond d’attributs inchangé à 99.
+- Débit immédiat, réserve financière préservée, renouvellement désactivé par défaut. S’il est activé, l’échéance utilise les fonds disponibles avant les revenus du jour ; un refus arrête les tentatives automatiques.
+- Résilier coupe le prochain renouvellement. La période payée reste disponible jusqu’à son terme, sans remboursement ni prolongation pour blessure/repos. Un transfert conserve le service ; la retraite le clôt.
+- Le bilan distingue prix payé, séances accompagnées et XP supplémentaires réellement accordés après arrondi. Les 24 dernières périodes sont détaillées, les totaux de carrière conservés.
+- Les anciennes parties ne reçoivent aucun abonnement automatique. Match commencé, progression gratuite et préférence de simulation conservés.
+
+Cette livraison couvre le premier lot : coach individuel et bilan. Autres spécialistes, installations et stages restent prévus pour les lots suivants. L’IA conserve sa progression annuelle actuelle ; il n’existe pas encore d’économie de staff IA symétrique.
 
 ## Changements de la V3.6
 

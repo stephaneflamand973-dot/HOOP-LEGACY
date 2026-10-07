@@ -1,22 +1,25 @@
-# HOOP LEGACY V3.6 — validation
+# HOOP LEGACY V3.7-A — validation
 
-76 scénarios fonctionnels, dont 14 nouveaux, passent sur la copie restaurée. Les 14 couvrent délais partagés, priorité agent, commandes interdites, absence de RNG/jour caché, prime unique, blessure, transfert, départ, coach, retraite, migration, import invalide, historique borné, échappement, moteur réel et échéance.
+95 tests fonctionnels passent. Les deux défauts importants de la revue indépendante ont été reproduits puis corrigés : cohérence des imports et remise à zéro de l’environnement lors des migrations historiques. Détails et deux points mineurs différés : `docs/v3.7-review.md`.
 
-La revue indépendante avait identifié la clôture trop précoce au dernier jour, la retraite automatique laissant des engagements ouverts et le départ annuel du référent traité tardivement. Les trois corrections sont restaurées et couvertes par les tests dédiés.
+## Navigateur et sauvegardes
 
-Le bilan collectif intervient le lendemain de l'échéance pour compter tous les matchs du dernier jour. Les règles de match 3.5, physique, maîtrise et progression sont conservées : seuls leurs liens de cache changent.
+Chromium à 320/390/1440 pixels : devis, annulation, achat, renouvellement volontaire, raccourcis programme/réserve, bilan après simulation worker, rechargement, hors ligne et blocage pendant une décision. Aucune erreur JavaScript ni débordement. Moteur direct et worker identiques ; cible de simulation conservée après deux décisions et 80 jours, avec trois paiements de 300.
 
-## Navigateur
-Le parcours V3.6 repasse à 320/390/1440 : échanges, priorité, suivi en worker, délais, sauvegarde/rechargement, hors ligne et boutons bloqués pendant une décision. Aucune erreur JavaScript. Chromium mobile simulé, pas téléphone physique ni Safari iOS.
+Les parcours antérieurs V3.3/V3.5/V3.6 et le parcours général passent. Migrations V3.0–V3.6 avec ancien cache : copie de secours, match/RNG conservés, réouverture hors ligne et idempotence. La migration V3.6 a été rejouée après les corrections de revue.
 
-## Diagnostic
-1 440 matchs reproductibles dans `tests/v36-balance.json`. Le même joueur uniformément 99 domine aussi sous contrôle IA ; les rotations et contextes diffèrent. Voir `docs/v3.6-diagnostic.md`. Aucune preuve d'une résolution des dynasties, aucun résultat forcé.
+Pas de test sur téléphone physique ni Safari iOS ; la vérification du focus couvre les raccourcis, pas un audit complet d’accessibilité.
 
-## Campagnes et migrations
-Deux campagnes de 30 saisons terminées sur l'empreinte `1bdd924fe7f033fe9310dc033cd1179ea8bdf9e47cbbac7a819480fc744eb3fe` : graine 2026, Toronto 14 titres (10 franchises championnes) ; graine 973, Charlotte 17 titres (11 franchises championnes). L'alerte 17/30 reste ouverte ; seuil inchangé à plus de 15/30. Les trajectoires sportives sans nouvelles discussions restent identiques à V3.5. Les interactions sont exercées par les tests dédiés et le navigateur.
+## Progression et économie
 
-Contrôles : calendriers, séries, champions, effectifs, statistiques, vieillissement, plafonds, titres, archives et comptes de carrière. Le héros atteint 99 puis termine à 95 à 46 ans. Exports complets : environ 104,8–104,9 millions de caractères.
+16 scénarios, deux graines (2026/973), lycée et rookie, sans coach et avec chaque gamme, trois saisons chacun : 48 saisons comparées sans injection d’argent. Montants finis et non négatifs, comptabilité cohérente, attributs plafonnés à 99, historique borné. La réserve est contrôlée à l’achat ; le seuil et l’ordre exact du renouvellement sont testés unitairement.
 
-Les six migrations V3.0–V3.5 repassent avec ancien cache actif, copie de secours, match/RNG exacts, réouverture hors ligne et idempotence. Les parcours antérieurs (playoffs, arrêt/reprise, finances, famille, projets) passent sans erreur. La CI vérifie les empreintes des deux rapports complets, puis répète une simulation indépendante de deux saisons et les parcours navigateur ; le test navigateur sur 30 saisons est exécuté localement.
+Les lycéens de ces scénarios restent sans revenus ni coach sur ces trois saisons. Les rookies bénéficient de suppléments réels ; leur intérêt diminue à l’approche de 99. Exemple expert : 72 000 dépensés et 1 071/1 116 XP supplémentaires selon la graine. Ce constat ne prouve pas un équilibrage optimal pour toutes les carrières.
 
-Carrière de 30 saisons ouverte dans Chromium : 29 archives différées, dossiers/statistiques/distinctions, filtres, coach, marché et consultation hors ligne validés ; RNG inchangé par navigation. Démarrage 373.8ms, rendu au 95e percentile 13.3ms sur cet hôte. Ce ne sont pas des mesures sur téléphone physique.
+Sans achat : deux saisons complètes par graine comparées à V3.6, états normalisés strictement identiques (hors version et nouveau sous-état).
+
+## Carrières longues
+
+Deux campagnes de 30 saisons régénérées après les corrections de revue, empreintes vérifiées contre les fichiers moteur. Contrôles calendriers, séries, effectifs, statistiques, vieillissement, plafonds, archives et comptes. Toronto remporte 14 titres NBA avec la graine 2026 ; Charlotte 17 avec 973. L’alerte de domination au-delà de 15/30 reste ouverte. Le héros termine à 95 à 46 ans. Les dynasties ne sont pas corrigées ici.
+
+La CI de branche répète tests, économie, comparaison sans achat, navigateurs et sept migrations ; elle vérifie les empreintes des rapports longs avant une simulation indépendante de deux saisons. La publication exige ensuite CI verte, déploiement Pages et contrôle du site public.

@@ -8,7 +8,7 @@ import {VERSION} from '../dist/config.js';
 const previous=process.env.QA_PREVIOUS_ROOT;
 assert.ok(previous,'Définir QA_PREVIOUS_ROOT vers le dossier dist de la version précédente.');
 const oldVersion=(await import(pathToFileURL(path.join(previous,'config.js')))).VERSION;
-assert.ok(['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0'].includes(oldVersion));
+assert.ok(['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0'].includes(oldVersion));
 const legacy=await import(pathToFileURL(path.join(previous,'engine.js')));
 const old=legacy.createGame(legacy.defaultBuild()),game=legacy.competition(old).schedule[0];
 old.day=game.day;old.match=legacy.startMatch(old,game);legacy.continueMatch(old,null,60);
@@ -34,7 +34,7 @@ try{
  await page.evaluate(async()=>{const registration=await navigator.serviceWorker.ready;await registration.update();});
  await page.waitForFunction(v=>navigator.serviceWorker.controller?.state==='activated'&&navigator.serviceWorker.controller.scriptURL.endsWith('sw.js?v='+v),oldVersion);
  assert.ok((await page.evaluate(()=>caches.keys())).includes('hoop-legacy-'+oldVersion));served=current;
- await page.goto('http://127.0.0.1:4174/?v='+VERSION);try{await page.waitForSelector('[data-action="finish"]');}catch(e){console.error(JSON.stringify({errors,body:await page.locator('body').innerText(),caches:await page.evaluate(()=>caches.keys())}));throw e;}
+ await page.goto('http://127.0.0.1:4174/?v='+VERSION);try{await page.waitForSelector('[data-action="finish"]');}catch(e){console.error(JSON.stringify({loadDiagnostic:await page.evaluate(async v=>{try{return {loaded:!!(await(await import('./storage.js?v='+v)).load())};}catch(e){return {error:e.message,stack:e.stack};}},VERSION),errors,body:await page.locator('body').innerText(),caches:await page.evaluate(()=>caches.keys())}));throw e;}
  const migrated=await page.evaluate(async v=>await(await import('./storage.js?v='+v)).load(),VERSION);
  assert.equal(migrated.engine,VERSION);for(const key of ['rng','match','pending','history'])assert.deepEqual(migrated[key],fixture.save[key]);
  assert.deepEqual(migrated.development.xp,fixture.save.development.xp);

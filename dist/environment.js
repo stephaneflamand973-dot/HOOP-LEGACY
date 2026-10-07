@@ -66,15 +66,19 @@ export function validateEnvironment(s){
  const fail=()=>{throw Error('Environnement invalide');};
  if(!e||e.version!==1||!integer(e.nextId)||e.nextId<1||typeof e.renew!=='boolean'||!optionalDate(e.processedDay)||!optionalDate(e.lastTrainingDay)||e.lastTrainingDay!==null&&e.lastTrainingDay%2!==0||!Array.isArray(e.history)||e.history.length>24||!e.totals||['paid','sessions','extraXP'].some(k=>!integer(e.totals[k]))||e.notice!==null&&(typeof e.notice!=='string'||e.notice.length>500)||e.contract===undefined||!e.contract&&e.renew)fail();
  const periods=[...e.history,...(e.contract?[e.contract]:[])],ids=new Set();let paid=0,sessions=0,extraXP=0,previous=null;
+ if(e.totals.extraXP>(s.development?.sources?.training??0))fail();
  for(const c of periods){
   if(!c||!integer(c.id)||c.id<1||c.id>=e.nextId||ids.has(c.id)||c.catalogVersion!==1||!offerFor(c.offerId)||!Object.hasOwn(GROUPS,c.domain))fail();
   const o=offerFor(c.offerId),archived=c!==e.contract;
+  // At most 38 raw XP in the coached domain (hard pro training plus video).
+  if(c.extraXP>c.sessions*Math.ceil(38*o.rate)||!archived&&c.end<s.day)fail();
   if(c.price!==o.price||c.rate!==o.rate||!date(c.bought)||!integer(c.start)||!integer(c.end)||![c.bought,c.bought+1].includes(c.start)||c.end!==c.start+29||!integer(c.sessions)||c.sessions>15||!integer(c.extraXP)||!optionalDate(c.lastSessionDay))fail();
   if(c.sessions===0&&(c.lastSessionDay!==null||c.extraXP!==0)||c.sessions>0&&(c.lastSessionDay===null||c.lastSessionDay<c.start||c.lastSessionDay>c.end||c.lastSessionDay%2!==0||c.sessions>Math.floor(c.lastSessionDay/2)-Math.floor((c.start-1)/2)||e.lastTrainingDay===null||c.lastSessionDay>e.lastTrainingDay))fail();
   if(archived&&(!date(c.closed)||c.closed<c.bought||c.lastSessionDay!==null&&c.closed<c.lastSessionDay||typeof c.reason!=='string'||c.reason.length>500))fail();
-  if(previous&&(c.id<=previous.id||c.bought<previous.closed))fail();
+  if(archived&&c.closed<c.end&&(!s.retired||c!==e.history.at(-1)))fail();
+  if(previous&&(c.id<=previous.id||c.bought<previous.closed||c.start<=previous.end))fail();
   ids.add(c.id);paid+=c.price;sessions+=c.sessions;extraXP+=c.extraXP;previous=c;
  }
- if(e.totals.paid<paid||e.totals.sessions<sessions||e.totals.extraXP<extraXP||e.nextId-1<periods.length||s.retired&&e.contract)fail();
+ if(e.totals.paid<paid||e.totals.sessions<sessions||e.totals.extraXP<extraXP||e.totals.extraXP>e.totals.sessions*8||e.nextId-1<periods.length||s.retired&&e.contract)fail();
  if(e.nextId-1<=24&&(e.totals.paid!==paid||e.totals.sessions!==sessions||e.totals.extraXP!==extraXP||periods.length!==e.nextId-1))fail();
 }

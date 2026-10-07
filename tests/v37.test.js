@@ -79,3 +79,23 @@ test('environnement : import hostile rejeté sans remplacer la partie',()=>{
  for(const change of changes){const s=make();env.hireCoach(s,'local','Tir');const old=structuredClone(s),bad=structuredClone(s);change(bad);assert.throws(()=>validate(bad),/Environnement/);assert.throws(()=>parseSave(JSON.stringify(bad)),/Environnement/);assert.deepEqual(s,old);}
  const s=make();env.hireCoach(s,'local','Tir');assert.deepEqual(parseSave(JSON.stringify(s)),s);
 });
+test('migration IndexedDB V3.6 : sauvegarde de secours avant remplacement',async()=>{
+ await import('fake-indexeddb/auto');const {save,load}=await import('../dist/storage.js');const s=make();s.engine='3.6.0';delete s.environment;
+ await save(s,'v37-upgrade');const m=await load('v37-upgrade');assert.equal(m.engine,'3.7.0');assert.equal(m.environment.contract,null);assert.equal(m.money,s.money);
+ const backup=await new Promise((resolve,reject)=>{const r=indexedDB.open('hoop-legacy-v1');r.onerror=()=>reject(r.error);r.onsuccess=()=>{const q=r.result.transaction('slots').objectStore('slots').get('backup-before-3.6.0-v37-upgrade');q.onsuccess=()=>{resolve(q.result);r.result.close();};q.onerror=()=>reject(q.error);};});assert.equal(backup.engine,'3.6.0');assert.equal(backup.environment,undefined);assert.deepEqual(backup.rng,s.rng);
+});
+test('environnement : imports aux gains ou périodes impossibles refusés',()=>{
+ const makeContract=()=>{const s=make();env.hireCoach(s,'local','Tir');return s;};
+ for(const mutate of [
+  s=>{s.day=2;hero(s).fatigue=0;trainingDay(s,hero(s));s.environment.contract.extraXP=s.environment.totals.extraXP=1e9;},
+  s=>{s.day=2;hero(s).fatigue=0;trainingDay(s,hero(s));s.development.sources.training=0;},
+  s=>{const e=s.environment;e.history=[{...e.contract,closed:0,reason:'Période terminée'}];e.contract={...e.contract,id:2};e.nextId=3;e.totals.paid=600;},
+  s=>{s.day=50;s.environment.processedDay=50;}
+ ]){const s=makeContract();mutate(s);assert.throws(()=>parseSave(JSON.stringify(s)),/Environnement/);}
+});
+test('migration : les champs environnement injectés dans une ancienne version sont ignorés',()=>{
+ for(const version of ['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0']){
+  const s=make();env.hireCoach(s,'local','Tir');env.setCoachRenewal(s,true);s.engine=version;
+  const m=parseSave(JSON.stringify(s));assert.equal(m.environment.contract,null);assert.equal(m.environment.renew,false);assert.deepEqual(m.environment.totals,{paid:0,sessions:0,extraXP:0});assert.equal(m.money,s.money);
+ }
+});

@@ -1,3 +1,13 @@
+# 3.7.0 — Mon environnement, premier lot
+
+- Coach individuel spécialisé et prépayé pour 30 jours, trois gammes à rendement décroissant, devis et réserve protégée.
+- XP supplémentaires uniquement sur les séances admissibles du domaine choisi, sans altérer la progression gratuite ni les règles de match.
+- Renouvellement facultatif, prélèvement unique avant les revenus du jour, arrêt après refus, résiliation sans remboursement.
+- Bilan réel des séances, XP et dépenses ; historique borné et cumuls conservés.
+- Interface Vie adaptée au mobile, liens vers programme/réserve, sauvegarde et consultation hors ligne.
+- Migration V3.6 ajoutée ; nouvelle partie sans abonnement et ancien match conservé.
+- Garde contre une seconde attribution d’entraînement à la même date.
+
 # 3.6.0 — Échanges et engagements sportifs
 
 - Coach : niveau, concurrence, disponibilité, projection et évaluation expliqués.

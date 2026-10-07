@@ -1,5 +1,5 @@
 {
-  "fingerprint": "1bdd924fe7f033fe9310dc033cd1179ea8bdf9e47cbbac7a819480fc744eb3fe",
+  "fingerprint": "5cf8bda7de99c3538f55d30e3a64299e9e163f6e184a56f5738b25f71eab3d6b",
   "champions": {
     "Oklahoma City Thunder": 2,
     "Los Angeles Lakers": 3,
@@ -27,7 +27,7 @@
   "dominanceWarning": false,
   "seed": 2026,
   "steps": 3832,
-  "seconds": 350.2,
+  "seconds": 401.7,
   "saveMB": 104.8,
   "checkpoints": [
     {

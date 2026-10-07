@@ -1,0 +1,727 @@
+{
+  "engine": "3.7.0",
+  "fingerprint": "cb086b66a3d43cf69e1361d2f5e6c4a4d7aa79f8987a03a07d0bec6d2c41d278",
+  "seasons": 3,
+  "rows": [
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "none",
+      "steps": 1126,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 67,
+          "free": 67,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "three": 80,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 92,
+          "free": 91,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "local",
+      "steps": 1126,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 67,
+          "free": 67,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "three": 80,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 92,
+          "free": 91,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "confirmed",
+      "steps": 1126,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 67,
+          "free": 67,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "three": 80,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 92,
+          "free": 91,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "expert",
+      "steps": 1126,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 67,
+          "free": 67,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "three": 80,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 92,
+          "free": 91,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "none",
+      "steps": 1136,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "three": 96,
+          "mid": 96,
+          "free": 95,
+          "money": 910390.35,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1832756.3,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 97,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2753775.45,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "local",
+      "steps": 1128,
+      "minCash": 0,
+      "paid": 5700,
+      "sessions": 264,
+      "extraXP": 621,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "three": 96,
+          "mid": 96,
+          "free": 96,
+          "money": 906481.71,
+          "paid": 3900,
+          "sessions": 181,
+          "extraXP": 519
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1826960.06,
+          "paid": 5700,
+          "sessions": 264,
+          "extraXP": 621
+        },
+        {
+          "season": 3,
+          "overall": 97,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2747900.49,
+          "paid": 5700,
+          "sessions": 264,
+          "extraXP": 621
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "confirmed",
+      "steps": 1132,
+      "minCash": 0,
+      "paid": 21600,
+      "sessions": 259,
+      "extraXP": 865,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "three": 97,
+          "mid": 96,
+          "free": 96,
+          "money": 894850.83,
+          "paid": 15600,
+          "sessions": 181,
+          "extraXP": 690
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1811829.98,
+          "paid": 21600,
+          "sessions": 259,
+          "extraXP": 865
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2733400.17,
+          "paid": 21600,
+          "sessions": 259,
+          "extraXP": 865
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "expert",
+      "steps": 1130,
+      "minCash": 0,
+      "paid": 72000,
+      "sessions": 251,
+      "extraXP": 1071,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 88,
+          "three": 97,
+          "mid": 97,
+          "free": 96,
+          "money": 858559.91,
+          "paid": 52000,
+          "sessions": 180,
+          "extraXP": 840
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1762645.01,
+          "paid": 72000,
+          "sessions": 251,
+          "extraXP": 1071
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2685209.04,
+          "paid": 72000,
+          "sessions": 251,
+          "extraXP": 1071
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "highschool",
+      "offer": "none",
+      "steps": 1128,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 68,
+          "free": 68,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 69,
+          "three": 81,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 90,
+          "free": 90,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "highschool",
+      "offer": "local",
+      "steps": 1128,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 68,
+          "free": 68,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 69,
+          "three": 81,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 90,
+          "free": 90,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "highschool",
+      "offer": "confirmed",
+      "steps": 1128,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 68,
+          "free": 68,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 69,
+          "three": 81,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 90,
+          "free": 90,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "highschool",
+      "offer": "expert",
+      "steps": 1128,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "three": 71,
+          "mid": 68,
+          "free": 68,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 69,
+          "three": 81,
+          "mid": 78,
+          "free": 77,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "three": 92,
+          "mid": 90,
+          "free": 90,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "rookie",
+      "offer": "none",
+      "steps": 1125,
+      "minCash": 0,
+      "paid": 0,
+      "sessions": 0,
+      "extraXP": 0,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "three": 96,
+          "mid": 95,
+          "free": 95,
+          "money": 910450.47,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1833425.97,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2754992.88,
+          "paid": 0,
+          "sessions": 0,
+          "extraXP": 0
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "rookie",
+      "offer": "local",
+      "steps": 1130,
+      "minCash": 0,
+      "paid": 6000,
+      "sessions": 274,
+      "extraXP": 629,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "three": 96,
+          "mid": 96,
+          "free": 96,
+          "money": 906538.23,
+          "paid": 3900,
+          "sessions": 181,
+          "extraXP": 517
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1827289.63,
+          "paid": 6000,
+          "sessions": 274,
+          "extraXP": 629
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2748745.02,
+          "paid": 6000,
+          "sessions": 274,
+          "extraXP": 629
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "rookie",
+      "offer": "confirmed",
+      "steps": 1136,
+      "minCash": 0,
+      "paid": 21600,
+      "sessions": 252,
+      "extraXP": 859,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 88,
+          "three": 97,
+          "mid": 97,
+          "free": 96,
+          "money": 894878.55,
+          "paid": 15600,
+          "sessions": 181,
+          "extraXP": 698
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1812138.75,
+          "paid": 21600,
+          "sessions": 252,
+          "extraXP": 859
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2733961.5,
+          "paid": 21600,
+          "sessions": 252,
+          "extraXP": 859
+        }
+      ]
+    },
+    {
+      "seed": 973,
+      "path": "rookie",
+      "offer": "expert",
+      "steps": 1124,
+      "minCash": 0,
+      "paid": 72000,
+      "sessions": 254,
+      "extraXP": 1116,
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "three": 97,
+          "mid": 96,
+          "free": 96,
+          "money": 858349.67,
+          "paid": 52000,
+          "sessions": 180,
+          "extraXP": 874
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 1760303.17,
+          "paid": 72000,
+          "sessions": 254,
+          "extraXP": 1116
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "three": 99,
+          "mid": 99,
+          "free": 99,
+          "money": 2680951.68,
+          "paid": 72000,
+          "sessions": 254,
+          "extraXP": 1116
+        }
+      ]
+    }
+  ]
+}
