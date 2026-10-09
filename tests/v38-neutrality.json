@@ -1,0 +1,57 @@
+{
+  "engine": "3.8.0",
+  "fingerprint": "9ff704b0238a21780c6e178c5e09fc33af0b2285469897fe0a83a20cfe3cef96",
+  "reference": "6cea8a311ddd68d26cc9a94a13675355f59dc159",
+  "reports": [
+    {
+      "seed": 2026,
+      "path": "young",
+      "identical": true
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "identical": true
+    },
+    {
+      "seed": 973,
+      "path": "young",
+      "identical": true
+    },
+    {
+      "seed": 973,
+      "path": "rookie",
+      "identical": true
+    },
+    {
+      "seed": 38,
+      "path": "young",
+      "identical": true
+    },
+    {
+      "seed": 38,
+      "path": "rookie",
+      "identical": true
+    },
+    {
+      "seed": 1,
+      "path": "young",
+      "identical": true
+    },
+    {
+      "seed": 1,
+      "path": "rookie",
+      "identical": true
+    },
+    {
+      "seed": 999,
+      "path": "young",
+      "identical": true
+    },
+    {
+      "seed": 999,
+      "path": "rookie",
+      "identical": true
+    }
+  ]
+}

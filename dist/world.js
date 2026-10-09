@@ -1,9 +1,10 @@
-import {updateProject,recruitmentValue,clubNotice,executeTrade} from './club-project.js?v=3.7.0';
-import {KEYS,WEIGHTS} from './config.js?v=3.7.0';
-import {leagueDef} from './leagues.js?v=3.7.0';
-import {NBA_ROSTERS,ROSTER_SOURCE} from './nba-rosters.js?v=3.7.0';
-import {generatedPlayer,overall,getPlayer,team,rng,log,totals,clamp} from './engine.js?v=3.7.0';
-import {ageAttributes} from './progression.js?v=3.7.0';
+import {syncCollective} from './collective.js?v=3.8.0';
+import {updateProject,recruitmentValue,clubNotice,executeTrade} from './club-project.js?v=3.8.0';
+import {KEYS,WEIGHTS} from './config.js?v=3.8.0';
+import {leagueDef} from './leagues.js?v=3.8.0';
+import {NBA_ROSTERS,ROSTER_SOURCE} from './nba-rosters.js?v=3.8.0';
+import {generatedPlayer,overall,getPlayer,team,rng,log,totals,clamp} from './engine.js?v=3.8.0';
+import {ageAttributes} from './progression.js?v=3.8.0';
 // Bespoke game ratings, not an official or licensed ratings dataset.
 const STARS={
 'Nikola Jokic':[96,'P',30],'Shai Gilgeous-Alexander':[95,'MJ',27],'Giannis Antetokounmpo':[95,'AF',30],'Luka Doncic':[94,'MJ',26],'Stephen Curry':[92,'MJ',37],'Anthony Edwards':[90,'AR',24],'LeBron James':[90,'AI',40],'Kevin Durant':[90,'AI',37],'Victor Wembanyama':[91,'P',21],'Jayson Tatum':[91,'AI',27],'Jalen Brunson':[90,'MJ',29],'Donovan Mitchell':[89,'AR',29],'Anthony Davis':[90,'P',32],'Joel Embiid':[89,'P',31],'Devin Booker':[88,'AR',28],'Kawhi Leonard':[88,'AI',34],'James Harden':[88,'MJ',36],'Tyrese Haliburton':[88,'MJ',25],'Ja Morant':[87,'MJ',26],'Trae Young':[87,'MJ',27],'Cade Cunningham':[88,'MJ',24],'Paolo Banchero':[87,'AF',22],'Karl-Anthony Towns':[88,'P',29],'Domantas Sabonis':[87,'P',29],'Jimmy Butler III':[87,'AI',36],'Jaylen Brown':[88,'AR',29],'Jalen Williams':[87,'AI',24],'Chet Holmgren':[85,'P',23],'Jamal Murray':[85,'MJ',28],'Alperen Sengun':[86,'P',23],'Bam Adebayo':[86,'P',28],'Pascal Siakam':[86,'AF',31],'Scottie Barnes':[84,'AI',24],'Franz Wagner':[85,'AI',24],'LaMelo Ball':[85,'MJ',24],'Tyrese Maxey':[86,'MJ',24],'Kyrie Irving':[86,'MJ',33],'De\'Aaron Fox':[85,'MJ',27],'Derrick White':[84,'AR',31],'Evan Mobley':[86,'AF',24],'Jaren Jackson Jr.':[85,'AF',26],'Zion Williamson':[85,'AF',25],'Cooper Flagg':[79,'AF',18],'Damian Lillard':[84,'MJ',35],'Rudy Gobert':[83,'P',33],'Chris Paul':[74,'MJ',40],'Al Horford':[76,'P',39],'Kevin Love':[72,'AF',37],'Russell Westbrook':[76,'MJ',36],'Mike Conley':[75,'MJ',38],'Nicolas Batum':[75,'AI',36],'Joe Ingles':[69,'AI',38],'Kyle Lowry':[70,'MJ',39],'Garrett Temple':[65,'AR',39],'Jeff Green':[70,'AF',39]};
@@ -66,7 +67,7 @@ export function refreshWorld(s){initWorld(s);s.lastDraft=[];let pool=new Set(s.f
  // Budgets constrain future offers only. Active commitments are never rescaled.
  for(let t of clubs)updateProject(s,t);
  let remaining=[...pool].map(id=>getPlayer(s,id)).sort((a,b)=>rating(b)-rating(a));s.freeAgents=remaining.slice(0,180).map(p=>p.id);for(let p of remaining.slice(180)){remember(s,p);retired.add(p.id);}
- let active=new Set([...s.teams.flatMap(t=>t.roster),...s.freeAgents,s.hero]);s.players=s.players.filter(p=>active.has(p.id)&&!retired.has(p.id));s.world.drafts.push({season:s.season-1,picks:s.lastDraft});s.world.transactions=s.world.transactions.slice(0,300);
+ let active=new Set([...s.teams.flatMap(t=>t.roster),...s.freeAgents,s.hero]);s.players=s.players.filter(p=>active.has(p.id)&&!retired.has(p.id));s.world.drafts.push({season:s.season-1,picks:s.lastDraft});s.world.transactions=s.world.transactions.slice(0,300);syncCollective(s);
 }
 export function marketDay(s){if(s.day%45!==0||s.day%365>180||s.match)return;initWorld(s);let clubs=s.teams.filter(t=>!leagueDef(t.league).amateur);
  const offset=Math.floor(rng(s,'career')*clubs.length);for(let i=0;i<clubs.length;i++){const a=clubs[(i+offset)%clubs.length];updateProject(s,a);for(const b of clubs.filter(t=>t.id!==a.id&&t.league===a.league)){updateProject(s,b);const candidates=t=>t.roster.map(id=>getPlayer(s,id)).filter(p=>p.id!==s.hero&&p.age<35&&!p.injury).sort((p,q)=>overall(p)-overall(q)||p.id.localeCompare(q.id)).slice(0,6);for(const p of candidates(a))for(const q of candidates(b))if(executeTrade(s,a,b,p,q))return;}}

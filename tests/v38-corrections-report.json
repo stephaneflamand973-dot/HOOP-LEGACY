@@ -1,0 +1,100 @@
+{
+  "engine": "3.8.0",
+  "scope": "Local import and mobile corrections",
+  "fingerprint": "2baab28e184ad958910da1f2b3dd3552f523c143b4fb99413524908359a41d1e",
+  "unitTests": 128,
+  "mobile": {
+    "errors": [],
+    "overflows": [],
+    "viewport": "390x844, 320x740, 1440x1000",
+    "offline": true,
+    "longSave": {
+      "archives": 30,
+      "history": 30,
+      "day": 10957,
+      "continued": true
+    }
+  },
+  "migrations": [
+    {
+      "from": "3.0.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.0.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.1.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.1.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.2.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.2.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.3.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.3.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.4.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.4.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.5.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.5.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.6.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.6.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.7.0",
+      "to": "3.8.0",
+      "oldCache": true,
+      "backup": "3.7.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    }
+  ]
+}

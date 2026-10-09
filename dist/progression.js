@@ -1,7 +1,7 @@
-import {canChange} from './commands.js?v=3.7.0';
-import {initEnvironment,coachTraining} from './environment.js?v=3.7.0';
-import {masteryTraining} from './system.js?v=3.7.0';
-import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.7.0';
+import {canChange} from './commands.js?v=3.8.0';
+import {initEnvironment,coachTraining} from './environment.js?v=3.8.0';
+import {masteryTraining} from './system.js?v=3.8.0';
+import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.8.0';
 export const DOMAINS=Object.keys(GROUPS);
 export const domainOf=k=>DOMAINS.find(d=>GROUPS[d].includes(k));
 export const LEAGUE_XP={highschool:.5,ncaa:.72,nba:1.15,euroleague:1.08,acb:1,elite:.92,bbl:.9,lba:.94,nbl:.92};
@@ -45,7 +45,7 @@ export function matchXP(s,p,b,league){if(!b?.min)return null;initDevelopment(s);
  let out=awardXP(s,p,raw,'match');s.development.weekXP={[week]:already+Object.values(out).reduce((a,b)=>a+b,0)};
  s.development.performance={efficiency:+efficiency.toFixed(2),coefficient:coef,normalizer,minutes:+b.min.toFixed(1),amounts:out};return out;
 }
-export function trainingDay(s,p){initDevelopment(s);initEnvironment(s);if(p.injury||s.environment.lastTrainingDay===s.day)return;
+export function trainingDay(s,p){initDevelopment(s);initEnvironment(s);if(s.environment.trainingProcessedDay===s.day)return;s.environment.trainingProcessedDay=s.day;if(p.injury||s.environment.lastTrainingDay===s.day)return;
  let plan=s.trainingPlan,rest=s.activity==='repos'||p.fatigue>65;
  if(rest){p.fatigue=Math.max(0,p.fatigue-7);return;}
  if(s.day%2!==0)return; // Fixed dates: clicking or splitting time cannot farm a session.

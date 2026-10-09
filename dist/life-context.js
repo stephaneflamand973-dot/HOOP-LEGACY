@@ -1,5 +1,5 @@
-import {hero,team,clamp} from './engine.js?v=3.7.0';
-import {canChange} from './commands.js?v=3.7.0';
+import {hero,team,clamp} from './engine.js?v=3.8.0';
+import {canChange} from './commands.js?v=3.8.0';
 const names=['Camille','Alex','Charlie','Sasha','Lou','Noa','Robin','Alix','Jules','Morgan','Eden','Léa'];
 function identity(s,id,role){let h=0;for(const c of `${hero(s).name}:${id}`)h=(h*31+c.charCodeAt(0))>>>0;return {id,name:names[h%names.length]+' '+['Laurent','Joseph','Baptiste','Moreau','Diallo'][Math.floor(h/13)%5],role};}
 export function initContext(s){const l=s.life;l.people??={agent:identity(s,'agent','Agent'),mentor:identity(s,'mentor','Mentor'),close:identity(s,'close','Proche')};

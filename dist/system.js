@@ -19,6 +19,7 @@ function gain(s,amount,source) {
   return delta;
 }
 export function masteryMatch(s,minutes) { return minutes>0?gain(s,.52*Math.min(1.35,minutes/26),'match'):0; }
+export function masteryCollective(s,raw){initMastery(s);s.mastery.sources.collective??=0;return gain(s,raw,'collective');}
 export function masteryTraining(s,intensity) {
   initMastery(s);
   if (s.mastery.lastTrainingDay===s.day) return 0;

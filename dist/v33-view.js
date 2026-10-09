@@ -1,7 +1,7 @@
-import {ADVANCE_MODES,destinationLabel} from './simulation.js?v=3.7.0';
-import {archivedRounds,seriesStakes} from './postseason.js?v=3.7.0';
-import {seasonStints} from './career-ledger.js?v=3.7.0';
-import {leagueDef,REFERENCE} from './leagues.js?v=3.7.0';
+import {ADVANCE_MODES,destinationLabel} from './simulation.js?v=3.8.0';
+import {archivedRounds,seriesStakes} from './postseason.js?v=3.8.0';
+import {seasonStints} from './career-ledger.js?v=3.8.0';
+import {leagueDef,REFERENCE} from './leagues.js?v=3.8.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const club=(s,id)=>s.teams.find(t=>t.id===id)?.name||'Club';
 const date=day=>new Date(Date.UTC(REFERENCE.baseYear,8,1+day)).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
@@ -37,7 +37,7 @@ export function playoffsView(s,lid,{season=null,conference='Tous',round='all'}={
 }
 export function masteryPanel(s) {
   const m=s.mastery;
-  const labels={match:'Matchs joués',training:'Entraînement',video:'Vidéo',transfer:'Changement de club'};
+  const labels={match:'Matchs joués',training:'Entraînement',video:'Vidéo',collective:'Préparation collective',transfer:'Changement de club'};
   return `<section class="panel mastery-report"><p class="eyebrow">COMPRENDRE VOTRE PROGRESSION</p><h3>Maîtrise du système · ${s.system.toFixed(1)} / 100</h3><p>Les minutes réellement jouées, les séances et la vidéo font progresser votre connaissance du collectif. Elle facilite légèrement les tirs et la circulation du ballon et améliore le placement défensif.</p><div class="development-changes">${Object.entries(m.sources).map(([key,value])=>`<span>${labels[key]} <b>+${value.toFixed(1)}</b></span>`).join('')}</div><p class="muted">Gains suivis depuis le jour ${m.since}. La maîtrise se conserve d’une saison à l’autre. Un transfert conserve 85 % pour un système similaire, 65 % sinon.</p>${m.compensation?`<p class="muted">Mise à jour V3.3 : l’ancienne valeur, qui ne pouvait que diminuer, a été rétablie de ${m.compensation.from.toFixed(1)} à ${m.compensation.to}. Aucun XP ajouté.</p>`:''}<details><summary>Dernières évolutions</summary>${m.recent.slice(-8).reverse().map(e=>`<p>J${e.day} · ${labels[e.source]} : ${e.delta>=0?'+':''}${e.delta.toFixed(2)}</p>`).join('')||'<p>Les premiers gains apparaîtront après une séance ou un match joué.</p>'}</details></section>`;
 }
 export function stintPanel(s) {

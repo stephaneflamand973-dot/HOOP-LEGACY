@@ -1,0 +1,988 @@
+{
+  "engine": "3.8.0",
+  "fingerprint": "d255546f21258d71fcc7d4a59aabe4dba65c4d0e329db1f541d1cfd2b2cec7bc",
+  "seasons": 3,
+  "seeds": [
+    2026
+  ],
+  "rows": [
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "none",
+      "steps": 1126,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 3.1433085769633755,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 0,
+        "mastery": 0,
+        "duo": 0
+      },
+      "skips": {
+        "Aucune préparation": 1095
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "systemMastery": 72.4028895468986,
+          "duoMean": 9.617455594000024,
+          "minutes": 642.6125965537716,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "systemMastery": 92.8856601214717,
+          "duoMean": 19.793867385336785,
+          "minutes": 788.8502673796778,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "systemMastery": 99.80677809860931,
+          "duoMean": 15.872498609323845,
+          "minutes": 1110.8524290524285,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "routine-video",
+      "steps": 1127,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 3.2188635280836224,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 263,
+        "mastery": 32.94080898268085,
+        "duo": 0
+      },
+      "skips": {
+        "Jour sans séance": 548,
+        "Match": 49,
+        "Plafond atteint": 235
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "systemMastery": 92.6415004990779,
+          "duoMean": 9.617455594000024,
+          "minutes": 642.6125965537716,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "systemMastery": 100,
+          "duoMean": 19.872556357735327,
+          "minutes": 795.1836007130112,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "systemMastery": 100,
+          "duoMean": 16.527436355845747,
+          "minutes": 1164.3413179413171,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "routine-tactical",
+      "steps": 1126,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 3.562356512285285,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 195,
+        "mastery": 42.29705401105871,
+        "duo": 0
+      },
+      "skips": {
+        "Jour sans séance": 548,
+        "Match": 48,
+        "Plafond atteint": 304
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "systemMastery": 100,
+          "duoMean": 9.250215797377066,
+          "minutes": 616.2596553773011,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "systemMastery": 100,
+          "duoMean": 19.35769978952601,
+          "minutes": 779.122994652405,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "systemMastery": 100,
+          "duoMean": 15.952480464537553,
+          "minutes": 1117.0985088985083,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "routine-partners",
+      "steps": 1123,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 4.201367519069807,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 500,
+        "mastery": 0,
+        "duo": 260.9045183613488
+      },
+      "skips": {
+        "Jour sans séance": 548,
+        "Match": 47
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "systemMastery": 72.01506956333681,
+          "duoMean": 20.13098787787313,
+          "minutes": 616.2596553773011,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "systemMastery": 92.52212539079376,
+          "duoMean": 34.183858383946855,
+          "minutes": 778.0819964349363,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "systemMastery": 99.41844587725194,
+          "duoMean": 25.456085953794194,
+          "minutes": 1079.4770562770557,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "stage-video",
+      "steps": 1126,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 3.1433085769633755,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 0,
+        "mastery": 0,
+        "duo": 0
+      },
+      "skips": {
+        "Aucune préparation": 1095
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "systemMastery": 72.4028895468986,
+          "duoMean": 9.617455594000024,
+          "minutes": 642.6125965537716,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "systemMastery": 92.8856601214717,
+          "duoMean": 19.793867385336785,
+          "minutes": 788.8502673796778,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "systemMastery": 99.80677809860931,
+          "duoMean": 15.872498609323845,
+          "minutes": 1110.8524290524285,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "stage-tactical",
+      "steps": 1126,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 3.1433085769633755,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 0,
+        "mastery": 0,
+        "duo": 0
+      },
+      "skips": {
+        "Aucune préparation": 1095
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "systemMastery": 72.4028895468986,
+          "duoMean": 9.617455594000024,
+          "minutes": 642.6125965537716,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "systemMastery": 92.8856601214717,
+          "duoMean": 19.793867385336785,
+          "minutes": 788.8502673796778,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "systemMastery": 99.80677809860931,
+          "duoMean": 15.872498609323845,
+          "minutes": 1110.8524290524285,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "highschool",
+      "offer": "stage-partners",
+      "steps": 1126,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 3.1433085769633755,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 0,
+        "mastery": 0,
+        "duo": 0
+      },
+      "skips": {
+        "Aucune préparation": 1095
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 61,
+          "systemMastery": 72.4028895468986,
+          "duoMean": 9.617455594000024,
+          "minutes": 642.6125965537716,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 68,
+          "systemMastery": 92.8856601214717,
+          "duoMean": 19.793867385336785,
+          "minutes": 788.8502673796778,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 78,
+          "systemMastery": 99.80677809860931,
+          "duoMean": 15.872498609323845,
+          "minutes": 1110.8524290524285,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 0,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "none",
+      "steps": 1124,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 28.60927712595933,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 0,
+        "mastery": 0,
+        "duo": 0
+      },
+      "skips": {
+        "Aucune préparation": 1095
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "systemMastery": 90.80767821940452,
+          "duoMean": 16.071822799059202,
+          "minutes": 2152.6361634561986,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 910346.79,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 94,
+          "systemMastery": 100,
+          "duoMean": 37.27873991473493,
+          "minutes": 3491.855233346376,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 1832271.09,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "systemMastery": 100,
+          "duoMean": 35.68317660081108,
+          "minutes": 3450.5089580622544,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 2752893.36,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "routine-video",
+      "steps": 1127,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 32.149791128093604,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 89,
+        "mastery": 11.7196611664994,
+        "duo": 0
+      },
+      "skips": {
+        "Jour sans séance": 548,
+        "Match": 152,
+        "Plafond atteint": 289,
+        "Fatigue": 17
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "systemMastery": 100,
+          "duoMean": 18.41808054930177,
+          "minutes": 2500.471720002544,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 910486.47,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "systemMastery": 100,
+          "duoMean": 32.66177767761101,
+          "minutes": 3786.694085282817,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 1833826.97,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "systemMastery": 100,
+          "duoMean": 39.5937050857545,
+          "minutes": 3873.6886531211444,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 2755721.88,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "routine-tactical",
+      "steps": 1128,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 33.36685699499789,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 72,
+        "mastery": 17.220743655122874,
+        "duo": 0
+      },
+      "skips": {
+        "Jour sans séance": 548,
+        "Match": 149,
+        "Fatigue": 16,
+        "Plafond atteint": 310
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 86,
+          "systemMastery": 100,
+          "duoMean": 16.167429897482787,
+          "minutes": 2264.034440086985,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 910378.47,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 94,
+          "systemMastery": 100,
+          "duoMean": 36.313374541613186,
+          "minutes": 3437.387321316459,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 1832623.97,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "systemMastery": 100,
+          "duoMean": 35.80056143284198,
+          "minutes": 3710.9750548220704,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 2753534.88,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "routine-partners",
+      "steps": 1130,
+      "buys": 0,
+      "minCash": 0,
+      "meanFatigue": 37.55602650205134,
+      "paid": 0,
+      "sessions": 0,
+      "mastery": 0,
+      "duo": 0,
+      "preparation": {
+        "sessions": 377,
+        "mastery": 0,
+        "duo": 159.66100622118208
+      },
+      "skips": {
+        "Jour sans séance": 548,
+        "Match": 149,
+        "Fatigue": 18,
+        "Blessure": 3
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 86,
+          "systemMastery": 90.08741127842221,
+          "duoMean": 19.0947404138312,
+          "minutes": 2145.467511669591,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 909079.95,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 94,
+          "systemMastery": 100,
+          "duoMean": 34.20863613389354,
+          "minutes": 3437.2394897832296,
+          "injuries": 1,
+          "injuryDays": 7,
+          "titles": 1,
+          "money": 1829253.18,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 97,
+          "systemMastery": 100,
+          "duoMean": 41.38528124211748,
+          "minutes": 4014.845774833716,
+          "injuries": 1,
+          "injuryDays": 7,
+          "titles": 2,
+          "money": 2759532.33,
+          "paid": 0,
+          "sessions": 0,
+          "mastery": 0,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "stage-video",
+      "steps": 1127,
+      "buys": 29,
+      "minCash": 0,
+      "meanFatigue": 32.149791128093604,
+      "paid": 17400,
+      "sessions": 69,
+      "mastery": 18.65433692377757,
+      "duo": 0,
+      "preparation": {
+        "sessions": 69,
+        "mastery": 18.65433692377757,
+        "duo": 0
+      },
+      "skips": {
+        "Aucune préparation": 892,
+        "Jour sans séance": 87,
+        "Match": 44,
+        "Plafond atteint": 3
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 87,
+          "systemMastery": 100,
+          "duoMean": 18.41808054930177,
+          "minutes": 2500.471720002544,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 893086.47,
+          "paid": 17400,
+          "sessions": 69,
+          "mastery": 18.65433692377757,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 95,
+          "systemMastery": 100,
+          "duoMean": 32.66177767761101,
+          "minutes": 3786.694085282817,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 1816426.97,
+          "paid": 17400,
+          "sessions": 69,
+          "mastery": 18.65433692377757,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "systemMastery": 100,
+          "duoMean": 39.5937050857545,
+          "minutes": 3873.6886531211444,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 2738321.88,
+          "paid": 17400,
+          "sessions": 69,
+          "mastery": 18.65433692377757,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "stage-tactical",
+      "steps": 1129,
+      "buys": 13,
+      "minCash": 0,
+      "meanFatigue": 31.85790942577841,
+      "paid": 26000,
+      "sessions": 50,
+      "mastery": 24.443412612294765,
+      "duo": 0,
+      "preparation": {
+        "sessions": 50,
+        "mastery": 24.443412612294765,
+        "duo": 0
+      },
+      "skips": {
+        "Aucune préparation": 913,
+        "Jour sans séance": 91,
+        "Match": 39,
+        "Fatigue": 1,
+        "Plafond atteint": 1
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 86,
+          "systemMastery": 100,
+          "duoMean": 18.050838095431402,
+          "minutes": 2179.316730512003,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 884335.63,
+          "paid": 26000,
+          "sessions": 50,
+          "mastery": 24.443412612294765,
+          "duo": 0
+        },
+        {
+          "season": 2,
+          "overall": 94,
+          "systemMastery": 100,
+          "duoMean": 34.14760132782565,
+          "minutes": 3525.1733787681655,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 1806146.78,
+          "paid": 26000,
+          "sessions": 50,
+          "mastery": 24.443412612294765,
+          "duo": 0
+        },
+        {
+          "season": 3,
+          "overall": 98,
+          "systemMastery": 100,
+          "duoMean": 39.0937486706477,
+          "minutes": 3355.3917343791186,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 1,
+          "money": 2726667.37,
+          "paid": 26000,
+          "sessions": 50,
+          "mastery": 24.443412612294765,
+          "duo": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "offer": "stage-partners",
+      "steps": 1129,
+      "buys": 73,
+      "minCash": 0,
+      "meanFatigue": 33.90896662236057,
+      "paid": 255500,
+      "sessions": 349,
+      "mastery": 0,
+      "duo": 248.0938003706877,
+      "preparation": {
+        "sessions": 349,
+        "mastery": 0,
+        "duo": 248.0938003706877
+      },
+      "skips": {
+        "Aucune préparation": 79,
+        "Jour sans séance": 508,
+        "Match": 132,
+        "Fatigue": 17,
+        "Partenaires indisponibles": 4,
+        "Blessure": 6
+      },
+      "trajectory": [
+        {
+          "season": 1,
+          "overall": 86,
+          "systemMastery": 90.15059051302477,
+          "duoMean": 23.378199932419005,
+          "minutes": 2144.71526646709,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 822841.03,
+          "paid": 87500,
+          "sessions": 124,
+          "mastery": 0,
+          "duo": 114.21584164999189
+        },
+        {
+          "season": 2,
+          "overall": 94,
+          "systemMastery": 100,
+          "duoMean": 31.48191102793777,
+          "minutes": 3312.6583197605123,
+          "injuries": 0,
+          "injuryDays": 0,
+          "titles": 0,
+          "money": 1660706.93,
+          "paid": 171500,
+          "sessions": 249,
+          "mastery": 0,
+          "duo": 173.53123449954998
+        },
+        {
+          "season": 3,
+          "overall": 97,
+          "systemMastery": 100,
+          "duoMean": 41.89665121273626,
+          "minutes": 3322.6161105601063,
+          "injuries": 1,
+          "injuryDays": 16,
+          "titles": 1,
+          "money": 2497276.72,
+          "paid": 255500,
+          "sessions": 349,
+          "mastery": 0,
+          "duo": 248.0938003706877
+        }
+      ]
+    }
+  ]
+}

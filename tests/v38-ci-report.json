@@ -1,0 +1,44 @@
+{
+  "runId": 38001898911,
+  "url": "https://github.com/stephaneflamand973-dot/HOOP-LEGACY/actions/runs/38001898911",
+  "headSha": "7fbc0064e0d9c85f20d1601593c2ad65fbdf8055",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {
+      "name": "long-career (973)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-09T22:56:44Z",
+      "completedAt": "2026-10-09T23:06:12Z"
+    },
+    {
+      "name": "economy (2026)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-09T22:56:44Z",
+      "completedAt": "2026-10-09T23:05:51Z"
+    },
+    {
+      "name": "long-career (2026)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-09T22:56:44Z",
+      "completedAt": "2026-10-09T23:07:23Z"
+    },
+    {
+      "name": "economy (973)",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-09T22:56:44Z",
+      "completedAt": "2026-10-09T23:11:30Z"
+    },
+    {
+      "name": "validation",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-10-09T22:56:44Z",
+      "completedAt": "2026-10-09T23:02:27Z"
+    }
+  ]
+}

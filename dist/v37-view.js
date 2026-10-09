@@ -1,6 +1,6 @@
-import {COACHES,coachQuote} from './environment.js?v=3.7.0';
-import {GROUPS} from './config.js?v=3.7.0';
-import {canChange} from './commands.js?v=3.7.0';
+import {COACHES,coachQuote} from './environment.js?v=3.8.0';
+import {GROUPS} from './config.js?v=3.8.0';
+import {canChange} from './commands.js?v=3.8.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>Number(n).toLocaleString('fr-FR',{maximumFractionDigits:2})+' €';
 export function environmentView(s,{busy=false,quote=null,domain=s.trainingPlan.domain}={}){
