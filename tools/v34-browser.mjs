@@ -23,7 +23,7 @@ try{
  const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true}),page=await context.newPage(),errors=[];
  page.on('pageerror',e=>errors.push(e.message));
  const url='http://127.0.0.1:4177/?v='+VERSION;await page.goto(url);await page.waitForSelector('[data-action="next-step"]');
- await page.evaluate(async v=>{const state=await(await fetch('/qa-state')).json();await(await import('./storage.js?v='+v)).save(state);},VERSION);
+ const saveMs=await page.evaluate(async v=>{const state=await(await fetch('/qa-state')).json(),started=performance.now();await(await import('./storage.js?v='+v)).save(state);return performance.now()-started;},VERSION);
  let started=performance.now();await page.reload();await page.waitForSelector('#advance-size');const startupMs=performance.now()-started;
  const load=()=>page.evaluate(async v=>await(await import('./storage.js?v='+v)).load('auto',{lazy:true}),VERSION);
  const summary=()=>page.evaluate(async v=>{const s=await(await import('./storage.js?v='+v)).load('auto',{lazy:true});return {rng:s.rng,day:s.day,archives:s.archives.length,deferred:s.archives.filter(a=>a.deferred).length};},VERSION);
@@ -59,6 +59,6 @@ try{
  await page.waitForFunction(()=>document.querySelector('#market-preference')?.value==='salary');assert.match(await page.locator('.comparison-offers').innerText(),/Concurrence/);
  await page.setViewportSize({width:320,height:900});assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);await page.screenshot({path:output+'v34-market-320.png',fullPage:true});
  assert.deepEqual(errors,[]);
- const result={engine:VERSION,errors,archives:30,lazyArchives:29,startupMs:+startupMs.toFixed(1),renderP95Ms:+p95.toFixed(1),viewRngUnchanged:true,statisticsFilters:true,retiredDossiers:true,awards:true,coachReload:true,marketComparison:true,offlineArchive:true,widths:[320,390,1440]};
+ const result={engine:VERSION,saveMs:+saveMs.toFixed(1),saveMB:Buffer.byteLength(longText)/1e6,errors,archives:30,lazyArchives:29,startupMs:+startupMs.toFixed(1),renderP95Ms:+p95.toFixed(1),viewRngUnchanged:true,statisticsFilters:true,retiredDossiers:true,awards:true,coachReload:true,marketComparison:true,offlineArchive:true,widths:[320,390,1440]};
  fs.writeFileSync(output+'v34-browser-result.json',JSON.stringify(result,null,2));console.log(JSON.stringify(result));
 }finally{await browser.close();await new Promise(r=>server.close(r));}

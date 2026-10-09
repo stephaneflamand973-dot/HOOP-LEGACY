@@ -29,3 +29,4 @@ h1,h2,h3,h4,.timeline p,.hero-panel>div:first-child{overflow-wrap:anywhere}.hero
 .collective-panel,.stages-panel,.stage-quote{scroll-margin-top:24px;overflow-wrap:anywhere}.collective-partners select{width:100%;min-width:0}.collective-panel .button-row{flex-wrap:wrap}
 .collective-panel:focus,.stages-panel:focus,.stage-quote:focus{outline:2px solid var(--orange,#ed7939);outline-offset:4px}
 @media(max-width:540px){.collective-partners,.collective-duos{grid-template-columns:1fr}.collective-panel .button-row button{width:100%}}
+@media(max-width:760px){html{scroll-padding-bottom:calc(90px + env(safe-area-inset-bottom))}.offers button{scroll-margin-block:90px}}

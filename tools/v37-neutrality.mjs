@@ -1,9 +1,10 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import * as old from '../.qa-previous36/dist/engine.js';
-import * as current from '../dist/engine.js';
+// Historical V3.7 check only. V3.8 intentionally grows free chemistry for every club.
+import * as current from '../.qa-previous37/dist/engine.js';
 import * as oldSport from '../.qa-previous36/dist/sport-events.js';
-import * as currentSport from '../dist/sport-events.js';
+import * as currentSport from '../.qa-previous37/dist/sport-events.js';
 function step(s,engine,sport){
  if(sport.hasSportPause(s))sport.acknowledgeSport(s);
  else if(s.pending){if(s.pending.type==='contract'){const i=s.offers.findIndex(o=>o.league==='nba');engine.sign(s,i<0?0:i);}else engine.decide(s,s.pending.type==='draft-choice'?'draft':s.pending.type==='offseason'?'shoot':s.pending.choices[0][0]);}

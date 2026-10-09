@@ -24,16 +24,22 @@ export function collectiveSummary(m,heroId){
  for(const tid of [m.home,m.away])for(const [key,minutes] of Object.entries(c.minutes[tid])){const ids=JSON.parse(key);if(ids.includes(heroId))duos.push({team:tid,ids,minutes,gain:c.gains?.[tid]?.[key]||0});}
  return {version:1,effects:structuredClone(c.effects),duos};
 }
-export function validateCollectiveMatch(s,m){
- if(!m||m.rulesVersion!=='3.8.0')return;
+export function validateCollectiveMatch(s,m,{historical=false}={}){
+ if(!m)return;
+ if(m.rulesVersion!=='3.8.0'){if(m.collective)throw Error('Collectif de match invalide');return;}
  const c=m.collective,fail=()=>{throw Error('Collectif de match invalide');},finite=x=>Number.isFinite(x)&&x>=0;
  if(!c||c.version!==1||typeof c.applied!=='boolean'||c.applied&&!m.done||!c.scores||!c.minutes||!c.effects||!finite(m.duration)||m.duration<=0||!Number.isSafeInteger(m.regulation)||m.regulation<=0||!Number.isSafeInteger(m.n)||m.n<0)fail();
  for(const map of [c.scores,c.minutes,c.effects])if(Object.keys(map).length!==2||!Object.hasOwn(map,m.home)||!Object.hasOwn(map,m.away))fail();
  for(const tid of [m.home,m.away]){
-  const ids=s.teams.find(t=>t.id===tid)?.roster,valid=new Set();if(!ids)fail();
+  let ids=s.teams.find(t=>t.id===tid)?.roster;const valid=new Set();if(!ids)fail();
+  if(historical){
+   if(!m.done||!m.box||!c.scores[tid]||typeof c.scores[tid]!=='object'||Array.isArray(c.scores[tid]))fail();
+   const recorded=new Set();for(const key of Object.keys(c.scores[tid])){let pair;try{pair=JSON.parse(key);}catch{fail();}if(!Array.isArray(pair)||pair.length!==2||pair.some(id=>typeof id!=='string'||!Object.hasOwn(m.box,id))||pair[0]>=pair[1]||pairKey(...pair)!==key)fail();pair.forEach(id=>recorded.add(id));}ids=[...recorded];if(ids.length<2)fail();
+  }
   for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++){const k=pairKey(ids[i],ids[j]);valid.add(k);const score=c.scores[tid]?.[k];if(!finite(score)||score>100)fail();}
   if(Object.keys(c.scores[tid]).some(k=>!valid.has(k))||!c.minutes[tid])fail();
   for(const [k,n] of Object.entries(c.minutes[tid]))if(!valid.has(k)||!finite(n)||n>m.n*m.duration/m.regulation+1e-7)fail();
+  if(c.gains?.[tid])for(const [k,n] of Object.entries(c.gains[tid]))if(!valid.has(k)||!finite(n)||n>100)fail();
   const e=c.effects[tid];if(!e||['passes','turnoverActions','shotActions'].some(k=>!Number.isSafeInteger(e[k])||e[k]<0||e[k]>m.n)||e.turnoverActions>e.passes||e.shotActions>e.turnoverActions||!Number.isFinite(e.turnoverSum)||e.turnoverSum>1e-8||e.turnoverSum<-.005*e.turnoverActions-1e-8||!finite(e.shotSum)||e.shotSum>.005*e.shotActions+1e-8)fail();
  }
 }

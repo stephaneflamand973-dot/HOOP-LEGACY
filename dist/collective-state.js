@@ -33,6 +33,13 @@ export function validateCollective(s){
  if(!e||e.version!==1||!['none','video','tactical','partners'].includes(e.routine)||!Array.isArray(e.partners)||e.partners.length>2||new Set(e.partners).size!==e.partners.length||e.processedDay!==null&&!date(e.processedDay)||e.team!==s.team||!e.duos||Array.isArray(e.duos)||!Array.isArray(e.archived)||e.archived.length>50||!Array.isArray(e.history)||e.history.length>24||!Array.isArray(e.recent)||e.recent.length>24||!Number.isSafeInteger(e.nextId)||e.nextId<1||e.stage===undefined||!e.totals||['paid','sessions','mastery','duo'].some(k=>!finite(e.totals[k]))||!Number.isSafeInteger(e.totals.sessions)||e.notice!==null&&(typeof e.notice!=='string'||e.notice.length>500))fail();
  const clubs=new Map(s.teams.map(t=>[t.id,new Set(t.roster)])),people=new Set([...s.players.map(p=>p.id),...Object.keys(s.world?.people||{})]);
  if(e.partners.some(id=>!safe(id)||id===s.hero||!clubs.get(s.team)?.has(id)))fail();
+ let lastDay=-1;
+ for(const r of e.recent){
+  if(!r||!date(r.day)||r.day<=lastDay||!['none','video','tactical','partners'].includes(r.mode)||r.stageId!==null&&(!Number.isSafeInteger(r.stageId)||r.stageId<1||r.stageId>=e.nextId)||typeof r.reason!=='string'||r.reason.length>500||!finite(r.mastery)||!finite(r.duo)||!finite(r.fatigue)||r.fatigue>2||!Array.isArray(r.partners)||r.partners.length>2||new Set(r.partners).size!==r.partners.length||r.partners.some(id=>!safe(id)||id===s.hero||!people.has(id)))fail();
+  const max=r.stageId===null?(r.mode==='video'?.2:r.mode==='tactical'?.35:r.mode==='partners'?.5:0):(STAGES[r.mode]?.gain||0);
+  if(r.mastery>max+1e-8||r.duo>max*r.partners.length+1e-8||(r.mode==='partners'?r.mastery!==0:r.duo!==0)||r.reason&&(r.mastery!==0||r.duo!==0||r.fatigue!==0)||['none','video'].includes(r.mode)&&r.fatigue!==0)fail();
+  lastDay=r.day;
+ }
  const check=d=>{if(!d||!Array.isArray(d.ids)||d.ids.length!==2||d.ids[0]>=d.ids[1]||d.ids.some(id=>!safe(id)||!people.has(id))||!finite(d.score)||d.score>100||!finite(d.minutes)||!d.sources||['match','routine','stage'].some(k=>!finite(d.sources[k])))fail();};
  for(const [tid,duos] of Object.entries(e.duos)){if(!safe(tid)||!clubs.has(tid)||!duos||Array.isArray(duos))fail();for(const [key,d] of Object.entries(duos)){check(d);if(key!==pairKey(...d.ids)||!d.ids.every(id=>clubs.get(tid).has(id)))fail();}}
  const seen=new Set();for(const a of e.archived){check(a);const key=JSON.stringify([a.team,...a.ids]);if(!clubs.has(a.team)||!a.ids.includes(s.hero)||!date(a.closed)||seen.has(key))fail();seen.add(key);}

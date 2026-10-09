@@ -1,3 +1,13 @@
+# 3.8.0 — Collectif complet
+
+- Routines gratuites de vidéo, travail tactique et préparation avec deux partenaires au maximum.
+- Automatismes par duo et par club, progression gratuite selon les minutes partagées pour toutes les équipes ; effets symétriques limités aux vraies passes.
+- Trois stages prépayés, devis reconfirmé si les conditions changent, réserve protégée et aucun renouvellement automatique.
+- Bilans de séances, coûts et gains ; séparation de la maîtrise personnelle et des automatismes ; retour au club avec 75 % du score archivé.
+- Migration V3.7 conservant le coach payé ; moteur historique préservé pour les matchs en cours.
+- Garde quotidienne de l’entraînement, y compris après une séance sautée, pour empêcher les traitements répétés.
+- Interface mobile, mise à jour hors ligne et cible de simulation persistante.
+
 # 3.7.0 — Mon environnement, premier lot
 
 - Coach individuel spécialisé et prépayé pour 30 jours, trois gammes à rendement décroissant, devis et réserve protégée.

@@ -1,8 +1,23 @@
-# HOOP LEGACY — V3.7.0
+# HOOP LEGACY — V3.8.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.7.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.8.0)
+
+## V3.8 — Collectif complet
+
+Dans **Carrière → Préparation collective**, choisissez une routine gratuite : vidéo tactique, terrain ou travail avec un ou deux partenaires. La maîtrise du système et les automatismes des duos restent deux notions distinctes. Les duos de tous les clubs progressent aussi gratuitement grâce aux minutes réellement partagées sur le terrain.
+
+Dans **Vie → Stages collectifs**, un devis précède tout paiement en monnaie du jeu : atelier vidéo **600 € / 7 jours**, stage tactique **2 000 € / 14 jours**, partenaires **3 500 € / 14 jours**. Le stage remplace temporairement la routine supplémentaire, pas l’entraînement individuel ni le coach V3.7.
+
+- Une séance au maximum les jours pairs sans match, hors blessure/repos et avec une fatigue au plus égale à 65 après l’entraînement individuel. La vidéo ne fatigue pas ; terrain et partenaires ajoutent 2 points de fatigue au héros.
+- Prix, réserve protégée, dates inclusives, partenaires et créneaux estimés visibles avant achat. Un devis modifié demande une nouvelle confirmation sans débit. Aucun renouvellement automatique.
+- Aucun remboursement ni prolongation. Un transfert du héros ou la retraite clôt le stage ; le départ d’un partenaire ne remplace pas sa sélection.
+- Bilans : séances effectuées et sautées, gains réels, coût par séance, historique des 24 derniers stages et cumuls de carrière.
+- Effets des duos limités aux vraies actions passeur–tireur : jusqu’à −0,5 point de pourcentage de perte de balle et +0,5 point de réussite, avec les mêmes règles pour l’IA. Aucun panier ni victoire garanti.
+- Les sauvegardes V3.0–V3.7 migrent sans achat automatique. Les coachs V3.7 déjà payés et leur renouvellement sont conservés. Les matchs commencés gardent leurs règles historiques.
+
+Autres spécialistes, logements et installations restent hors de cette livraison. Les joueurs IA n’achètent pas de stages personnels ; ils bénéficient des mêmes automatismes gratuits et effets en match.
 
 ## V3.7-A — Mon environnement
 
@@ -15,7 +30,7 @@ Dans **Vie → Mon environnement**, réservez un coach individuel pour un domain
 - Le bilan distingue prix payé, séances accompagnées et XP supplémentaires réellement accordés après arrondi. Les 24 dernières périodes sont détaillées, les totaux de carrière conservés.
 - Les anciennes parties ne reçoivent aucun abonnement automatique. Match commencé, progression gratuite et préférence de simulation conservés.
 
-Cette livraison couvre le premier lot : coach individuel et bilan. Autres spécialistes, installations et stages restent prévus pour les lots suivants. L’IA conserve sa progression annuelle actuelle ; il n’existe pas encore d’économie de staff IA symétrique.
+La V3.7 couvre le premier lot : coach individuel et bilan. Les stages sont ajoutés en V3.8. Il n’existe pas encore d’économie de staff IA symétrique.
 
 ## Changements de la V3.6
 
