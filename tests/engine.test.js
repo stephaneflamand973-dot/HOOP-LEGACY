@@ -10,7 +10,7 @@ import {KEYS} from '../dist/config.js';
 import {LEAGUES} from '../dist/leagues.js';
 import {createGame,defaultBuild,hero,team,getPlayer,overall,allGames,competition,startMatch,stepMatch,simulate,finalizeMatch,next,continueMatch,decide,sign,enterDraft,requestTrade,upgrade,upgradeCost,validate} from '../dist/engine.js';
 import {DOMAINS,matchXP,ageAttributes} from '../dist/progression.js';
-import {refreshWorld} from '../dist/world.js?v=3.7.0';
+import {refreshWorld} from '../dist/world.js?v=3.8.0';
 import {lifeAction,resolveLife} from '../dist/life.js';
 import {parseSave} from '../dist/storage.js';
 const make=(path='young',seed=2026)=>createGame({...defaultBuild(),path,seed});
@@ -32,7 +32,7 @@ test('marché IA : distribution des talents après expiration simultanée, sans 
 import {v3Fixture} from './fixtures/v3-compatible.js';
 
 test('V3 → V3.4 : XP, attributs, décisions et RNG conservés, reprise du match',()=>{
- const fixture=v3Fixture(),old=fixture.save,s=parseSave(JSON.stringify(old));assert.equal(s.engine,'3.7.0');
+ const fixture=v3Fixture(),old=fixture.save,s=parseSave(JSON.stringify(old));assert.equal(s.engine,'3.8.0');
  assert.deepEqual(s.rng,old.rng);assert.deepEqual(hero(s).attrs,hero(old).attrs);assert.deepEqual(s.development.xp,old.development.xp);assert.deepEqual(s.match,old.match);assert.deepEqual(s.history,old.history);assert.deepEqual(s.pending,old.pending);
  continueMatch(s,null,10000);assert.deepEqual(JSON.parse(JSON.stringify(s.lastMatch)),fixture.finished);
  const again=parseSave(JSON.stringify(s));assert.equal(again.journal.length,s.journal.length);assert.deepEqual(again.rng,s.rng);

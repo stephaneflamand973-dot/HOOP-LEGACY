@@ -1,22 +1,25 @@
-import {observeLife} from './life-context.js?v=3.7.0';
-import {initStatistics,recordStatistics,recordInjury,recordWorldTitle,closeStatistics,beginStatistics,settleAwards,validateStatistics} from './statistics.js?v=3.7.0';
-import {initEnvironment,environmentDay,validateEnvironment} from './environment.js?v=3.7.0';
-import {initCareerPlan,recordCoachMatch,reviewCoach,recordTeamMatch,discussionDay,closeTeamWork,validateDiscussions} from './career-plan.js?v=3.7.0';
-import {beginChapters,updateChapters,closeChapters} from './chapters.js?v=3.7.0';
-import {canChange,retireCareer} from './commands.js?v=3.7.0';
-import {initSimulation,validateSimulation} from './simulation.js?v=3.7.0';
-import {initSportEvents,sportingPause,hasSportPause} from './sport-events.js?v=3.7.0';
-import {initMastery,masteryMatch,transferMastery} from './system.js?v=3.7.0';
-import {seedPostseason,makeSeries,seriesHome,syncRound,recoverPostseason} from './postseason.js?v=3.7.0';
-import {initCareerLedger,openStint,recordStintMatch,awardTitle,seasonTitles,seasonStints} from './career-ledger.js?v=3.7.0';
-import {initLegacy,beginLegacySeason,refreshAmbition,recordLegacyMatch,recordLegacySeries,finishLegacySeason,recordLegacyTitle,validateLegacy} from './legacy.js?v=3.7.0';
-import {KEYS,WEIGHTS,CFG,STYLES,BADGES,TECHNIQUES,VERSION,MATCH_RULES} from './config.js?v=3.7.0';
-import {startMatch,stepMatch} from './match.js?v=3.7.0';
-export {startMatch,stepMatch} from './match.js?v=3.7.0';
-import {initDevelopment,spendXP,awardXP,matchXP,trainingDay,ageAttributes,closeDevelopmentYear,costFor,DOMAINS,domainOf} from './progression.js?v=3.7.0';
-import {initLife,lifeDay,resolveLife} from './life.js?v=3.7.0';
-import {realRoster,initWorld,refreshWorld,marketDay} from './world.js?v=3.7.0';
-import {LEAGUES,REFERENCE,leagueDef,clubCatalog,clubId,makeCalendar} from './leagues.js?v=3.7.0';
+import {observeLife} from './life-context.js?v=3.8.0';
+import {initStatistics,recordStatistics,recordInjury,recordWorldTitle,closeStatistics,beginStatistics,settleAwards,validateStatistics} from './statistics.js?v=3.8.0';
+import {initEnvironment,environmentDay,validateEnvironment} from './environment.js?v=3.8.0';
+import {initCareerPlan,recordCoachMatch,reviewCoach,recordTeamMatch,discussionDay,closeTeamWork,validateDiscussions} from './career-plan.js?v=3.8.0';
+import {beginChapters,updateChapters,closeChapters} from './chapters.js?v=3.8.0';
+import {canChange,retireCareer} from './commands.js?v=3.8.0';
+import {initSimulation,validateSimulation} from './simulation.js?v=3.8.0';
+import {initSportEvents,sportingPause,hasSportPause} from './sport-events.js?v=3.8.0';
+import {initCollective,validateCollective} from './collective-state.js?v=3.8.0';
+import {collectiveDay,syncCollective} from './collective.js?v=3.8.0';
+import {finishCollectiveMatch,collectiveSummary,validateCollectiveMatch} from './collective-match.js?v=3.8.0';
+import {initMastery,masteryMatch,transferMastery} from './system.js?v=3.8.0';
+import {seedPostseason,makeSeries,seriesHome,syncRound,recoverPostseason} from './postseason.js?v=3.8.0';
+import {initCareerLedger,openStint,recordStintMatch,awardTitle,seasonTitles,seasonStints} from './career-ledger.js?v=3.8.0';
+import {initLegacy,beginLegacySeason,refreshAmbition,recordLegacyMatch,recordLegacySeries,finishLegacySeason,recordLegacyTitle,validateLegacy} from './legacy.js?v=3.8.0';
+import {KEYS,WEIGHTS,CFG,STYLES,BADGES,TECHNIQUES,VERSION,MATCH_RULES} from './config.js?v=3.8.0';
+import {startMatch,stepMatch} from './match.js?v=3.8.0';
+export {startMatch,stepMatch} from './match.js?v=3.8.0';
+import {initDevelopment,spendXP,awardXP,matchXP,trainingDay,ageAttributes,closeDevelopmentYear,costFor,DOMAINS,domainOf} from './progression.js?v=3.8.0';
+import {initLife,lifeDay,resolveLife} from './life.js?v=3.8.0';
+import {realRoster,initWorld,refreshWorld,marketDay} from './world.js?v=3.8.0';
+import {LEAGUES,REFERENCE,leagueDef,clubCatalog,clubId,makeCalendar} from './leagues.js?v=3.8.0';
 export const clamp=(x,a=0,b=100)=>Math.max(a,Math.min(b,x));
 export function rng(s,stream='career'){let x=s.rng[stream]>>>0;x^=x<<13;x^=x>>>17;x^=x<<5;s.rng[stream]=x>>>0;return (x>>>0)/4294967296}
 const pick=(s,a,stream)=>a[Math.floor(rng(s,stream)*a.length)];
@@ -41,7 +44,7 @@ export const competition=(s,id=s.league)=>s.competitions.find(c=>c.id===id);
 export const activeLeague=s=>leagueDef(s.league);
 export const allGames=s=>s.competitions.flatMap(c=>c.schedule);
 export function playerGames(s){return allGames(s).filter(g=>g.home===s.team||g.away===s.team).sort((a,b)=>a.day-b.day||a.id.localeCompare(b.id))}
-export function syncLeague(s){let c=competition(s);s.schedule=c.schedule;s.round=c.schedule.filter(g=>g.stage==='regular'&&g.result&&(g.home===s.team||g.away===s.team)).length;s.phase=s.retired?'Retraite':s.pending?.type==='draft-choice'?'Orientation':c.phase;for(let t of s.teams){let r=c.records[t.id];t.wins=r?.wins||0;t.losses=r?.losses||0}return s}
+export function syncLeague(s){syncCollective(s);let c=competition(s);s.schedule=c.schedule;s.round=c.schedule.filter(g=>g.stage==='regular'&&g.result&&(g.home===s.team||g.away===s.team)).length;s.phase=s.retired?'Retraite':s.pending?.type==='draft-choice'?'Orientation':c.phase;for(let t of s.teams){let r=c.records[t.id];t.wins=r?.wins||0;t.losses=r?.losses||0}return s}
 export function log(s,title,text){let e={id:'e'+s.nextId++,day:s.day,season:s.season,title,text};s.log.unshift(e);s.log=s.log.slice(0,120);s.journal??=[];s.journal.push(e)}
 export function generatedPlayer(s,id,club,age){let def=leagueDef(club.league),level=Math.max(...club.competitions.map(id=>leagueDef(id).level));let pos=pick(s,Object.keys(WEIGHTS),'players'),base=level-8+rng(s,'players')*12;
  return {id,name:pick(s,['Noah','Elias','Jules','Amir','Léo','Malik','Isaac','Gabriel','Tiago','Sacha','Liam','Jayden','Mateo','Luca','Nikola','Kai'],'players')+' '+pick(s,['Laurent','Diallo','Moreau','Baptiste','Santos','Martin','Bernard','Joseph','Durand','Koné','Williams','Wilson','Miller','Silva','Rossi','Keller'],'players'),age:age??(def.amateur?(def.id==='highschool'?16:19):20+Math.floor(rng(s,'players')*14)),pos,attrs:Object.fromEntries(KEYS.map(k=>[k,Math.round(clamp(base+rng(s,'players')*12+(WEIGHTS[pos][k]?3:-4),25,94))])),fatigue:0,injury:0,season:totals(),byLeague:{},contract:{years:def.amateur?1:1+Math.floor(rng(s,'players')*3),salary:def.amateur?0:Math.round(def.salary*(1+Math.max(0,base-50)/9)),guarantee:1,option:'Aucune'},badges:{},learned:[],equipped:[],practice:{}};
@@ -66,7 +69,7 @@ function advanceDay(s,day){
  if(day!==s.day+1)throw Error('La chronologie doit avancer un jour à la fois');
  observeLife(s);s.day=day;for(let p of s.players){p.fatigue=clamp(p.fatigue-5);if(p.injury){p.injury--;if(!p.injury){p.returning=6;if(p.id===s.hero)sportingPause(s,`return-${s.day}`,'Le retour se prépare','La blessure est guérie. La reprise sera progressive pendant six matchs.');}}}
  let p=hero(s);if(p.rehabDeficit&&s.health?.rehab!=='pause'&&!p.injury){for(let k of ['speed','agility','vertical']){let gain=Math.min(.08,p.rehabDeficit[k]||0);p.rehabDeficit[k]-=gain;p.attrs[k]=Math.min(99,p.attrs[k]+gain);}if(Object.values(p.rehabDeficit).every(v=>v<.001))delete p.rehabDeficit;}
- s.charge=clamp(s.charge-1);environmentDay(s);trainingDay(s,p);discussionDay(s);reviewCoach(s);if(s.life?.bonusTraining){addXP(s,55);s.life.bonusTraining=false;}lifeDay(s);marketDay(s);discussionDay(s);
+ s.charge=clamp(s.charge-1);environmentDay(s);trainingDay(s,p);collectiveDay(s);discussionDay(s);reviewCoach(s);if(s.life?.bonusTraining){addXP(s,55);s.life.bonusTraining=false;}lifeDay(s);marketDay(s);discussionDay(s);
 }
 function queueDecision(s,event){s.decisionQueue??=[];s.decisionQueue.push(event)}
 function surfaceDecision(s){if(!s.pending&&s.decisionQueue?.length)s.pending=s.decisionQueue.shift()}
@@ -76,7 +79,8 @@ export function finalizeMatch(s,g,m){
  if(g.result)return false;if(!m.done)throw Error('Match incomplet');
  const c=competition(s,g.league),winner=m.score[0]>m.score[1]?g.home:g.away,loser=winner===g.home?g.away:g.home,mine=g.home===s.team||g.away===s.team;
  recordStatistics(s,g,m);
- g.result={score:[...m.score],ot:m.ot,duration:m.duration,...(mine?{box:m.box,heroTeam:s.team}:{} )};
+ finishCollectiveMatch(s,m);
+ g.result={score:[...m.score],ot:m.ot,duration:m.duration,...(mine?{box:m.box,heroTeam:s.team,...(m.collective?{collective:collectiveSummary(m,s.hero)}:{})}:{} )};
  if(g.stage==='regular'){c.records[winner].wins++;c.records[loser].losses++;[g.home,g.away].forEach((id,i)=>{c.records[id].for+=m.score[i];c.records[id].against+=m.score[1-i]});}
  for(let b of Object.values(m.box)){let p=getPlayer(s,b.id);if(!b.min)continue;p.byLeague[g.league]??=totals();for(let stats of [p.season,p.byLeague[g.league]]){stats.gp++;for(let k of Object.keys(stats))if(k!=='gp')stats[k]+=b[k]||0;}
  if(p.returning)p.returning--;p.fatigue=clamp(p.fatigue+b.min*.34);
@@ -212,7 +216,7 @@ function offerFor(s,t,{academic=false,draftRank=null}={}){let p=hero(s),def=leag
 export function marketOffers(s,{includeNBA=true}={}){let p=hero(s),rating=overall(p)+(s.grade-50)/20+Math.min(3,s.career.exposure/30),offers=[];for(let def of LEAGUES.filter(l=>!l.amateur)){if(def.id==='nba'&&!includeNBA)continue;let clubs=s.teams.filter(t=>t.league===def.id&&t.id!==s.team&&rating>=def.minOffer&&(!t.competitions.includes('euroleague')||rating>=67));clubs.sort((a,b)=>{let fit=t=>t.roster.filter(id=>getPlayer(s,id).pos===p.pos).reduce((n,id)=>Math.max(n,overall(getPlayer(s,id))),45);return fit(a)-fit(b)});if(clubs.length)offers.push(offerFor(s,clubs[0]));}if(!offers.length){let club=s.teams.filter(t=>t.league==='elite'&&!t.competitions.includes('euroleague')).sort((a,b)=>a.roster.reduce((n,id)=>n+overall(getPlayer(s,id)),0)-b.roster.reduce((n,id)=>n+overall(getPlayer(s,id)),0))[0];let o=offerFor(s,club);o.role='Développement';o.minutes=8;o.salary=45000;o.reason='Contrat de développement : faible salaire, temps de jeu à gagner.';offers.push(o)}return offers}
 function collegeOffers(s){let score=(s.lastSeasonScouting||scouting(s)).score,clubs=s.teams.filter(t=>t.league==='ncaa');let ranked=clubs.sort((a,b)=>b.roster.reduce((n,id)=>n+overall(getPlayer(s,id)),0)-a.roster.reduce((n,id)=>n+overall(getPlayer(s,id)),0));let start=score>=67&&s.career.academics>=65?0:score>=60?9:23;return ranked.slice(start,start+3).map(t=>offerFor(s,t,{academic:true}))}
 function moveHero(s,destination){if(destination!==s.team)closeTeamWork(s,'Le changement de club met fin à ce travail.');if(destination!==s.team)reviewCoach(s,'Le changement de club clôt cette évaluation. Un nouveau coach évaluera votre rôle.');let old=team(s),dest=team(s,destination),p=hero(s);if(old.id===dest.id)return;old.roster=old.roster.filter(id=>id!==s.hero);if(old.roster.length<10){let free=(s.freeAgents||[]).map(id=>getPlayer(s,id)).find(q=>q&&!q.injury);if(free){old.roster.push(free.id);s.freeAgents=s.freeAgents.filter(id=>id!==free.id)}else{let replacement=generatedPlayer(s,`replacement-${s.season}-${s.nextId++}`,old);s.players.push(replacement);old.roster.push(replacement.id);}}
- if(dest.roster.length>=19){let weakest=dest.roster.map(id=>getPlayer(s,id)).sort((a,b)=>overall(a)-overall(b))[0];dest.roster=dest.roster.filter(id=>id!==weakest.id);s.freeAgents.push(weakest.id);}dest.roster.push(s.hero);s.team=dest.id;s.league=dest.league;transferMastery(s,old.system,dest.system);openStint(s);s.trust=55;s.recent=[];p.fatigue=clamp(p.fatigue-10);}
+ if(dest.roster.length>=19){let weakest=dest.roster.map(id=>getPlayer(s,id)).sort((a,b)=>overall(a)-overall(b))[0];dest.roster=dest.roster.filter(id=>id!==weakest.id);s.freeAgents.push(weakest.id);}dest.roster.push(s.hero);s.team=dest.id;s.league=dest.league;transferMastery(s,old.system,dest.system);openStint(s);s.trust=55;s.recent=[];p.fatigue=clamp(p.fatigue-10);syncCollective(s);}
 
 export function sign(s,index){if(!canChange(s,{pending:true}))return false;let o=s.offers[index];if(!o||s.pending?.type!=='contract')return false;let origin=team(s).name;moveHero(s,o.team);let p=hero(s);p.contract={years:o.years,salary:o.salary,guarantee:o.guarantee,option:o.option};s.role=o.role;s.minutes=o.minutes;if(o.academic){s.career.stage='college';s.career.collegeYears=0}else s.career.stage='pro';s.pending=null;s.offers=[];s.lastTransfer=s.day;s.career.milestones.push({season:s.season,day:s.day,text:`${origin} → ${team(s).name} (${leagueDef(s.league).name})`});log(s,o.academic?'Université choisie':'Contrat signé',`${team(s).name} · ${leagueDef(s.league).name} · ${o.academic?'Scolarité et basket universitaire':`${o.years} ans · ${o.salary.toLocaleString('fr-FR')} € par saison (simulation)`} · rôle ${o.role}.`);refreshAmbition(s);syncLeague(s);return true}
 export function requestTrade(s){if(s.pending||s.match||s.retired)return false;if(s.career.stage!=='pro'){log(s,'Orientation','Terminez votre saison : les choix universitaires et professionnels arrivent à l’intersaison.');return false}if(s.lastMarketDay!==undefined&&s.day-s.lastMarketDay<20){log(s,'Agent','Les clubs attendent de nouvelles performances. Prochaine démarche après vingt jours.');return false}s.lastMarketDay=s.day;if(hero(s).contract.years>1&&s.round<8){log(s,'Transfert refusé','Votre club ne vous libère pas aussi tôt. Huit matchs et de nouvelles performances sont nécessaires avant une autre démarche.');s.relationships.agent=clamp(s.relationships.agent+3);return false}s.offers=marketOffers(s);s.pending={type:'contract',title:'Votre marché international',text:'Offres filtrées selon votre niveau, votre production et les besoins des clubs. Le changement de pays conserve votre carrière ; vous rejoignez le calendrier en cours.',canDecline:true};return true}
@@ -234,15 +238,15 @@ export function migrateLegacy(old){
  if(!old||![1,2,3,4].includes(old.schema))throw Error('Sauvegarde incompatible');
  if(old.schema===4){
   if(old.engine===VERSION)return validate(old);
-  if(!['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0'].includes(old.engine))throw Error('Version de moteur incompatible');
-  let s=structuredClone(old);delete s.environment;s.engine=VERSION;initDevelopment(s);
+  if(!['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0','3.7.0'].includes(old.engine))throw Error('Version de moteur incompatible');
+  let s=structuredClone(old);delete s.collective;if(old.engine!=='3.7.0')delete s.environment;else s.environment.trainingProcessedDay??=null;s.engine=VERSION;initDevelopment(s);
   // Recover prior selections from V3 archives so an existing rookie cannot be drafted again.
   for(let year of s.world?.drafts||[])for(let pick of year.picks||[]){let p=getPlayer(s,pick.id);if(p&&!p.draft&&Number.isInteger(pick.pick)&&pick.pick>0)p.draft={season:year.season,pick:pick.pick,team:s.teams.find(t=>t.name===pick.team)?.id||null};}
-  initLegacy(s,true);initV33(s,true);initV34(s,true);initLife(s);initWorld(s);log(s,'Mise à jour 3.7','Mon environnement : un coach individuel facultatif et un bilan des gains réels. Aucun achat automatique. Votre match commencé et les résultats déjà joués restent inchangés.');return validate(s);
+  initLegacy(s,true);initV33(s,true);initV34(s,true);initLife(s);initWorld(s);log(s,'Mise à jour 3.8','Collectif : automatismes partagés et préparation facultative. Aucun stage acheté automatiquement. Votre coach payé et votre match commencé restent conservés.');return validate(s);
  }
  let s=old.schema===3?structuredClone(old):migrateV1(old),p=hero(s);
  if(!p)throw Error('Joueur principal absent');
- delete s.environment;s.schema=4;s.engine=VERSION;s.pack='world-2025-v3';s.rng.life??=((s.rng.career+1777)>>>0)||1777;
+ delete s.environment;delete s.collective;s.schema=4;s.engine=VERSION;s.pack='world-2025-v3';s.rng.life??=((s.rng.career+1777)>>>0)||1777;
  for(let q of s.players){q.caps=limits();q.absolute=limits();q.tendencyMode??='auto';}
  initDevelopment(s);initLife(s);initWorld(s);s.health??={rehab:'active',history:[]};s.journal??=structuredClone(s.log||[]).reverse();
  let credit=Math.max(0,Number(s.points)||0)*75+Math.max(0,Number(s.xp)||0);for(let d of DOMAINS)s.development.xp[d]+=Math.floor(credit/DOMAINS.length);s.points=0;s.xp=0;
@@ -254,7 +258,7 @@ function initV33(s,recovered=false){
  initSimulation(s);initSportEvents(s);initMastery(s,recovered);initCareerLedger(s,recovered);
  for(const c of s.competitions){recoverPostseason(s,c,standings(s,c.id));if(recovered&&c.champion){const title=awardTitle(s,c,{recovered:true});if(title?.eligible)recordLegacyTitle(s);}}
 }
-function initV34(s,recovered=false){initStatistics(s,recovered);initCareerPlan(s);beginChapters(s);initEnvironment(s);}
+function initV34(s,recovered=false){initStatistics(s,recovered);initCareerPlan(s);beginChapters(s);initEnvironment(s);initCollective(s);s.mastery.sources.collective??=0;}
 export function validate(s){
  if(!s||s.schema!==4||s.engine!==VERSION||!Array.isArray(s.players)||!Array.isArray(s.teams)||!Array.isArray(s.competitions)||s.competitions.length!==LEAGUES.length||!s.career||!s.rng)throw Error('Sauvegarde incompatible');
  let ids=new Set();for(let p of s.players){if(typeof p.id!=='string'||!/^[a-zA-Z0-9-]{1,150}$/.test(p.id)||ids.has(p.id))throw Error('Identifiant joueur invalide');ids.add(p.id);if(!WEIGHTS[p.pos]||typeof p.name!=='string'||!Number.isFinite(p.age)||p.age<16||p.age>80||KEYS.some(k=>!Number.isFinite(p.attrs?.[k])||p.attrs[k]<25||p.attrs[k]>99)||!p.season||!p.byLeague||!p.contract||!Number.isFinite(p.contract.salary)||p.contract.salary<0||!p.badges||!Array.isArray(p.equipped)||!Array.isArray(p.learned)||!Number.isFinite(p.injury)||p.injury<0)throw Error('Joueur invalide');}
@@ -270,12 +274,12 @@ export function validate(s){
  if(!policies||!['manual','family','rest','work'].includes(policies.routine)||!['manual','team','rest','ambition'].includes(policies.media)||!['manual','local','rest'].includes(policies.agent)||!s.life.preferences||!['local','national','none'].includes(s.life.preferences.exposure)||['stories','history','ledger','delegationLog','storySeen'].some(k=>!Array.isArray(s.life[k]))||!s.life.people)throw Error('Suivi personnel invalide');
  for(let o of s.offers||[])if(!clubs.has(o.team)||!Number.isFinite(o.salary)||o.salary<0||!Number.isInteger(o.years)||o.years<1||!Number.isFinite(o.minutes)||o.minutes<0||o.minutes>48)throw Error('Offre invalide');
  let gids=new Set(),cids=new Set();for(let c of s.competitions){if(cids.has(c.id)||!leagueDef(c.id)||!Array.isArray(c.schedule)||!c.records)throw Error('Compétition invalide');cids.add(c.id);for(let g of c.schedule){if(gids.has(g.id)||g.league!==c.id||!clubs.has(g.home)||!clubs.has(g.away)||g.home===g.away||!Number.isFinite(g.day))throw Error('Calendrier invalide');gids.add(g.id);if(g.result&&(!Array.isArray(g.result.score)||g.result.score.length!==2||g.result.score.some(x=>!Number.isInteger(x)||x<0)))throw Error('Résultat invalide');}}
- if(s.match&&(!gids.has(s.match.id)||!s.match.box||!Number.isInteger(s.match.n)||!Number.isInteger(s.match.regulation)||s.match.rulesVersion&&!['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0'].includes(s.match.rulesVersion)))throw Error('Match invalide');
+ if(s.match&&(!gids.has(s.match.id)||!s.match.box||!Number.isInteger(s.match.n)||!Number.isInteger(s.match.regulation)||s.match.rulesVersion&&!['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.8.0'].includes(s.match.rulesVersion)))throw Error('Match invalide');
  for(let k of ['log','history','archives','offers','trophies','recent','journal'])if(!Array.isArray(s[k]))throw Error('Historique invalide');
  if(s.pending&&!['contract','draft-choice','life','medical','sport','offseason'].includes(s.pending.type))throw Error('Décision invalide');validateLegacy(s);validateSimulation(s);validateStatistics(s);
- if(!s.careerPlan||!s.chapters||s.chapters.current?.season!==s.season)throw Error('Suivi V3.4 invalide');validateDiscussions(s);validateEnvironment(s);
+ if(!s.careerPlan||!s.chapters||s.chapters.current?.season!==s.season)throw Error('Suivi V3.4 invalide');validateDiscussions(s);validateEnvironment(s);validateCollective(s);validateCollectiveMatch(s,s.match);
  if(!s.mastery||!Number.isFinite(s.system)||s.system<0||s.system>100||!s.careerLedger||!Array.isArray(s.careerLedger.stints)||!Array.isArray(s.careerLedger.titles)||!s.sportEvents||!Array.isArray(s.sportEvents.seen)||s.sportEvents.notice&&!Array.isArray(s.sportEvents.notice.items))throw Error('Suivi V3.3 invalide');
- if(s.mastery.version!==1||!Array.isArray(s.mastery.recent)||['match','training','video'].some(k=>!Number.isFinite(s.mastery.sources?.[k])||s.mastery.sources[k]<0))throw Error('Maîtrise invalide');
+ if(s.mastery.version!==1||!Array.isArray(s.mastery.recent)||['match','training','video','collective'].some(k=>!Number.isFinite(s.mastery.sources?.[k])||s.mastery.sources[k]<0))throw Error('Maîtrise invalide');
  if(s.careerLedger.version!==1||new Set(s.careerLedger.titles.map(t=>t.id)).size!==s.careerLedger.titles.length||s.careerLedger.stints.some(t=>!clubs.has(t.team)||!Array.isArray(t.games)||!t.stats||Object.values(t.stats).some(v=>!Number.isFinite(v)||v<0))||s.careerLedger.titles.some(t=>typeof t.id!=='string'||typeof t.name!=='string'||typeof t.eligible!=='boolean'))throw Error('Parcours par club invalide');
  if(s.sportEvents.seen.some(id=>typeof id!=='string')||s.sportEvents.notice?.items.some(e=>typeof e.id!=='string'||typeof e.title!=='string'||typeof e.text!=='string'))throw Error('Étape sportive invalide');
  return syncLeague(s);

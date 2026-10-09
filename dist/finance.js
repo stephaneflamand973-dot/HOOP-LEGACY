@@ -1,5 +1,5 @@
-import {hero,team,rng,clamp} from './engine.js?v=3.7.0';
-import {canChange} from './commands.js?v=3.7.0';
+import {hero,team,rng,clamp} from './engine.js?v=3.8.0';
+import {canChange} from './commands.js?v=3.8.0';
 export const cents=n=>Math.round(n*100)/100;
 export function initFinance(s){const l=s.life;l.finance??={percent:20,reserve:5000,frequency:30,automatic:false,lastDay:s.day};l.finance.start??={cash:s.money,investments:l.investments,property:l.property?.value||0};l.finance.totals??={cash:0,investments:0,property:0};}
 export function receipt(s,label,cash=0,investments=0,property=0){initFinance(s);const f=s.life.finance;cash=cents(cash);investments=cents(investments);property=cents(property);f.totals.cash=cents(f.totals.cash+cash);f.totals.investments=cents(f.totals.investments+investments);f.totals.property=cents(f.totals.property+property);s.life.ledger.unshift({day:s.day,label,amount:cash,cash,investments,property});s.life.ledger=s.life.ledger.slice(0,180);}

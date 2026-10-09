@@ -1,5 +1,5 @@
-import {VERSION} from './config.js?v=3.7.0';
-import {validate,migrateLegacy} from './engine.js?v=3.7.0';
+import {VERSION} from './config.js?v=3.8.0';
+import {validate,migrateLegacy} from './engine.js?v=3.8.0';
 const open=()=>new Promise((resolve,reject)=>{let r=indexedDB.open('hoop-legacy-v1',3);r.onupgradeneeded=()=>{for(let name of ['slots','archives','slotMeta'])if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name)};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.onblocked=()=>reject(Error('Fermez les autres onglets du jeu pour terminer la mise à jour.'))});
 let writes=Promise.resolve();const archiveKeys=new WeakMap();
 function archiveKey(a){if(a.deferred&&a.archiveRef)return a.archiveRef;let key=archiveKeys.get(a);if(key)return key;let str=JSON.stringify(a),h=2166136261;for(let i=0;i<str.length;i++)h=Math.imul(h^str.charCodeAt(i),16777619);key='season-'+a.season+'-'+(h>>>0)+'-'+str.length;archiveKeys.set(a,key);return key;}
@@ -16,7 +16,7 @@ export async function load(slot='auto',{lazy=false}={}){
  if(data?.archiveRefs?.length){let refs=data.archiveRefs;data.archives=await new Promise((res,rej)=>{let tx=db.transaction('archives'),out=new Array(refs.length);refs.forEach((key,i)=>{if(lazy&&data.engine===VERSION&&data.archiveIndex?.[i]&&i<refs.length-1){out[i]=data.archiveIndex[i];return;}let r=tx.objectStore('archives').get(key);r.onsuccess=()=>{if(!r.result){rej(Error('Archive manquante : chargez le secours ou votre export JSON.'));return;}out[i]=r.result;};r.onerror=()=>rej(r.error);});tx.oncomplete=()=>res(out);tx.onerror=()=>rej(tx.error);});delete data.archiveRefs;delete data.archiveIndex;}
  db.close();if(!data)return null;if(needsMigration(data)){let migrated=migrate(data);await save(data,(data.schema===4?'backup-before-'+data.engine+'-':'backup-before-migration-')+slot);data=migrated;await save(data,slot);}return validate(data);
 }
-const needsMigration=s=>[1,2,3].includes(s?.schema)||s?.schema===4&&['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0'].includes(s.engine);
+const needsMigration=s=>[1,2,3].includes(s?.schema)||s?.schema===4&&['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0','3.7.0'].includes(s.engine);
 export function migrate(data){return validate(migrateLegacy(data))}
 export function parseSave(text){if(text.length>150000000)throw Error('Fichier trop volumineux');let s=JSON.parse(text);if(s?.archives?.some(a=>a.deferred)||s?.archiveRefs?.length&&!s.archives?.length)throw Error('Export incomplet : les archives ne sont pas incluses');return needsMigration(s)?migrate(s):validate(s)}
 

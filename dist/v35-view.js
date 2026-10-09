@@ -1,6 +1,6 @@
-import {hero,team} from './engine.js?v=3.7.0';
-import {investmentQuote,cents} from './finance.js?v=3.7.0';
-import {projectSnapshot} from './club-project.js?v=3.7.0';
+import {hero,team} from './engine.js?v=3.8.0';
+import {investmentQuote,cents} from './finance.js?v=3.8.0';
+import {projectSnapshot} from './club-project.js?v=3.8.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const money=n=>Number(n||0).toLocaleString('fr-FR',{maximumFractionDigits:2})+' €';
 const select=(id,label,value,options)=>`<label>${label}<select id="${id}">${options.map(([v,t])=>`<option value="${v}" ${String(value)===String(v)?'selected':''}>${t}</option>`).join('')}</select></label>`;

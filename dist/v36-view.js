@@ -1,6 +1,6 @@
-import {team} from './engine.js?v=3.7.0';
-import {canChange} from './commands.js?v=3.7.0';
-import {teamContact,discussionWait,PREFERENCES} from './career-plan.js?v=3.7.0';
+import {team} from './engine.js?v=3.8.0';
+import {canChange} from './commands.js?v=3.8.0';
+import {teamContact,discussionWait,PREFERENCES} from './career-plan.js?v=3.8.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 export function discussionsView(s){
  const d=s.careerPlan.discussions,e=d.teamwork,contact=teamContact(s),writable=canChange(s);

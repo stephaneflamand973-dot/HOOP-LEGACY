@@ -1,11 +1,12 @@
-import {developmentBonus} from './club-project.js?v=3.7.0';
-import {stepMatch as legacyStepMatch} from './match-v34.js?v=3.7.0';
-import {physicalContest,aerialFinish,physicalBlock,physicalRebound,coveragePlan,coverageEffect} from './physical.js?v=3.7.0';
-import {playerReading} from './system.js?v=3.7.0';
-import {shotBoost,finishKind,reboundWeight,freeChance,stealChance} from './match-effects.js?v=3.7.0';
-import {KEYS,BADGES,TECHNIQUES} from './config.js?v=3.7.0';
-import {leagueDef} from './leagues.js?v=3.7.0';
-import {clamp,rng,team,getPlayer,overall,hero,badgeLevel} from './engine.js?v=3.7.0';
+import {snapshotCollective,recordSharedPossession,collectiveEffect} from './collective-match.js?v=3.8.0';
+import {developmentBonus} from './club-project.js?v=3.8.0';
+import {stepMatch as legacyStepMatch} from './match-v35.js?v=3.8.0';
+import {physicalContest,aerialFinish,physicalBlock,physicalRebound,coveragePlan,coverageEffect} from './physical.js?v=3.8.0';
+import {playerReading} from './system.js?v=3.8.0';
+import {shotBoost,finishKind,reboundWeight,freeChance,stealChance} from './match-effects.js?v=3.8.0';
+import {KEYS,BADGES,TECHNIQUES} from './config.js?v=3.8.0';
+import {leagueDef} from './leagues.js?v=3.8.0';
+import {clamp,rng,team,getPlayer,overall,hero,badgeLevel} from './engine.js?v=3.8.0';
 const line=p=>({id:p.id,name:p.name,pts:0,reb:0,oreb:0,ast:0,stl:0,blk:0,tov:0,fgm:0,fga:0,tpm:0,tpa:0,ftm:0,fta:0,pf:0,min:0});
 function weighted(s,list,value){let weights=list.map(value),r=rng(s,'match')*weights.reduce((a,b)=>a+b,0);for(let i=0;i<list.length;i++){r-=weights[i];if(r<=0)return list[i]}return list.at(-1)}
 export function tendencies(p){let a=p.attrs;return {three:Math.max(5,(a.three-30)*1.8),drive:Math.max(5,a.layup+a.ballSpeed-70),post:Math.max(5,a.post+a.strength-80),mid:Math.max(5,a.mid-35),pass:Math.max(10,a.pass),...(p.tendencyMode==='manual'?p.tendencies:{})};}
@@ -16,7 +17,7 @@ function used(p,context){for(let b of byContext[context]||[])if(p.attrs[b.attr]>
 export function startMatch(s,g){if(g.result)throw Error('Match déjà résolu');let clubs=[team(s,g.home),team(s,g.away)],players=clubs.flatMap(t=>t.roster.map(id=>getPlayer(s,id)));
  let duration=leagueDef(g.league).minutes;
  let total=Math.round((duration===48?198:duration===40?146:128)+(clubs.filter(t=>t.system==='pace').length*8-clubs.filter(t=>t.system==='defense').length*5));total+=total%2;
- return {rulesVersion:'3.5.0',id:g.id,league:g.league,home:g.home,away:g.away,duration,regulation:total,total,n:0,ot:0,score:[0,0],done:false,box:Object.fromEntries(players.map(p=>[p.id,line(p)])),ratings:Object.fromEntries(players.map(p=>[p.id,overall(p)])),bonuses:Object.fromEntries(players.map(p=>[p.id,Object.fromEntries(Object.keys(byContext).map(c=>[c,rawBonus(p,c)]))])),tendencies:Object.fromEntries(players.map(p=>[p.id,tendencies(p)])),events:[],grade:50,reasons:{},retain:g.home===s.team||g.away===s.team};
+ const m={rulesVersion:'3.8.0',id:g.id,league:g.league,home:g.home,away:g.away,duration,regulation:total,total,n:0,ot:0,score:[0,0],done:false,box:Object.fromEntries(players.map(p=>[p.id,line(p)])),ratings:Object.fromEntries(players.map(p=>[p.id,overall(p)])),bonuses:Object.fromEntries(players.map(p=>[p.id,Object.fromEntries(Object.keys(byContext).map(c=>[c,rawBonus(p,c)]))])),tendencies:Object.fromEntries(players.map(p=>[p.id,tendencies(p)])),events:[],grade:50,reasons:{},retain:g.home===s.team||g.away===s.team};m.collective=snapshotCollective(s,m);return m;
 }
 function lineup(s,m,tid){let all=team(s,tid).roster.map(id=>getPlayer(s,id)).filter(p=>!p.injury);let eligible=all.filter(p=>m.box[p.id].pf<(m.duration===48?6:5));if(eligible.length<5)eligible=all; // Emergency last eligible player rule; no injured player takes the floor.
  let chosen=[],phase=Math.floor(m.n/12)%5;
@@ -31,10 +32,11 @@ function lineup(s,m,tid){let all=team(s,tid).roster.map(id=>getPlayer(s,id)).fil
  if(!want&&chosen.includes(h)){let q=eligible.find(p=>p!==h&&!chosen.includes(p));if(q)chosen[chosen.indexOf(h)]=q;}}
  return chosen;
 }
-export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.5.0')return legacyStepMatch(s,m,count);if(Object.getPrototypeOf(m.box)!==null)for(let key of ['box','ratings','bonuses','tendencies'])m[key]=Object.assign(Object.create(null),m[key]);for(let n=0;n<count&&!m.done;n++){
+export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.8.0')return legacyStepMatch(s,m,count);if(Object.getPrototypeOf(m.box)!==null)for(let key of ['box','ratings','bonuses','tendencies'])m[key]=Object.assign(Object.create(null),m[key]);for(let n=0;n<count&&!m.done;n++){
  const side=m.n%2,tid=side?m.away:m.home,opp=side?m.home:m.away;
  // Recompute rotations every 12 actions, but immediately replace a fouled-out player.
  if(!m.lineups||m.n%12===0||Object.values(m.lineups).flat().some(id=>m.box[id].pf>=(m.duration===48?6:5))){m.lineups={[m.home]:lineup(s,m,m.home).map(p=>p.id),[m.away]:lineup(s,m,m.away).map(p=>p.id)};}
+ recordSharedPossession(m,m.lineups);
  const atk=m.lineups[tid].map(id=>getPlayer(s,id)),def=m.lineups[opp].map(id=>getPlayer(s,id));
  if(!atk.length||!def.length)throw Error('Effectif indisponible : aucun joueur valide');
  const seconds=m.n<m.regulation?m.duration*60/m.regulation:15;
@@ -50,12 +52,13 @@ export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.5.0')return legacy
  const reading=playerReading(s,p),defReading=playerReading(s,d),passReading=playerReading(s,passer),catchShot=three&&handler!==p&&rng(s,'match')<.65;
  const fit=team(s,tid).system==='pace'?(p.attrs.speed-65)*.0006:team(s,tid).system==='defense'?-.005:.008;
  const tired=(p.fatigue*.0006+b.min/(3500+p.attrs.stamina*22))*(1-bonus(m,p,'team')*2),defense=(interior?d.attrs.interior:d.attrs.perimeter),heightAdv=clamp(((p.height||200)-(d.height||200))*.001,-.025,.025);
- let turnover=clamp(.125+(d.attrs.steal-p.attrs.handle)/850+(70-passer.attrs.pass)/1600+tired*.3-bonus(m,p,'handle')-bonus(m,passer,'pass')*.4-reading.iq-passReading.system*.3,.04,.22);
+ const chemistry=collectiveEffect(m,tid,handler.id,p.id),effects=m.collective.effects[tid];if(handler!==p)effects.passes++;
+ const turnoverRaw=.125+(d.attrs.steal-p.attrs.handle)/850+(70-passer.attrs.pass)/1600+tired*.3-bonus(m,p,'handle')-bonus(m,passer,'pass')*.4-reading.iq-passReading.system*.3;let turnover=clamp(turnoverRaw+chemistry.turnover,.04,.22);if(handler!==p){effects.turnoverActions++;effects.turnoverSum+=turnover-clamp(turnoverRaw,.04,.22);}
  let text='',made=false,probability=0,assist=false;
  if(rng(s,'match')<turnover){b.tov++;let steal=rng(s,'match')<stealChance(m,d);if(steal){db.stl++;used(d,'steal')}text=steal?`${d.name} intercepte le ballon de ${p.name}.`:`${p.name} perd le ballon hors des limites.`;}
  else{
  const contest=clamp(.5+(defense-p.attrs.ballSpeed)*.002-(spacing-65)*.002-(screen-65)*.0007+physicalContest(p,d,action),.12,.82);
- probability=clamp((three?.18:interior?.32:.23)+p.attrs[k]*.0042-contest*.16-tired+(passer.attrs.pass-65)*.0005+heightAdv+fit+aerialFinish(p,k)+coverageEffect(m.coverage[tid],p)+(tid===s.team?(s.relationships.team-50)*.0002:0)+(p.id===s.hero?(s.life.morale-50)*.00025:0)+shotBoost(m,p,{action,kind:k,catchShot})+reading.system+reading.iq*.4-bonus(m,d,interior?'interior':'perimeter')-bonus(m,d,'defense')*.4-defReading.system*.5,.1,three?.58:.84);
+ const shotRaw=(three?.18:interior?.32:.23)+p.attrs[k]*.0042-contest*.16-tired+(passer.attrs.pass-65)*.0005+heightAdv+fit+aerialFinish(p,k)+coverageEffect(m.coverage[tid],p)+(tid===s.team?(s.relationships.team-50)*.0002:0)+(p.id===s.hero?(s.life.morale-50)*.00025:0)+shotBoost(m,p,{action,kind:k,catchShot})+reading.system+reading.iq*.4-bonus(m,d,interior?'interior':'perimeter')-bonus(m,d,'defense')*.4-defReading.system*.5;probability=clamp(shotRaw+chemistry.shot,.1,three?.58:.84);if(handler!==p){effects.shotActions++;effects.shotSum+=probability-clamp(shotRaw,.1,three?.58:.84);}
  let foul=rng(s,'match')<(interior?.135:.045),blocked=!foul&&rng(s,'match')<clamp((interior?d.attrs.block:25)/1800+bonus(m,d,'block')*.3+physicalBlock(d,interior),.008,.09);
  if(foul){db.pf++;let attempts=three?3:2;b.fta+=attempts;for(let i=0;i<attempts;i++)if(rng(s,'match')<freeChance(m,p)){b.ftm++;b.pts++;m.score[side]++;}text=`${p.name} obtient ${attempts} lancers francs.`;used(p,'free');}
  else{

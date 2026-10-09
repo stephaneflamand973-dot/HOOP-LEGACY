@@ -1,4 +1,6 @@
-import {stepMatch as legacyStepMatch} from './match-v32.js?v=3.8.0';
+import {developmentBonus} from './club-project.js?v=3.8.0';
+import {stepMatch as legacyStepMatch} from './match-v34.js?v=3.8.0';
+import {physicalContest,aerialFinish,physicalBlock,physicalRebound,coveragePlan,coverageEffect} from './physical.js?v=3.8.0';
 import {playerReading} from './system.js?v=3.8.0';
 import {shotBoost,finishKind,reboundWeight,freeChance,stealChance} from './match-effects.js?v=3.8.0';
 import {KEYS,BADGES,TECHNIQUES} from './config.js?v=3.8.0';
@@ -14,13 +16,13 @@ function used(p,context){for(let b of byContext[context]||[])if(p.attrs[b.attr]>
 export function startMatch(s,g){if(g.result)throw Error('Match déjà résolu');let clubs=[team(s,g.home),team(s,g.away)],players=clubs.flatMap(t=>t.roster.map(id=>getPlayer(s,id)));
  let duration=leagueDef(g.league).minutes;
  let total=Math.round((duration===48?198:duration===40?146:128)+(clubs.filter(t=>t.system==='pace').length*8-clubs.filter(t=>t.system==='defense').length*5));total+=total%2;
- return {rulesVersion:'3.3.0',id:g.id,league:g.league,home:g.home,away:g.away,duration,regulation:total,total,n:0,ot:0,score:[0,0],done:false,box:Object.fromEntries(players.map(p=>[p.id,line(p)])),ratings:Object.fromEntries(players.map(p=>[p.id,overall(p)])),bonuses:Object.fromEntries(players.map(p=>[p.id,Object.fromEntries(Object.keys(byContext).map(c=>[c,rawBonus(p,c)]))])),tendencies:Object.fromEntries(players.map(p=>[p.id,tendencies(p)])),events:[],grade:50,reasons:{},retain:g.home===s.team||g.away===s.team};
+ return {rulesVersion:'3.5.0',id:g.id,league:g.league,home:g.home,away:g.away,duration,regulation:total,total,n:0,ot:0,score:[0,0],done:false,box:Object.fromEntries(players.map(p=>[p.id,line(p)])),ratings:Object.fromEntries(players.map(p=>[p.id,overall(p)])),bonuses:Object.fromEntries(players.map(p=>[p.id,Object.fromEntries(Object.keys(byContext).map(c=>[c,rawBonus(p,c)]))])),tendencies:Object.fromEntries(players.map(p=>[p.id,tendencies(p)])),events:[],grade:50,reasons:{},retain:g.home===s.team||g.away===s.team};
 }
 function lineup(s,m,tid){let all=team(s,tid).roster.map(id=>getPlayer(s,id)).filter(p=>!p.injury);let eligible=all.filter(p=>m.box[p.id].pf<(m.duration===48?6:5));if(eligible.length<5)eligible=all; // Emergency last eligible player rule; no injured player takes the floor.
  let chosen=[],phase=Math.floor(m.n/12)%5;
  for(let pos of ['MJ','AR','AI','AF','P']){
  let options=eligible.filter(p=>!chosen.includes(p));if(!options.length)break;
- const score=p=>m.ratings[p.id]+(p.pos===pos?12:p.secondary===pos?6:0)-m.box[p.id].min*.48-p.fatigue*.09+(phase===3&&m.box[p.id].min<4?15:0)+(p.id===s.hero?(s.trust-50)*.08:0);
+ const score=p=>m.ratings[p.id]+developmentBonus(team(s,tid),p)+(p.pos===pos?12:p.secondary===pos?6:0)-m.box[p.id].min*.48-p.fatigue*.09+(phase===3&&m.box[p.id].min<4?15:0)+(p.id===s.hero?(s.trust-50)*.08:0);
  options.sort((a,b)=>score(b)-score(a)||a.id.localeCompare(b.id));chosen.push(options[0]);
  }
  // Coaching allocates the user's minutes; presentation and UI have no sporting effect.
@@ -29,7 +31,7 @@ function lineup(s,m,tid){let all=team(s,tid).roster.map(id=>getPlayer(s,id)).fil
  if(!want&&chosen.includes(h)){let q=eligible.find(p=>p!==h&&!chosen.includes(p));if(q)chosen[chosen.indexOf(h)]=q;}}
  return chosen;
 }
-export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.3.0')return legacyStepMatch(s,m,count);if(Object.getPrototypeOf(m.box)!==null)for(let key of ['box','ratings','bonuses','tendencies'])m[key]=Object.assign(Object.create(null),m[key]);for(let n=0;n<count&&!m.done;n++){
+export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.5.0')return legacyStepMatch(s,m,count);if(Object.getPrototypeOf(m.box)!==null)for(let key of ['box','ratings','bonuses','tendencies'])m[key]=Object.assign(Object.create(null),m[key]);for(let n=0;n<count&&!m.done;n++){
  const side=m.n%2,tid=side?m.away:m.home,opp=side?m.home:m.away;
  // Recompute rotations every 12 actions, but immediately replace a fouled-out player.
  if(!m.lineups||m.n%12===0||Object.values(m.lineups).flat().some(id=>m.box[id].pf>=(m.duration===48?6:5))){m.lineups={[m.home]:lineup(s,m,m.home).map(p=>p.id),[m.away]:lineup(s,m,m.away).map(p=>p.id)};}
@@ -39,6 +41,7 @@ export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.3.0')return legacy
  for(let p of [...atk,...def])m.box[p.id].min+=seconds/60;
  let handler=weighted(s,atk,p=>Math.max(1,p.attrs.handle+p.attrs.pass-65)),p=weighted(s,atk,q=>Math.max(8,Math.max(q.attrs.three,q.attrs.close,q.attrs.layup,q.attrs.post)-45)**1.6);
  let d=def.reduce((best,q)=>Math.abs(['MJ','AR','AI','AF','P'].indexOf(q.pos)-['MJ','AR','AI','AF','P'].indexOf(p.pos))<Math.abs(['MJ','AR','AI','AF','P'].indexOf(best.pos)-['MJ','AR','AI','AF','P'].indexOf(p.pos))?q:best,def[0]);
+ m.coverage??=Object.fromEntries([m.home,m.away].map(id=>[id,coveragePlan(team(s,id).roster.map(id=>getPlayer(s,id)).filter(p=>!p.injury),m.ratings)]));
  const t=m.tendencies[p.id],action=weighted(s,['three','drive','post','mid'],k=>Math.max(1,t[k]));
  let k=action==='three'?'three':action==='mid'?'mid':action==='post'?'post':finishKind(p,d,rng(s,'match')),context=action==='mid'?'pull':action==='drive'?k:action;
  const three=k==='three',interior=!three&&k!=='mid',b=m.box[p.id],db=m.box[d.id];
@@ -51,21 +54,21 @@ export function stepMatch(s,m,count=1){if(m.rulesVersion!=='3.3.0')return legacy
  let text='',made=false,probability=0,assist=false;
  if(rng(s,'match')<turnover){b.tov++;let steal=rng(s,'match')<stealChance(m,d);if(steal){db.stl++;used(d,'steal')}text=steal?`${d.name} intercepte le ballon de ${p.name}.`:`${p.name} perd le ballon hors des limites.`;}
  else{
- const contest=clamp(.5+(defense-p.attrs.ballSpeed)*.002-(spacing-65)*.002-(screen-65)*.0007,.12,.82);
- probability=clamp((three?.18:interior?.32:.23)+p.attrs[k]*.0042-contest*.16-tired+(passer.attrs.pass-65)*.0005+heightAdv+fit+(tid===s.team?(s.relationships.team-50)*.0002:0)+(p.id===s.hero?(s.life.morale-50)*.00025:0)+shotBoost(m,p,{action,kind:k,catchShot})+reading.system+reading.iq*.4-bonus(m,d,interior?'interior':'perimeter')-bonus(m,d,'defense')*.4-defReading.system*.5,.1,three?.58:.84);
- let foul=rng(s,'match')<(interior?.135:.045),blocked=!foul&&rng(s,'match')<clamp((interior?d.attrs.block:25)/1800+bonus(m,d,'block')*.3,.008,.08);
+ const contest=clamp(.5+(defense-p.attrs.ballSpeed)*.002-(spacing-65)*.002-(screen-65)*.0007+physicalContest(p,d,action),.12,.82);
+ probability=clamp((three?.18:interior?.32:.23)+p.attrs[k]*.0042-contest*.16-tired+(passer.attrs.pass-65)*.0005+heightAdv+fit+aerialFinish(p,k)+coverageEffect(m.coverage[tid],p)+(tid===s.team?(s.relationships.team-50)*.0002:0)+(p.id===s.hero?(s.life.morale-50)*.00025:0)+shotBoost(m,p,{action,kind:k,catchShot})+reading.system+reading.iq*.4-bonus(m,d,interior?'interior':'perimeter')-bonus(m,d,'defense')*.4-defReading.system*.5,.1,three?.58:.84);
+ let foul=rng(s,'match')<(interior?.135:.045),blocked=!foul&&rng(s,'match')<clamp((interior?d.attrs.block:25)/1800+bonus(m,d,'block')*.3+physicalBlock(d,interior),.008,.09);
  if(foul){db.pf++;let attempts=three?3:2;b.fta+=attempts;for(let i=0;i<attempts;i++)if(rng(s,'match')<freeChance(m,p)){b.ftm++;b.pts++;m.score[side]++;}text=`${p.name} obtient ${attempts} lancers francs.`;used(p,'free');}
  else{
  b.fga++;if(three)b.tpa++;made=!blocked&&rng(s,'match')<probability;
  if(made){let pts=three?3:2;b.fgm++;if(three)b.tpm++;b.pts+=pts;m.score[side]+=pts;assist=rng(s,'match')<clamp(.44+(passer.attrs.pass-60)*.006+bonus(m,passer,'assist'),.35,.8);if(assist){m.box[passer.id].ast++;used(passer,'assist');}text=`${p.name} marque ${pts} points${assist?', servi par '+passer.name:''}.`;}
  else{if(blocked){db.blk++;used(d,'block');}let offensive=rng(s,'match')<clamp(.24+(atk.reduce((n,q)=>n+q.attrs.offReb,0)-def.reduce((n,q)=>n+q.attrs.defReb,0))/1600+(atk.reduce((n,q)=>n+bonus(m,q,'offReb'),0)-def.reduce((n,q)=>n+bonus(m,q,'rebound'),0))*.06,.12,.36);
- let r=weighted(s,offensive?atk:def,q=>reboundWeight(m,q,offensive));m.box[r.id].reb++;if(offensive)m.box[r.id].oreb++;used(r,offensive?'offReb':'rebound');text=`${p.name} ${blocked?'est contré':'rate'}. Rebond ${r.name}.`;
- if(offensive){let rb=m.box[r.id];rb.fga++;used(r,'close');if(rng(s,'match')<clamp(.21+r.attrs.close*.004+bonus(m,r,'close'),.3,.75)){rb.fgm++;rb.pts+=2;m.score[side]+=2;text+=' Deuxième chance convertie.';}else{let dr=weighted(s,def,q=>reboundWeight(m,q,false));m.box[dr.id].reb++;used(dr,'rebound');}}}
+ let r=weighted(s,offensive?atk:def,q=>reboundWeight(m,q,offensive)*physicalRebound(q));m.box[r.id].reb++;if(offensive)m.box[r.id].oreb++;used(r,offensive?'offReb':'rebound');text=`${p.name} ${blocked?'est contré':'rate'}. Rebond ${r.name}.`;
+ if(offensive){let rb=m.box[r.id];rb.fga++;used(r,'close');if(rng(s,'match')<clamp(.21+r.attrs.close*.004+bonus(m,r,'close'),.3,.75)){rb.fgm++;rb.pts+=2;m.score[side]+=2;text+=' Deuxième chance convertie.';}else{let dr=weighted(s,def,q=>reboundWeight(m,q,false)*physicalRebound(q));m.box[dr.id].reb++;used(dr,'rebound');}}}
  }
  used(p,context);if(action==='drive')used(p,'drive');if(catchShot)used(p,'catch');if(screener)used(screener,'screen');used(d,interior?'interior':'perimeter');used(d,'defense');
  }
  used(p,'handle');used(p,'team');used(passer,'pass');
- if(m.retain)m.events.push({kind:k,catchShot,n:m.n,score:[...m.score],text,action,probability:+probability.toFixed(3),key:made&&(three||Math.abs(m.score[0]-m.score[1])<=5&&m.n>m.regulation*.85)});
+ if(m.retain)m.events.push({kind:k,catchShot,n:m.n,score:[...m.score],text,action,probability:+probability.toFixed(3),coverage:coverageEffect(m.coverage[tid],p),key:made&&(three||Math.abs(m.score[0]-m.score[1])<=5&&m.n>m.regulation*.85)});
  m.n++;
  if(m.n>=m.total){if(m.score[0]===m.score[1]){m.ot++;m.total+=20;m.lineups=null;}else m.done=true;}
  }

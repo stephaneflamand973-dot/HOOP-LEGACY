@@ -1,6 +1,6 @@
-import {GROUPS} from './config.js?v=3.7.0';
-import {canChange} from './commands.js?v=3.7.0';
-import {receipt,cents} from './finance.js?v=3.7.0';
+import {GROUPS} from './config.js?v=3.8.0';
+import {canChange} from './commands.js?v=3.8.0';
+import {receipt,cents} from './finance.js?v=3.8.0';
 
 export const COACHES=Object.freeze({
  local:Object.freeze({name:'Coach de proximité',price:300,rate:.1}),
@@ -11,7 +11,7 @@ const offerFor=id=>Object.hasOwn(COACHES,id)?COACHES[id]:null;
 const player=s=>s.players.find(p=>p.id===s.hero);
 const capped=(s,domain)=>GROUPS[domain].every(k=>player(s).attrs[k]>=99);
 export function initEnvironment(s){
- s.environment??={version:1,nextId:1,contract:null,renew:false,processedDay:null,lastTrainingDay:null,history:[],totals:{paid:0,sessions:0,extraXP:0},notice:null};
+ s.environment??={version:1,nextId:1,contract:null,renew:false,processedDay:null,trainingProcessedDay:null,lastTrainingDay:null,history:[],totals:{paid:0,sessions:0,extraXP:0},notice:null};
 }
 export function coachQuote(s,offerId,domain){
  const offer=offerFor(offerId),validDomain=Object.hasOwn(GROUPS,domain),reserve=s.life.finance.reserve;
@@ -64,7 +64,7 @@ export function coachTraining(s,p,raw){
 export function validateEnvironment(s){
  const e=s.environment,integer=n=>Number.isSafeInteger(n)&&n>=0,date=n=>integer(n)&&n<=s.day,optionalDate=n=>n===null||date(n);
  const fail=()=>{throw Error('Environnement invalide');};
- if(!e||e.version!==1||!integer(e.nextId)||e.nextId<1||typeof e.renew!=='boolean'||!optionalDate(e.processedDay)||!optionalDate(e.lastTrainingDay)||e.lastTrainingDay!==null&&e.lastTrainingDay%2!==0||!Array.isArray(e.history)||e.history.length>24||!e.totals||['paid','sessions','extraXP'].some(k=>!integer(e.totals[k]))||e.notice!==null&&(typeof e.notice!=='string'||e.notice.length>500)||e.contract===undefined||!e.contract&&e.renew)fail();
+ if(!e||e.version!==1||!integer(e.nextId)||e.nextId<1||typeof e.renew!=='boolean'||!optionalDate(e.processedDay)||!optionalDate(e.trainingProcessedDay)||!optionalDate(e.lastTrainingDay)||e.lastTrainingDay!==null&&e.lastTrainingDay%2!==0||!Array.isArray(e.history)||e.history.length>24||!e.totals||['paid','sessions','extraXP'].some(k=>!integer(e.totals[k]))||e.notice!==null&&(typeof e.notice!=='string'||e.notice.length>500)||e.contract===undefined||!e.contract&&e.renew)fail();
  const periods=[...e.history,...(e.contract?[e.contract]:[])],ids=new Set();let paid=0,sessions=0,extraXP=0,previous=null;
  if(e.totals.extraXP>(s.development?.sources?.training??0))fail();
  for(const c of periods){

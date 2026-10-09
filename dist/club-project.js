@@ -1,5 +1,6 @@
-import {getPlayer,overall,hero,log} from './engine.js?v=3.7.0';
-import {leagueDef} from './leagues.js?v=3.7.0';
+import {syncCollective} from './collective.js?v=3.8.0';
+import {getPlayer,overall,hero,log} from './engine.js?v=3.8.0';
+import {leagueDef} from './leagues.js?v=3.8.0';
 const positions=['MJ','AR','AI','AF','P'];
 export const payroll=(s,t)=>t.roster.reduce((n,id)=>n+(getPlayer(s,id)?.contract.salary||0),0);
 export function projectSnapshot(s,t){const players=t.roster.map(id=>getPlayer(s,id)).filter(Boolean),best=players.map(overall).sort((a,b)=>b-a).slice(0,8),strength=best.reduce((n,v)=>n+v,0)/Math.max(1,best.length),age=players.reduce((n,p)=>n+p.age,0)/Math.max(1,players.length),level=leagueDef(t.league).level;
@@ -18,5 +19,5 @@ export function validTrade(s,a,b,p,q){if(!a||!b||!p||!q||a.id===b.id||a.league!=
 }
 export function executeTrade(s,a,b,p,q){if(!validTrade(s,a,b,p,q))return false;a.roster=a.roster.map(id=>id===p.id?q.id:id);b.roster=b.roster.map(id=>id===q.id?p.id:id);const reason='Rééquilibrer les postes en respectant les contrats et le projet du club.';
  s.world.transactions.unshift({day:s.day,season:s.season,type:'Échange',player:p.name+' / '+q.name,from:a.name,to:b.name,reason});s.world.transactions=s.world.transactions.slice(0,300);
- for(const [t,incoming,out] of [[a,q,p],[b,p,q]]){updateProject(s,t);clubNotice(s,t,'Mouvement de votre club',`${incoming.name} (${incoming.pos}) arrive ; ${out.name} part. ${reason}${incoming.pos===hero(s).pos?' La concurrence à votre poste évolue.':''}`);}return true;
+ for(const [t,incoming,out] of [[a,q,p],[b,p,q]]){updateProject(s,t);clubNotice(s,t,'Mouvement de votre club',`${incoming.name} (${incoming.pos}) arrive ; ${out.name} part. ${reason}${incoming.pos===hero(s).pos?' La concurrence à votre poste évolue.':''}`);}syncCollective(s);return true;
 }
