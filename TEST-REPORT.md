@@ -1,6 +1,6 @@
 # HOOP LEGACY V3.8 — validation locale de la version candidate
 
-État au 9 octobre 2026 : corrections locales vérifiées, version non publiée. La revue indépendante a été interrompue avant son verdict final. La CI de livraison et le contrôle public V3.8 ne sont pas validés. Validation V3.7 archivée dans `docs/validation-v3.7.md`.
+État au 9 octobre 2026 : corrections vérifiées localement et CI GitHub réussie, version non publiée. La revue indépendante a été interrompue avant son verdict final. Le contrôle public V3.8 n’est pas effectué. Validation V3.7 archivée dans `docs/validation-v3.7.md`.
 
 ## Tests et compatibilité
 
@@ -25,4 +25,6 @@ Les carrières longues conservent 30 archives. Portland remporte 14 titres NBA a
 
 ## Points ouverts avant livraison
 
-La revue indépendante complète, la CI et la validation du site public restent à obtenir. Un compteur explicatif de tirs servis peut inclure une action terminée par des lancers francs ; ce point mineur différé concerne la télémétrie, pas le résultat simulé. Les corrections ciblées d’import ne constituent pas un audit de sécurité complet.
+La CI du commit `7fbc0064e0d9c85f20d1601593c2ad65fbdf8055` a réussi ses cinq jobs : tests/navigateurs/huit migrations, deux matrices économiques et deux carrières de 30 saisons. Elle répète donc les 144 saisons sur GitHub. Résultats : `tests/v38-ci-report.json` et [exécution GitHub](https://github.com/stephaneflamand973-dot/HOOP-LEGACY/actions/runs/38001898911).
+
+La revue indépendante complète et la validation du site public restent à obtenir. Un compteur explicatif de tirs servis peut inclure une action terminée par des lancers francs ; ce point mineur différé concerne la télémétrie, pas le résultat simulé. Les corrections ciblées d’import ne constituent pas un audit de sécurité complet.
