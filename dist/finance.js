@@ -1,13 +1,17 @@
 import {hero,team,rng,clamp} from './engine.js?v=3.8.0';
 import {canChange} from './commands.js?v=3.8.0';
+import {commissionForDay,recordCommission} from './representation.js?v=3.8.0';
 export const cents=n=>Math.round(n*100)/100;
 export function initFinance(s){const l=s.life;l.finance??={percent:20,reserve:5000,frequency:30,automatic:false,lastDay:s.day};l.finance.start??={cash:s.money,investments:l.investments,property:l.property?.value||0};l.finance.totals??={cash:0,investments:0,property:0};}
 export function receipt(s,label,cash=0,investments=0,property=0){initFinance(s);const f=s.life.finance;cash=cents(cash);investments=cents(investments);property=cents(property);f.totals.cash=cents(f.totals.cash+cash);f.totals.investments=cents(f.totals.investments+investments);f.totals.property=cents(f.totals.property+property);s.life.ledger.unshift({day:s.day,label,amount:cash,cash,investments,property});s.life.ledger=s.life.ledger.slice(0,180);}
 export function investmentQuote(s){const f=s.life.finance;return cents(Math.max(0,s.money-f.reserve)*f.percent/100);}
 export function financeDay(s){initFinance(s);const l=s.life,f=l.finance,p=hero(s);if(f.processedDay===s.day)return;f.processedDay=s.day;
  const net=cents(s.career.stage==='pro'?p.contract.salary/365*.76:0),sponsor=cents(l.sponsors.reduce((n,c)=>n+(c.ends>s.day?c.annual/365:0),0));
- const expense=cents(Math.min((l.lifestyle==='premium'?180:l.lifestyle==='comfortable'?45:8)+l.children.length*8,Math.max(0,(net+sponsor)*.28+s.money*.00005),s.money+net+sponsor));
- s.money=cents(s.money+net+sponsor-expense);receipt(s,'Salaire net et sponsors',net+sponsor);receipt(s,'Vie quotidienne',-expense);l.sponsors=l.sponsors.filter(c=>c.ends>s.day);
+ const commission=commissionForDay(s,net),received=net+sponsor-commission;
+ const expense=cents(Math.min((l.lifestyle==='premium'?180:l.lifestyle==='comfortable'?45:8)+l.children.length*8,Math.max(0,received*.28+s.money*.00005),s.money+received));
+ s.money=cents(s.money+received-expense);receipt(s,'Salaire net et sponsors',net+sponsor);
+ if(commission){recordCommission(s,commission);receipt(s,'Commission d’agent',-commission);}
+ receipt(s,'Vie quotidienne',-expense);l.sponsors=l.sponsors.filter(c=>c.ends>s.day);
  if(s.day%365===0){if(l.investments>0){const change=cents(l.investments*(.025+(rng(s,'life')-.5)*.1));l.investments=cents(l.investments+change);receipt(s,'Variation des placements · sans mouvement de liquidités',0,change);}if(l.property){const change=cents(l.property.value*.015);l.property.value=cents(l.property.value+change);receipt(s,'Évolution de la résidence · sans mouvement de liquidités',0,0,change);}}
  if(f.automatic&&s.day-f.lastDay>=f.frequency){f.lastDay=s.day;const amount=investmentQuote(s);if(amount>=.01){s.money=cents(s.money-amount);l.investments=cents(l.investments+amount);receipt(s,`Placement automatique · ${f.percent} % au-delà de ${f.reserve} €`, -amount,amount);l.delegationLog.unshift({day:s.day,domain:'finances',title:'Placement automatique',choice:`${amount.toLocaleString('fr-FR')} € placés`,reason:`${f.percent} % du disponible au-delà de la réserve de ${f.reserve} €`});l.delegationLog=l.delegationLog.slice(0,100);}}
 }

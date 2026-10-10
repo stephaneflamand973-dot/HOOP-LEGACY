@@ -1,8 +1,9 @@
+import {offerNet} from './representation.js?v=3.8.0';
 import {canChange} from './commands.js?v=3.8.0';
 import {hero,team,getPlayer,overall,clamp,log} from './engine.js?v=3.8.0';
 import {leagueDef} from './leagues.js?v=3.8.0';
 import {sportingPause} from './sport-events.js?v=3.8.0';
-export const PREFERENCES={balanced:'Équilibre',minutes:'Temps de jeu',title:'Projet de titre',salary:'Salaire'};
+export const PREFERENCES={balanced:'Équilibre',minutes:'Temps de jeu',title:'Projet de titre',salary:'Salaire',stability:'Stabilité'};
 export function initCareerPlan(s){s.careerPlan??={version:1,preference:'balanced',evaluation:null,reviews:[]};s.careerPlan.discussions??={version:1,history:[],cooldowns:{},teamwork:null};}
 export function roleProjection(s,club=team(s)){
  const p=hero(s),rivals=club.roster.map(id=>getPlayer(s,id)).filter(q=>q.id!==s.hero&&q.pos===p.pos),rival=rivals.length?Math.max(...rivals.map(overall)):leagueDef(club.league).level;
@@ -36,7 +37,8 @@ export function offerComparison(s,o){
 }
 export function orderedOffers(s){
  return s.offers.map((o,index)=>({o,index,c:offerComparison(s,o)})).sort((a,b)=>{
-  const value=x=>s.careerPlan.preference==='salary'?x.o.salary:s.careerPlan.preference==='minutes'?x.o.minutes:s.careerPlan.preference==='title'?x.c.strength:x.o.minutes+x.c.strength*.25;
+  if(s.careerPlan.preference==='stability'){const an=offerNet(s,a.o),bn=offerNet(s,b.o);return bn.years-an.years||bn.net*bn.years-an.net*an.years||a.index-b.index;}
+  const value=x=>s.careerPlan.preference==='salary'?offerNet(s,x.o).net:s.careerPlan.preference==='minutes'?x.o.minutes:s.careerPlan.preference==='title'?x.c.strength:x.o.minutes+x.c.strength*.25;
   return value(b)-value(a)||a.index-b.index;
  });
 }
