@@ -1,4 +1,4 @@
-import {STAGES} from './collective-catalog.js?v=3.8.0';
+import {STAGES} from './collective-catalog.js?v=3.9.0';
 const own=(o,k)=>o&&Object.hasOwn(o,k);
 const safe=id=>typeof id==='string'&&!['__proto__','constructor','prototype'].includes(id);
 export const pairKey=(a,b)=>JSON.stringify([a,b].sort());

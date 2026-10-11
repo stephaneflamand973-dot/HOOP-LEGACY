@@ -13,7 +13,7 @@ test('maîtrise : la nouvelle source possède un libellé lisible dès la créat
 test('V3.8 : migrations historiques neutres, coach V3.7 conservé et match ancien exact',()=>{
  for(const version of ['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0','3.7.0']){
   const s=make();hireCoach(s,'local','Tir');setCoachRenewal(s,true);s.engine=version;delete s.environment.trainingProcessedDay;s.collective={injected:true};s.match=oldStart(s,competition(s).schedule[0]);oldStep(s,s.match,30);const old=structuredClone(s),m=parseSave(JSON.stringify(s));
-  assert.equal(m.engine,'3.8.0');assert.equal(m.collective.stage,null);assert.equal(m.collective.routine,'none');assert.deepEqual(m.collective.duos,{});assert.equal(m.money,old.money);assert.deepEqual(m.rng,old.rng);assert.equal(m.system,old.system);assert.deepEqual(m.match,old.match);
+  assert.equal(m.engine,'3.9.0');assert.equal(m.collective.stage,null);assert.equal(m.collective.routine,'none');assert.deepEqual(m.collective.duos,{});assert.equal(m.money,old.money);assert.deepEqual(m.rng,old.rng);assert.equal(m.system,old.system);assert.deepEqual(m.match,old.match);
   if(version==='3.7.0')assert.deepEqual(m.environment,{...old.environment,trainingProcessedDay:null});else assert.equal(m.environment.contract,null);
   assert.deepEqual(migrateLegacy(m),m);stepMatch(m,m.match,20000);oldStep(old,old.match,20000);assert.deepEqual(m.match,old.match);assert.deepEqual(m.rng,old.rng);
  }
@@ -28,6 +28,6 @@ test('V3.8 : worker et export conservent stage, duos, match et destination',()=>
  const {prefix,state}=splitWorkerState(s);assert.equal(JSON.stringify(joinWorkerState(structuredClone(state),prefix)),JSON.stringify(s));const copy=parseSave(JSON.stringify(s));assert.equal(JSON.stringify(copy),JSON.stringify(s));stepMatch(s,s.match,20000);stepMatch(copy,copy.match,20000);assert.deepEqual(copy,s);
 });
 test('V3.8 : IndexedDB garde le secours V3.7 avec coach payé',async()=>{
- await import('fake-indexeddb/auto');const s=make();hireCoach(s,'local','Tir');setCoachRenewal(s,true);s.engine='3.7.0';delete s.collective;delete s.environment.trainingProcessedDay;await save(s,'v38-old');const m=await load('v38-old');assert.equal(m.engine,'3.8.0');assert.equal(m.environment.contract.price,300);assert.equal(m.environment.renew,true);
+ await import('fake-indexeddb/auto');const s=make();hireCoach(s,'local','Tir');setCoachRenewal(s,true);s.engine='3.7.0';delete s.collective;delete s.environment.trainingProcessedDay;await save(s,'v38-old');const m=await load('v38-old');assert.equal(m.engine,'3.9.0');assert.equal(m.environment.contract.price,300);assert.equal(m.environment.renew,true);
  const backup=await new Promise((resolve,reject)=>{const r=indexedDB.open('hoop-legacy-v1');r.onerror=()=>reject(r.error);r.onsuccess=()=>{const q=r.result.transaction('slots').objectStore('slots').get('backup-before-3.7.0-v38-old');q.onsuccess=()=>{resolve(q.result);r.result.close();};q.onerror=()=>reject(q.error);};});assert.equal(backup.engine,'3.7.0');assert.equal(backup.collective,undefined);assert.deepEqual(backup.environment,s.environment);
 });

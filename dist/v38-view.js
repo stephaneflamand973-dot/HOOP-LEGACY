@@ -1,6 +1,6 @@
-import {STAGES,stageQuote,collectiveGameDay} from './collective.js?v=3.8.0';
-import {duoFor} from './collective-state.js?v=3.8.0';
-import {canChange} from './commands.js?v=3.8.0';
+import {STAGES,stageQuote,collectiveGameDay} from './collective.js?v=3.9.0';
+import {duoFor} from './collective-state.js?v=3.9.0';
+import {canChange} from './commands.js?v=3.9.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const num=n=>Number.isFinite(Number(n??0))?Number(n??0).toLocaleString('fr-FR',{maximumFractionDigits:2}):'—';
 const money=n=>num(n)+' €';

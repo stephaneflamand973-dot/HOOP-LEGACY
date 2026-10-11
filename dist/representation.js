@@ -1,6 +1,6 @@
-import {MANDATES,validMandate} from './representation-catalog.js?v=3.8.0';
-import {initRepresentation,appendNegotiation,validateRepresentation} from './representation-state.js?v=3.8.0';
-import {negotiationLimits} from './negotiation-rules.js?v=3.8.0';
+import {MANDATES,validMandate} from './representation-catalog.js?v=3.9.0';
+import {initRepresentation,appendNegotiation,validateRepresentation} from './representation-state.js?v=3.9.0';
+import {negotiationLimits} from './negotiation-rules.js?v=3.9.0';
 const fail=reason=>({ok:false,reason});
 export function setMandate(s,id){
  if(s.retired||s.match||s.pending||!validMandate(id))return fail('Mandat indisponible.');

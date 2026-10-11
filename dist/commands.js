@@ -1,7 +1,7 @@
-import {closeTeamWork} from './career-plan.js?v=3.8.0';
-import {closeEnvironment} from './environment.js?v=3.8.0';
-import {closeStage} from './collective.js?v=3.8.0';
-import {closeRepresentation} from './representation.js?v=3.8.0';
+import {closeTeamWork} from './career-plan.js?v=3.9.0';
+import {closeEnvironment} from './environment.js?v=3.9.0';
+import {closeStage} from './collective.js?v=3.9.0';
+import {closeRepresentation} from './representation.js?v=3.9.0';
 // A single boundary for user commands; background sporting updates use their own functions.
 export function canChange(s, {busy=false, pending=false, match=false}={}) {
   return !!s && !busy && !s.retired && (pending || !s.pending) && (match || !s.match);

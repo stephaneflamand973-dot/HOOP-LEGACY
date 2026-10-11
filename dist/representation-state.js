@@ -1,5 +1,5 @@
-import {MANDATES,validMandate} from './representation-catalog.js?v=3.8.0';
-import {negotiationLimits,evaluateCounter} from './negotiation-rules.js?v=3.8.0';
+import {MANDATES,validMandate} from './representation-catalog.js?v=3.9.0';
+import {negotiationLimits,evaluateCounter} from './negotiation-rules.js?v=3.9.0';
 
 export function initRepresentation(s){
  if(s.representation===undefined)s.representation={version:1,mandate:'self',nextId:1,session:null,contract:null,history:[],totals:{commission:0}};
