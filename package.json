@@ -21,7 +21,10 @@
     "test:v38-browser": "node tools/v38-browser.mjs",
     "test:v38-balance": "node tools/v38-balance.mjs",
     "test:v38-match-balance": "node tools/v38-match-balance.mjs",
-    "test:v38-neutrality": "node tools/v38-neutrality.mjs"
+    "test:v38-neutrality": "node tools/v38-neutrality.mjs",
+    "test:v39-browser": "node tools/v39-browser.mjs",
+    "test:v39-balance": "node tools/v39-balance.mjs",
+    "test:v39-neutrality": "node tools/v39-neutrality.mjs"
   },
   "devDependencies": {
     "fake-indexeddb": "^6.2.5",

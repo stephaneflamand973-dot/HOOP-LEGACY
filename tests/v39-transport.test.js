@@ -10,6 +10,6 @@ test('V3.9 : export et transport préservent tentative, commission et destinatio
  const s=createGame({...defaultBuild(),path:'rookie'});hero(s).contract.years=1;setMandate(s,'national');setAdvanceMode(s,'40');beginAdvance(s);requestTrade(s);const o=s.offers[0];submitCounter(s,negotiationQuote(s,o.id,{raise:15,years:o.years}));
  const loaded=parseSave(JSON.stringify(s));assert.equal(loaded.representation.session.offers[0].attempts,1);assert.deepEqual(loaded.simulation,s.simulation);
  const {prefix,state}=splitWorkerState(loaded),worker=joinWorkerState(JSON.parse(JSON.stringify(state)),JSON.parse(JSON.stringify(prefix)));assert.deepEqual(JSON.parse(JSON.stringify(worker)),JSON.parse(JSON.stringify(s)));
- for(const x of [s,worker]){assert.equal(sign(x,0,{offerId:o.id,source:'current',revision:1}),true);x.day++;financeDay(x);validate(x);}
+ for(const x of [s,worker]){assert.equal(sign(x,0,{sessionId:x.representation.session.id,offerId:o.id,source:'current',revision:1}),true);x.day++;financeDay(x);validate(x);}
  assert.equal(s.simulation.mode,'40');assert.equal(s.simulation.cursor.targetSeason,2);assert.deepEqual(JSON.parse(JSON.stringify(worker)),JSON.parse(JSON.stringify(s)));
 });

@@ -1,8 +1,20 @@
-# HOOP LEGACY — V3.8.0
+# HOOP LEGACY — V3.9.0 (candidate)
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
 [Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.8.0)
+
+## V3.9 — Agents et négociations
+
+Version candidate en cours de validation ; le lien public ci-dessus reste celui de la dernière livraison confirmée.
+
+Dans **Carrière → Mon agent**, choisissez gratuitement votre mandat futur : autogestion **0 %**, conseiller local **1 %**, agence nationale **2 %**, internationale **3 %**. Le taux du contrat déjà signé reste inchangé. La commission porte uniquement sur le salaire net reçu chaque jour, sans frais sur les sponsors ni prélèvement rétroactif.
+
+Les nouvelles offres professionnelles permettent **deux contre-offres** : hausse de 0, 5, 10 ou 15 % du salaire initial, et durée dans la limite d’un an de moins ou de plus (1 à 4 ans). Le club tient compte du niveau, de la concurrence, de l’âge et de son budget. Aucun rôle ni temps de jeu n’est garanti. Le mandat ajoute une marge de négociation ; il ne garantit pas une hausse qui rembourse son coût.
+
+Consultez le brut, le net, les frais et le total théorique avant de confirmer. L’offre initiale reste signable après un refus ou un compromis. La priorité **Stabilité** trie les offres par durée puis net total. Les choix universitaires, la draft et les anciennes offres migrées restent non négociables et sans commission.
+
+Les sauvegardes V3.0–V3.8 conservent leurs matchs en cours, préparations déjà payées et destination de simulation. Le moteur sportif reste en règles V3.8. Les rapports de validation sont décrits dans `TEST-REPORT.md` ; les limites de revue sont consignées dans `docs/v3.9-review.md`.
 
 ## V3.8 — Collectif complet
 

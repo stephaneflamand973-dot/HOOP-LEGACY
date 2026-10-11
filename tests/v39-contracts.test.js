@@ -5,18 +5,24 @@ import {validateRepresentation} from '../dist/representation-state.js';
 import {negotiationQuote,submitCounter} from '../dist/negotiation.js';
 import {orderedOffers,PREFERENCES} from '../dist/career-plan.js';
 const make=()=>{const s=createGame({...defaultBuild(),path:'rookie'});hero(s).contract.years=1;return s;};
+test('contrats : signature ancienne session ou session absente refusée sans mutation',()=>{
+ const s=make();requestTrade(s);const choice={sessionId:s.representation.session.id,offerId:s.offers[0].id,source:'initial',revision:0};
+ openContractNegotiations(s);const before=JSON.stringify(s);assert.equal(sign(s,0,choice),false);assert.equal(JSON.stringify(s),before);
+ const {sessionId,...missing}=choice;assert.equal(sign(s,0,missing),false);assert.equal(JSON.stringify(s),before);
+ assert.equal(sign(s,0,{...choice,sessionId:s.representation.session.id}),true);
+});
 test('contrats : mandat futur sans frais, session figée et signature négociée',()=>{
  const s=make(),rng=structuredClone(s.rng),cash=s.money;assert.equal(setMandate(s,'national').ok,true);assert.deepEqual(s.rng,rng);assert.equal(s.money,cash);assert.equal(s.offers.length,0);
  marketOffers(s);assert.equal(s.representation.session,null);assert.equal(requestTrade(s),true);const session=s.representation.session;assert.equal(session.mandate,'national');assert.equal(setMandate(s,'self').ok,false);
  const o=s.offers[0],e=session.offers[0],q=negotiationQuote(s,o.id,{raise:15,years:o.years});assert.ok(q);assert.equal(submitCounter(s,q).ok,true);
- assert.equal(sign(s,0,{offerId:o.id,source:'current',revision:e.revision}),true);assert.equal(hero(s).contract.salary,q.response.salary);assert.equal(s.representation.contract.rate,.02);assert.equal(s.money,cash);assert.equal(s.representation.session,null);validateRepresentation(s);
+ assert.equal(sign(s,0,{sessionId:s.representation.session.id,offerId:o.id,source:'current',revision:e.revision}),true);assert.equal(hero(s).contract.salary,q.response.salary);assert.equal(s.representation.contract.rate,.02);assert.equal(s.money,cash);assert.equal(s.representation.session,null);validateRepresentation(s);
  assert.equal(sign(s,0),false);assert.equal(setMandate(s,'self').ok,true);assert.equal(s.representation.contract.rate,.02);
 });
 test('contrats : devis de signature périmé, club absent ou index incohérent refusé avant mutation',()=>{
  const s=make();setMandate(s,'local');requestTrade(s);const id=s.offers[0].id;
  for(const opts of [{offerId:id,source:'current',revision:9},{offerId:'missing',source:'initial',revision:0},{offerId:id,source:'raw',revision:0}]){const before=JSON.stringify(s);assert.equal(sign(s,0,opts),false);assert.equal(JSON.stringify(s),before);}
  const bad=structuredClone(s);bad.offers[0].team='missing';const before=JSON.stringify(bad);assert.equal(sign(bad,0),false);assert.equal(JSON.stringify(bad),before);
- const prepared=prepareSignature(s,{offerId:id,source:'initial',revision:0});assert.equal(prepared.ok,true);assert.equal(prepared.terms.salary,s.offers[0].salary);
+ const prepared=prepareSignature(s,{sessionId:s.representation.session.id,offerId:id,source:'initial',revision:0});assert.equal(prepared.ok,true);assert.equal(prepared.terms.salary,s.offers[0].salary);
 });
 test('contrats : refus laisse l’offre initiale disponible et clôture respecte le délai du marché',()=>{
  const s=make();setMandate(s,'international');requestTrade(s);const o=s.offers[0];const initial=o.salary;

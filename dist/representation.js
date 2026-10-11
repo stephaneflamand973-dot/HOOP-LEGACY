@@ -12,10 +12,10 @@ export function openNegotiations(s,inputs){
  r.session=offers.length?{id:r.nextId++,day:s.day,mandate,offers}:null;return r.session;
 }
 export function closeNegotiations(s,_reason){if(s.representation)s.representation.session=null;}
-export function prepareSignature(s,{offerId,source='initial',revision}){
+export function prepareSignature(s,{sessionId,offerId,source='initial',revision}){
  if(s.retired||s.match||s.pending?.type!=='contract'||!['initial','current'].includes(source))return fail('Signature indisponible.');
  const r=s.representation,session=r?.session,e=session?.offers.find(o=>o.offerId===offerId),offer=s.offers.find(o=>o.id===offerId);
- if(!e||!offer||e.revision!==revision||!s.teams.some(t=>t.id===offer.team))return fail('Offre périmée.');
+ if(!e||!offer||session.id!==sessionId||e.revision!==revision||!s.teams.some(t=>t.id===offer.team))return fail('Offre périmée.');
  try{validateRepresentation(s);}catch{return fail('Offre incohérente.');}
  const mandate=e.eligible?session.mandate:'self',terms={...e[source]};
  return {ok:true,reason:'Prêt à signer.',terms,tracking:{id:r.nextId,offerId,team:offer.team,mandate,rate:MANDATES[mandate].rate,started:s.day,commission:0},sessionId:session.id};
