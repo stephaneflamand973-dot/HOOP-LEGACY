@@ -1,4 +1,4 @@
-import {initCollective,duoFor,pairKey} from './collective-state.js?v=3.8.0';
+import {initCollective,duoFor,pairKey} from './collective-state.js?v=3.9.0';
 export function snapshotCollective(s,m){
  initCollective(s);const c={version:1,scores:{},minutes:{},effects:{},applied:false};
  for(const tid of [m.home,m.away]){c.scores[tid]={};c.minutes[tid]={};c.effects[tid]={passes:0,turnoverActions:0,shotActions:0,turnoverSum:0,shotSum:0};const ids=s.teams.find(t=>t.id===tid).roster;for(let i=0;i<ids.length;i++)for(let j=i+1;j<ids.length;j++)c.scores[tid][pairKey(ids[i],ids[j])]=duoFor(s,tid,ids[i],ids[j])?.score||0;}

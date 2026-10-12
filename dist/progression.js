@@ -1,7 +1,7 @@
-import {canChange} from './commands.js?v=3.8.0';
-import {initEnvironment,coachTraining} from './environment.js?v=3.8.0';
-import {masteryTraining} from './system.js?v=3.8.0';
-import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.8.0';
+import {canChange} from './commands.js?v=3.9.0';
+import {initEnvironment,coachTraining} from './environment.js?v=3.9.0';
+import {masteryTraining} from './system.js?v=3.9.0';
+import {GROUPS,KEYS,STYLES,WEIGHTS} from './config.js?v=3.9.0';
 export const DOMAINS=Object.keys(GROUPS);
 export const domainOf=k=>DOMAINS.find(d=>GROUPS[d].includes(k));
 export const LEAGUE_XP={highschool:.5,ncaa:.72,nba:1.15,euroleague:1.08,acb:1,elite:.92,bbl:.9,lba:.94,nbl:.92};

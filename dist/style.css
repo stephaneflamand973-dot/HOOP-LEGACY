@@ -30,3 +30,15 @@ h1,h2,h3,h4,.timeline p,.hero-panel>div:first-child{overflow-wrap:anywhere}.hero
 .collective-panel:focus,.stages-panel:focus,.stage-quote:focus{outline:2px solid var(--orange,#ed7939);outline-offset:4px}
 @media(max-width:540px){.collective-partners,.collective-duos{grid-template-columns:1fr}.collective-panel .button-row button{width:100%}}
 @media(max-width:760px){html{scroll-padding-bottom:calc(90px + env(safe-area-inset-bottom))}.offers button{scroll-margin-block:90px}}
+/* Contract decisions remain readable and actionable on narrow screens. */
+.contract-card{min-width:0;overflow-wrap:anywhere}
+.contract-amounts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0}
+.contract-amounts div{min-width:0;padding:10px;background:rgba(255,255,255,.035);border-radius:8px}
+.contract-amounts dt{font-size:.8rem;color:var(--muted)}
+.contract-amounts dd{margin:5px 0 0;font-weight:700}
+.counter-form,.signature-confirm{border:1px solid var(--orange);padding:16px;margin-top:18px;border-radius:12px;scroll-margin-block:100px}
+.counter-form label{display:block;margin-bottom:12px}
+.counter-form button,.signature-confirm button{margin:6px 6px 0 0;white-space:normal}
+#agent-panel select,.counter-form select{width:100%;max-width:100%;min-width:0}
+.contract-card:focus,.counter-form:focus,.signature-confirm:focus,#agent-panel:focus{outline:2px solid var(--orange);outline-offset:4px}
+@media(max-width:400px){.contract-amounts{grid-template-columns:1fr}.contract-card .button-row{display:grid;grid-template-columns:1fr}.counter-form,.signature-confirm{padding:12px}.contract-card button{width:100%}}

@@ -1,30 +1,25 @@
-# HOOP LEGACY V3.8 — validation locale de la version candidate
+# HOOP LEGACY V3.9 — validation de livraison
 
-État au 9 octobre 2026 : corrections vérifiées localement et CI GitHub réussie, version non publiée. La revue indépendante a été interrompue avant son verdict final. Le contrôle public V3.8 n’est pas effectué. Validation V3.7 archivée dans `docs/validation-v3.7.md`.
+Code validé pour livraison. Bilan V3.8 archivé dans `docs/validation-v3.8.md`.
 
-## Tests et compatibilité
+## Preuves
 
-- 128 tests fonctionnels réussis, dont quatre tests d’import et d’affichage du collectif.
-- Dix matchs sans automatismes identiques au moteur V3.7.
-- 2 400 matchs appariés : 400 graines, trois niveaux d’automatismes, deux orientations domicile/extérieur.
-- Huit migrations V3.0–V3.7 avec ancien cache : secours, match conservé, idempotence et réouverture hors ligne.
-- Chromium à 320, 390 et 1 440 pixels : routines, partenaires, devis, annulation, reconfirmation, paiement unique, simulation worker, rechargement et hors ligne. Aucune erreur JavaScript ni débordement relevé.
-- Import d’une carrière de 30 saisons, signature de contrat, poursuite et rechargement : bouton masqué par la navigation mobile corrigé, sans clic forcé.
+- **166 tests réussis**, zéro échec, y compris refus d’une ancienne session de signature sans mutation et extraction des neuf archives de migration.
+- **72 saisons économiques** : deux graines × quatre mandats × trois stratégies × trois saisons. Marché exploré une fois par saison après huit matchs, sans argent ajouté ; trois signatures minimum par scénario. Solde jamais négatif, frais quotidiens recomptés au centime, zéro frais en autogestion.
+- **Deux carrières de 30 saisons**, archives et suivi cohérents. Sauvegardes finales : 105,23 et 105,26 Mo ; général du héros 95 à 46 ans ; maximum 14 et 13 titres par franchise. Ces mesures ne garantissent pas un équilibrage optimal.
+- **Huit saisons de neutralité** : deux saisons lycée et rookie, graines 2026/973 ; égalité avec la V3.8 publiée après normalisation de la version et du seul sous-état representation.
+- **Neuf migrations V3.0–V3.8**, ancien cache actif, copie de secours, match/RNG conservés et réouverture hors ligne.
+- Chromium **320/390/1440 px** : annulation, compromis/refus, deux tentatives, double clic, signature, taux fixé, import d’une autre carrière et hors ligne. Aucun débordement ni erreur JavaScript.
+- Worker identique au calcul direct ; destination conservée sur 80 jours malgré quatre interruptions. Sauvegarde de 30 saisons importée, poursuivie et rechargée, sans clic forcé.
 
-Détails : `docs/v3.8-review.md` et `tests/v38-corrections-report.json`. Pas de validation sur iPhone physique/Safari.
+[CI indépendante : cinq jobs réussis](https://github.com/stephaneflamand973-dot/HOOP-LEGACY/actions/runs/38162171989), commit `896a01d1e438df10858db49bd3acc05654b031dd`. Artifacts récupérés, sommes SHA-256 contrôlées ; `node tools/v39-evidence.mjs` vérifie les empreintes des rapports contre le code livré.
 
-## Campagnes après corrections
+## Lecture économique
 
-Deux graines (2026 et 973), chacune avec une carrière de 30 saisons et quatorze scénarios économiques de trois saisons : **144 saisons au total**. Rapports complets, empreintes vérifiées contre les fichiers moteur corrigés. Les résultats restent identiques aux campagnes précédentes ; aucune formule sportive n’a été modifiée par ces correctifs.
+Dans les scénarios négociés, les frais cumulés sur trois saisons sont environ 62–68 k€ (local), 124–139 k€ (national) et 186–212 k€ (international). Ils dépendent des salaires effectivement obtenus et reçus. Les trajectoires, clubs et durées divergent ; comparer le patrimoine final ne mesure pas seulement l’effet comptable de l’agent. Les parcours lycée → université → draft restent exempts, contrôlés dans chaque job économique.
 
-Scénarios économiques : lycée/rookie, absence de préparation, trois routines et trois stages. Aucun argent injecté, réserve contrôlée à l’achat, soldes minimum non négatifs. Dans ces scénarios, les lycéens ne peuvent pas financer les stages ; les routines restent gratuites. Chez les rookies, la maîtrise atteint rapidement 100, réduisant l’intérêt ultérieur des stages vidéo et tactiques. Les stages partenaires coûtent 255 500 sur trois ans, pour environ 248/254 points cumulés sur plusieurs duos ; ce total n’est pas le score d’un duo unique.
+## Revue et limites
 
-À automatismes 100, l’écart moyen de score est de +1,26 point à domicile et +0,905 à l’extérieur dans les matchs appariés. Ces observations ne garantissent pas un équilibrage optimal ni une victoire ; les trajectoires aléatoires divergent après les premières possessions modifiées.
+Revue V3.9 indépendante : aucun critique ; deux importants corrigés et testés RED→GREEN. Mineurs différés : échéance d’offre non affichée ; focus rendu à la carte plutôt qu’au bouton exact après annulation. Voir `docs/v3.9-review.md`.
 
-Les carrières longues conservent 30 archives. Portland remporte 14 titres NBA avec la graine 2026, Memphis 13 avec 973 ; le seuil d’alerte supérieur à 15/30 n’est pas franchi. Cela ne signifie pas que les dynasties sont résolues. Le héros termine à 95 à 46 ans. Les sauvegardes restent volumineuses, environ 105 Mo.
-
-## Points ouverts avant livraison
-
-La CI du commit `7fbc0064e0d9c85f20d1601593c2ad65fbdf8055` a réussi ses cinq jobs : tests/navigateurs/huit migrations, deux matrices économiques et deux carrières de 30 saisons. Elle répète donc les 144 saisons sur GitHub. Résultats : `tests/v38-ci-report.json` et [exécution GitHub](https://github.com/stephaneflamand973-dot/HOOP-LEGACY/actions/runs/38001898911).
-
-La revue indépendante complète et la validation du site public restent à obtenir. Un compteur explicatif de tirs servis peut inclure une action terminée par des lancers francs ; ce point mineur différé concerne la télémétrie, pas le résultat simulé. Les corrections ciblées d’import ne constituent pas un audit de sécurité complet.
+Pas de test sur iPhone physique/Safari. La réserve historique de revue V3.8 reste distincte. Le workflow GitHub Pages effectue un contrôle public après chaque déploiement : création, match, sauvegarde/rechargement, anciennes vues, mandat, négociation, signature et destination persistante.

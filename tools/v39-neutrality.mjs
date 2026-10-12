@@ -1,0 +1,9 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import crypto from 'node:crypto';
+import * as old from '../.qa-previous38/dist/engine.js';import * as current from '../dist/engine.js';import * as oldSport from '../.qa-previous38/dist/sport-events.js';import * as currentSport from '../dist/sport-events.js';import {VERSION} from '../dist/config.js';
+function step(s,e,sport){if(sport.hasSportPause(s))sport.acknowledgeSport(s);else if(s.pending){if(s.pending.type==='contract'){const i=s.offers.findIndex(o=>o.league==='nba');e.sign(s,i<0?0:i);}else e.decide(s,s.pending.type==='draft-choice'?'draft':s.pending.type==='offseason'?'shoot':s.pending.choices[0][0]);}else e.next(s,{interactive:false});}
+const reports=[];for(const seed of [2026,973])for(const path of ['young','rookie']){
+ const a=old.createGame({...old.defaultBuild(),seed,path}),b=current.createGame({...current.defaultBuild(),seed,path});for(const s of [a,b]){s.life.delegated=true;s.life.policies={routine:'family',media:'team',agent:'local'};}
+ let steps=0;while(a.season<=2&&steps++<4000){step(a,old,oldSport);step(b,current,currentSport);assert.equal(b.day,a.day);assert.equal(b.money,a.money);assert.deepEqual(b.rng,a.rng);}
+ assert.equal(a.history.length,2);const normalized=structuredClone(b);delete normalized.representation;normalized.engine=a.engine;assert.deepEqual(normalized,a);reports.push({seed,path,seasons:2,steps,identical:true});console.log(JSON.stringify(reports.at(-1)));
+}
+const fingerprint=crypto.createHash('sha256').update(['engine','config','representation','representation-state','representation-catalog','negotiation','negotiation-rules','finance','career-plan'].map(n=>fs.readFileSync('dist/'+n+'.js','utf8')).join('')).digest('hex');fs.writeFileSync('tests/v39-neutrality.json',JSON.stringify({engine:VERSION,fingerprint,reference:'c657ca01438fa000cebd9dd474ce445fa70ed614',reports},null,2));

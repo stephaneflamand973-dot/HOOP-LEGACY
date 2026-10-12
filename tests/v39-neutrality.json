@@ -1,0 +1,35 @@
+{
+  "engine": "3.9.0",
+  "fingerprint": "b5943d01f4104698f863436689779261411409ca68f6244b3547009d060d66e6",
+  "reference": "c657ca01438fa000cebd9dd474ce445fa70ed614",
+  "reports": [
+    {
+      "seed": 2026,
+      "path": "young",
+      "seasons": 2,
+      "steps": 150,
+      "identical": true
+    },
+    {
+      "seed": 2026,
+      "path": "rookie",
+      "seasons": 2,
+      "steps": 259,
+      "identical": true
+    },
+    {
+      "seed": 973,
+      "path": "young",
+      "seasons": 2,
+      "steps": 150,
+      "identical": true
+    },
+    {
+      "seed": 973,
+      "path": "rookie",
+      "seasons": 2,
+      "steps": 269,
+      "identical": true
+    }
+  ]
+}

@@ -1,8 +1,20 @@
-# HOOP LEGACY — V3.8.0
+# HOOP LEGACY — V3.9.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.8.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.9.0)
+
+## V3.9 — Agents et négociations
+
+Version validée par les tests, campagnes et contrôles décrits dans `TEST-REPORT.md`.
+
+Dans **Carrière → Mon agent**, choisissez gratuitement votre mandat futur : autogestion **0 %**, conseiller local **1 %**, agence nationale **2 %**, internationale **3 %**. Le taux du contrat déjà signé reste inchangé. La commission porte uniquement sur le salaire net reçu chaque jour, sans frais sur les sponsors ni prélèvement rétroactif.
+
+Les nouvelles offres professionnelles permettent **deux contre-offres** : hausse de 0, 5, 10 ou 15 % du salaire initial, et durée dans la limite d’un an de moins ou de plus (1 à 4 ans). Le club tient compte du niveau, de la concurrence, de l’âge et de son budget. Aucun rôle ni temps de jeu n’est garanti. Le mandat ajoute une marge de négociation ; il ne garantit pas une hausse qui rembourse son coût.
+
+Consultez le brut, le net, les frais et le total théorique avant de confirmer. L’offre initiale reste signable après un refus ou un compromis. La priorité **Stabilité** trie les offres par durée puis net total. Les choix universitaires, la draft et les anciennes offres migrées restent non négociables et sans commission.
+
+Les sauvegardes V3.0–V3.8 conservent leurs matchs en cours, préparations déjà payées et destination de simulation. Le moteur sportif reste en règles V3.8. Les rapports de validation sont décrits dans `TEST-REPORT.md` ; les limites de revue sont consignées dans `docs/v3.9-review.md`.
 
 ## V3.8 — Collectif complet
 
@@ -172,3 +184,7 @@ La validation V3.5 se trouve dans `TEST-REPORT.md`. `QA_LONG_SAVE` permet de tes
 Le rapport `tests/long-run-2026-control.json` est le témoin historique de V3.3, décrit dans `docs/validation-v3.3.md` ; il ne sert pas de preuve pour le moteur V3.5.
 
 `npm run test:v35-browser` vérifie les consignes, les montants de placement, la vente, les décisions familiales, la réouverture et le hors ligne aux largeurs 320/390/1440. Le banc `test:balance` reste une comparaison historique des règles V3.3 et V3.4, distincte des campagnes V3.5.
+
+`npm run test:v39-browser` vérifie les agents, les contre-offres et les confirmations. `npm run test:v39-balance` simule 72 saisons avec exploration annuelle du marché ; `npm run test:v39-neutrality` compare deux saisons lycée et rookie pour deux graines à la V3.8 publiée (extraite dans `.qa-previous38`). `node tools/v39-evidence.mjs` refuse des rapports incomplets ou dont les empreintes diffèrent du code livré.
+
+La suite complète `npm test` contrôle les archives Git des versions précédentes : utilisez un clone avec son historique complet (pas uniquement le ZIP source).

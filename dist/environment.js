@@ -1,6 +1,6 @@
-import {GROUPS} from './config.js?v=3.8.0';
-import {canChange} from './commands.js?v=3.8.0';
-import {receipt,cents} from './finance.js?v=3.8.0';
+import {GROUPS} from './config.js?v=3.9.0';
+import {canChange} from './commands.js?v=3.9.0';
+import {receipt,cents} from './finance.js?v=3.9.0';
 
 export const COACHES=Object.freeze({
  local:Object.freeze({name:'Coach de proximité',price:300,rate:.1}),

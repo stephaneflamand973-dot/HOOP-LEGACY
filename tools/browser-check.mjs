@@ -43,7 +43,7 @@ if(process.env.QA_LONG_SAVE){
  await page.locator('[data-action="tab:home"]:visible').first().click();
  for(let attempt=0;attempt<6;attempt++){
   const state=await snapshot();if(state.day>imported.day)break;
-  if(state.pending==='contract')await page.locator('[data-action^="sign:"]').first().click();else if(state.pending)await page.locator('[data-action^="decision:"]').first().click();
+  if(state.pending==='contract'){await page.locator('[data-action^="sign:"]').first().click();await page.locator('[data-action="sign-confirm"]').click();}else if(state.pending)await page.locator('[data-action^="decision:"]').first().click();
   await page.locator('#advance-size:enabled').selectOption('2');await page.locator('[data-action="advance"]').last().click();await page.waitForFunction(()=>document.querySelector('[data-action="advance"]')&&!document.querySelector('[data-action="stop"]'),null,{timeout:60000});
  }
  const advanced=await snapshot();assert.ok(advanced.day>imported.day);assert.deepEqual(advanced.archives,imported.archives);

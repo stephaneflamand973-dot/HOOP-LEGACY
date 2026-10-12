@@ -1,3 +1,12 @@
+# 3.9.0 — Agents et négociations
+
+- Quatre mandats facultatifs : autogestion, conseiller local, agence nationale et internationale.
+- Deux contre-offres par proposition professionnelle, hausse et durée bornées, réponse expliquée et offre initiale toujours signable.
+- Comparaison du brut, du net, de la commission et du total théorique ; priorité stabilité.
+- Commission quotidienne sur le salaire net effectivement reçu, sans frais sur les sponsors ; taux fixé à la signature.
+- Confirmation de signature, historique borné, rechargement et worker conservant les tentatives et la destination de simulation.
+- Migration des sauvegardes V3.0–V3.8 sans commission rétroactive ni modification des matchs en cours.
+
 # 3.8.0 — Collectif complet
 
 - Routines gratuites de vidéo, travail tactique et préparation avec deux partenaires au maximum.
