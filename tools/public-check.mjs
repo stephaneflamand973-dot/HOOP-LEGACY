@@ -6,7 +6,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROMIUM_EXECUTA
 try{
  const page=await browser.newPage({viewport:{width:390,height:844},isMobile:true,hasTouch:true});
  const errors=[];page.on('pageerror',e=>errors.push(e.message));
- const url='https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v='+VERSION;
+ const url=process.env.QA_PUBLIC_URL||'https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v='+VERSION;
  const response=await page.goto(url,{waitUntil:'networkidle',timeout:45000});assert.equal(response.status(),200);
  await page.waitForSelector('[data-action="next-step"]');for(let i=0;i<6;i++)await page.locator('[data-action="next-step"]').click();
  await page.locator('[data-action="create"]').click();await page.waitForSelector('#advance-size');

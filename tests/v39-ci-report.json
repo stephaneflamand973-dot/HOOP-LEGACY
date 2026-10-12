@@ -1,0 +1,20 @@
+{
+  "engine": "3.9.0",
+  "run": 38162171989,
+  "url": "https://github.com/stephaneflamand973-dot/HOOP-LEGACY/actions/runs/38162171989",
+  "commit": "896a01d1e438df10858db49bd3acc05654b031dd",
+  "tree": "35a0a89098be76764eb3f4f5863e1a632482b852",
+  "conclusion": "success",
+  "jobs": [
+    "validation",
+    "economy (2026)",
+    "economy (973)",
+    "long-career (2026)",
+    "long-career (973)"
+  ],
+  "economicSeasons": 72,
+  "longSeasons": 60,
+  "neutralitySeasons": 8,
+  "migrations": 9,
+  "physicalSafari": false
+}

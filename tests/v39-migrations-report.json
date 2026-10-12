@@ -1,0 +1,96 @@
+{
+  "engine": "3.9.0",
+  "ciRun": 38162171989,
+  "rows": [
+    {
+      "from": "3.0.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.0.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.1.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.1.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.2.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.2.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.3.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.3.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.4.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.4.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.5.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.5.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.6.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.6.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.7.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.7.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.8.0",
+      "to": "3.9.0",
+      "oldCache": true,
+      "backup": "3.8.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    }
+  ]
+}

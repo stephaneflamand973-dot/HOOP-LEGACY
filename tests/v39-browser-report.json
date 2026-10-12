@@ -1,0 +1,27 @@
+{
+  "engine": "3.9.0",
+  "fingerprint": "071c805c0d87b8c6fa3f955d51d8033338d4cb14bb0913a8b8109b749fab4cb1",
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "errors": [],
+  "cancel": true,
+  "compromiseAndRefusal": true,
+  "twoAttempts": true,
+  "doubleClick": true,
+  "initialSignature": true,
+  "contractRateFixed": true,
+  "reload": true,
+  "offline": true,
+  "importClearsQuote": true,
+  "simulation": {
+    "identical": true,
+    "decisions": 4,
+    "day": 80,
+    "commission": 5422.4,
+    "target": 2
+  },
+  "physicalSafari": false
+}

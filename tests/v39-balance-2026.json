@@ -1,0 +1,747 @@
+{
+  "engine": "3.9.0",
+  "fingerprint": "e135d1216d6c58a31ff791d7a35f2de98db2c16c4f52284d79377913b18e963c",
+  "seasons": 3,
+  "seeds": [
+    2026
+  ],
+  "rows": [
+    {
+      "seed": 2026,
+      "mandate": "self",
+      "strategy": "initial",
+      "steps": 1132,
+      "minCash": 0,
+      "attempts": 0,
+      "responses": {},
+      "salaryReceived": 1253182.19,
+      "commission": 0,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-bayern-munich",
+          "salary": 260000,
+          "years": 2,
+          "rate": 0,
+          "minutes": 30
+        },
+        {
+          "day": 421,
+          "club": "club-perth-wildcats",
+          "salary": 416250,
+          "years": 3,
+          "rate": 0,
+          "minutes": 34
+        },
+        {
+          "day": 787,
+          "club": "club-partizan",
+          "salary": 1012500,
+          "years": 3,
+          "rate": 0,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-bayern-munich",
+          "minutes": 1451.0893512928671,
+          "cash": 253397.85,
+          "commission": 0
+        },
+        {
+          "season": 2,
+          "club": "club-perth-wildcats",
+          "minutes": 821.762841822748,
+          "cash": 548607.96,
+          "commission": 0
+        },
+        {
+          "season": 3,
+          "club": "club-partizan",
+          "minutes": 1364.2856892287725,
+          "cash": 1250002.27,
+          "commission": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "self",
+      "strategy": "salary",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "compromise": 3
+      },
+      "salaryReceived": 6845269.5,
+      "commission": 0,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1306250,
+          "years": 2,
+          "rate": 0,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3437500,
+          "years": 3,
+          "rate": 0,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4537500,
+          "years": 3,
+          "rate": 0,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 983192,
+          "commission": 0
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3470242.76,
+          "commission": 0
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6867373.06,
+          "commission": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "self",
+      "strategy": "stability",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "accepted": 3
+      },
+      "salaryReceived": 6277287.65,
+      "commission": 0,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1250000,
+          "years": 3,
+          "rate": 0,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3125000,
+          "years": 4,
+          "rate": 0,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4125000,
+          "years": 4,
+          "rate": 0,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 943956.8,
+          "commission": 0
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3209516.16,
+          "commission": 0
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6299391.21,
+          "commission": 0
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "local",
+      "strategy": "initial",
+      "steps": 1132,
+      "minCash": 0,
+      "attempts": 0,
+      "responses": {},
+      "salaryReceived": 1253182.19,
+      "commission": 11781.17,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-bayern-munich",
+          "salary": 260000,
+          "years": 2,
+          "rate": 0.01,
+          "minutes": 30
+        },
+        {
+          "day": 421,
+          "club": "club-perth-wildcats",
+          "salary": 416250,
+          "years": 3,
+          "rate": 0.01,
+          "minutes": 34
+        },
+        {
+          "day": 787,
+          "club": "club-partizan",
+          "salary": 1012500,
+          "years": 3,
+          "rate": 0.01,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-bayern-munich",
+          "minutes": 1451.0893512928671,
+          "cash": 251585.5,
+          "commission": 1812.35
+        },
+        {
+          "season": 2,
+          "club": "club-perth-wildcats",
+          "minutes": 821.762841822748,
+          "cash": 543813.62,
+          "commission": 4794.34
+        },
+        {
+          "season": 3,
+          "club": "club-partizan",
+          "minutes": 1364.2856892287725,
+          "cash": 1238221.1,
+          "commission": 11781.17
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "local",
+      "strategy": "salary",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "compromise": 3
+      },
+      "salaryReceived": 6907294.15,
+      "commission": 68325.75,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1318750,
+          "years": 2,
+          "rate": 0.01,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3468750,
+          "years": 3,
+          "rate": 0.01,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4578750,
+          "years": 3,
+          "rate": 0.01,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 982712.95,
+          "commission": 9199.1
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3467322.21,
+          "commission": 34219.95
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6861071.96,
+          "commission": 68325.75
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "local",
+      "strategy": "stability",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "accepted": 3
+      },
+      "salaryReceived": 6277287.65,
+      "commission": 62024.65,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1250000,
+          "years": 3,
+          "rate": 0.01,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3125000,
+          "years": 4,
+          "rate": 0.01,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4125000,
+          "years": 4,
+          "rate": 0.01,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 935236.75,
+          "commission": 8720.05
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3178216.76,
+          "commission": 31299.4
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6237366.56,
+          "commission": 62024.65
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "national",
+      "strategy": "initial",
+      "steps": 1132,
+      "minCash": 0,
+      "attempts": 0,
+      "responses": {},
+      "salaryReceived": 1253182.19,
+      "commission": 23562.59,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-bayern-munich",
+          "salary": 260000,
+          "years": 2,
+          "rate": 0.02,
+          "minutes": 30
+        },
+        {
+          "day": 421,
+          "club": "club-perth-wildcats",
+          "salary": 416250,
+          "years": 3,
+          "rate": 0.02,
+          "minutes": 34
+        },
+        {
+          "day": 787,
+          "club": "club-partizan",
+          "salary": 1012500,
+          "years": 3,
+          "rate": 0.02,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-bayern-munich",
+          "minutes": 1451.0893512928671,
+          "cash": 249769.8,
+          "commission": 3628.05
+        },
+        {
+          "season": 2,
+          "club": "club-perth-wildcats",
+          "minutes": 821.762841822748,
+          "cash": 539018.46,
+          "commission": 9589.5
+        },
+        {
+          "season": 3,
+          "club": "club-partizan",
+          "minutes": 1364.2856892287725,
+          "cash": 1226439.68,
+          "commission": 23562.59
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "national",
+      "strategy": "salary",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "compromise": 3
+      },
+      "salaryReceived": 7031343.45,
+      "commission": 139125.5,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1343750,
+          "years": 2,
+          "rate": 0.02,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3531250,
+          "years": 3,
+          "rate": 0.02,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4661250,
+          "years": 3,
+          "rate": 0.02,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 990605.55,
+          "commission": 18746.6
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3494453.81,
+          "commission": 69687.15
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6914321.51,
+          "commission": 139125.5
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "national",
+      "strategy": "stability",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "accepted": 3
+      },
+      "salaryReceived": 6277287.65,
+      "commission": 124045.65,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1250000,
+          "years": 3,
+          "rate": 0.02,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3125000,
+          "years": 4,
+          "rate": 0.02,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4125000,
+          "years": 4,
+          "rate": 0.02,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 926520.05,
+          "commission": 17436.75
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3146921.01,
+          "commission": 62595.15
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6175345.56,
+          "commission": 124045.65
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "international",
+      "strategy": "initial",
+      "steps": 1132,
+      "minCash": 0,
+      "attempts": 0,
+      "responses": {},
+      "salaryReceived": 1253182.19,
+      "commission": 35346.84,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-bayern-munich",
+          "salary": 260000,
+          "years": 2,
+          "rate": 0.03,
+          "minutes": 30
+        },
+        {
+          "day": 421,
+          "club": "club-perth-wildcats",
+          "salary": 416250,
+          "years": 3,
+          "rate": 0.03,
+          "minutes": 34
+        },
+        {
+          "day": 787,
+          "club": "club-partizan",
+          "salary": 1012500,
+          "years": 3,
+          "rate": 0.03,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-bayern-munich",
+          "minutes": 1451.0893512928671,
+          "cash": 247957.45,
+          "commission": 5440.4
+        },
+        {
+          "season": 2,
+          "club": "club-perth-wildcats",
+          "minutes": 821.762841822748,
+          "cash": 534224.12,
+          "commission": 14383.84
+        },
+        {
+          "season": 3,
+          "club": "club-partizan",
+          "minutes": 1364.2856892287725,
+          "cash": 1214655.43,
+          "commission": 35346.84
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "international",
+      "strategy": "salary",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "compromise": 1,
+        "accepted": 2
+      },
+      "salaryReceived": 7155389.1,
+      "commission": 212413.55,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1368750,
+          "years": 2,
+          "rate": 0.03,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3593750,
+          "years": 3,
+          "rate": 0.03,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4743750,
+          "years": 3,
+          "rate": 0.03,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 998146.4,
+          "commission": 28642.5
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3520324.46,
+          "commission": 106411.65
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6965079.11,
+          "commission": 212413.55
+        }
+      ]
+    },
+    {
+      "seed": 2026,
+      "mandate": "international",
+      "strategy": "stability",
+      "steps": 1138,
+      "minCash": 0,
+      "attempts": 3,
+      "responses": {
+        "accepted": 3
+      },
+      "salaryReceived": 6277287.65,
+      "commission": 186070.3,
+      "contracts": [
+        {
+          "day": 30,
+          "club": "club-utah-jazz",
+          "salary": 1250000,
+          "years": 3,
+          "rate": 0.03,
+          "minutes": 28
+        },
+        {
+          "day": 395,
+          "club": "club-toronto-raptors",
+          "salary": 3125000,
+          "years": 4,
+          "rate": 0.03,
+          "minutes": 34
+        },
+        {
+          "day": 760,
+          "club": "club-memphis-grizzlies",
+          "salary": 4125000,
+          "years": 4,
+          "rate": 0.03,
+          "minutes": 34
+        }
+      ],
+      "trajectory": [
+        {
+          "season": 1,
+          "club": "club-utah-jazz",
+          "minutes": 2298.9373108461677,
+          "cash": 917800,
+          "commission": 26156.8
+        },
+        {
+          "season": 2,
+          "club": "club-toronto-raptors",
+          "minutes": 3808.898701078707,
+          "cash": 3115621.61,
+          "commission": 93894.55
+        },
+        {
+          "season": 3,
+          "club": "club-memphis-grizzlies",
+          "minutes": 3718.138622584234,
+          "cash": 6113320.91,
+          "commission": 186070.3
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,4 @@
-# 3.9.0 — Agents et négociations (candidate)
+# 3.9.0 — Agents et négociations
 
 - Quatre mandats facultatifs : autogestion, conseiller local, agence nationale et internationale.
 - Deux contre-offres par proposition professionnelle, hausse et durée bornées, réponse expliquée et offre initiale toujours signable.
