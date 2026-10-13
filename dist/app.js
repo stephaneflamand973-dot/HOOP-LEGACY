@@ -1,5 +1,5 @@
 import {discussionsView} from './v36-view.js?v=3.9.0';
-import {representationView,negotiationOffersView,offerViewId} from './representation-view.js?v=3.9.0';
+import {representationView,negotiationOffersView,offerViewId} from './representation-view.js?v=3.9.0-ui1';
 import {setMandate} from './representation.js?v=3.9.0';
 import {negotiationQuote,submitCounter} from './negotiation.js?v=3.9.0';
 import {collectiveView,stagesView,collectiveMatchSummary} from './v38-view.js?v=3.9.0';
@@ -72,11 +72,11 @@ if(['watch','finish'].includes(act)&&!canChange(s,{busy,match:true}))return;
 if(['sign','sign-current','counter-open'].includes(act)){
  if(!canChange(s,{busy,pending:true})||s.pending?.type!=='contract')return;
  const o=s.offers[Number(arg)],session=s.representation.session,e=session?.offers.find(x=>x.offerId===o?.id);if(!o)return;
- representationUI={offerId:offerViewId(s,Number(arg)),index:Number(arg),open:act==='counter-open',raise:5,years:e?.initial.years||o.years};
+ representationUI={offerId:offerViewId(s,Number(arg)),index:Number(arg),returnFocus:'contract-action-'+act+'-'+arg,open:act==='counter-open',raise:5,years:e?.initial.years||o.years};
  if(act!=='counter-open')representationUI.signature={source:act==='sign-current'?'current':'initial',revision:e?.revision,sessionId:session?.id,offerId:o.id,legacy:!session,terms:JSON.stringify(o)};
  representationFocus=act==='counter-open'?'counter-form':'signature-confirm';render();return;
 }
-if(act==='counter-dismiss'){representationFocus='contract-'+representationUI.index;representationUI={};render();return;}
+if(act==='counter-dismiss'){representationFocus=representationUI.returnFocus||'contract-'+representationUI.index;representationUI={};render();return;}
 if(act==='counter-preview'){
  representationUI.quote=negotiationQuote(s,representationUI.offerId,{raise:representationUI.raise,years:representationUI.years});
  representationUI.message=representationUI.quote?'':'Demande inchangée ou négociation indisponible. Aucune tentative consommée.';render();return;

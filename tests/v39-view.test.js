@@ -4,6 +4,12 @@ import {setMandate} from '../dist/representation.js';
 import {negotiationQuote,submitCounter} from '../dist/negotiation.js';
 import {representationView,contractNegotiationView,negotiationOffersView} from '../dist/representation-view.js';
 const make=()=>{const s=createGame({...defaultBuild(),path:'rookie'});hero(s).contract.years=1;return s;};
+test('vues contrats : échéance stockée expliquée sans expiration automatique',()=>{
+ const s=make();requestTrade(s);const o=s.offers[0],before=JSON.stringify(s);let html=contractNegotiationView(s,o.id,{});
+ assert.match(html,/Échéance annoncée/);assert.ok(html.includes('jour '+o.expires));assert.match(html,/14 jours de jeu/);assert.match(html,/sans expiration automatique/);assert.equal(JSON.stringify(s),before);
+ o.expires=s.day;assert.match(contractNegotiationView(s,o.id,{}),/Échéance annoncée atteinte/);
+ for(const value of [undefined,NaN,Infinity,'<b>date</b>']){o.expires=value;html=contractNegotiationView(s,o.id,{});assert.match(html,/Échéance non précisée/);assert.doesNotMatch(html,/NaN|Infinity|<b>date<\/b>/);}
+});
 test('vues agent : mandat facultatif, taux et frais actuels distincts',()=>{
  const s=make(),before=JSON.stringify(s),html=representationView(s);
  for(const word of ['Autogestion','Conseiller local','Agence nationale','Agence internationale','1 %','2 %','3 %','contrat actuel','mandat futur'])assert.ok(html.includes(word),word);

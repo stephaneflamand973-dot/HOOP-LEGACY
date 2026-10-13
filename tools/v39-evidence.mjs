@@ -8,3 +8,5 @@ const n=read('v39-neutrality');assert.equal(n.fingerprint,fingerprint('v39-neutr
 const b=read('v39-browser-report');assert.equal(b.fingerprint,fingerprint('v39-browser'));assert.deepEqual(b.errors,[]);assert.deepEqual(b.widths,[320,390,1440]);assert.ok(b.simulation.identical&&b.compromiseAndRefusal&&b.importClearsQuote);
 const m=read('v39-migrations-report');assert.equal(m.rows.length,9);for(const r of m.rows){assert.equal(r.to,'3.9.0');assert.ok(r.oldCache&&r.matchPreserved&&r.offlineVersionedLink);assert.deepEqual(r.errors,[]);}
 console.log(JSON.stringify({engine:'3.9.0',economicSeasons:rows.length*3,longSeasons:60,neutralitySeasons:8,migrations:9,fingerprintsVerified:true}));
+
+const polish=read('v39-polish-cache-report');assert.equal(polish.fingerprint,fingerprint('v39-polish-cache'));assert.ok(polish.oldCache&&polish.httpCache&&polish.saveIdentical&&polish.offline&&polish.focusReturnsToTrigger);assert.deepEqual(polish.errors,[]);assert.ok(b.focusReturnsToTrigger);

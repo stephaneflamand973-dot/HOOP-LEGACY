@@ -23,3 +23,10 @@ Dans les scénarios négociés, les frais cumulés sur trois saisons sont enviro
 Revue V3.9 indépendante : aucun critique ; deux importants corrigés et testés RED→GREEN. Mineurs différés : échéance d’offre non affichée ; focus rendu à la carte plutôt qu’au bouton exact après annulation. Voir `docs/v3.9-review.md`.
 
 Pas de test sur iPhone physique/Safari. La réserve historique de revue V3.8 reste distincte. Le workflow GitHub Pages effectue un contrôle public après chaque déploiement : création, match, sauvegarde/rechargement, anciennes vues, mandat, négociation, signature et destination persistante.
+
+
+## Correctif interface 1 — 13 octobre 2026
+
+Les deux mineurs différés ci-dessus sont corrigés : échéance annoncée lisible (sans ajouter d’expiration automatique), et retour du focus au déclencheur exact après annulation. Aucun changement du moteur ni du format de sauvegarde.
+
+Validation : 167 tests, parcours Chromium 320/390/1440, et passage de la V3.9 publiée au correctif avec ancien cache HTTP, réouverture hors ligne et sauvegarde identique. Le test attend le changement effectif de contrôleur avant la réouverture. Les empreintes économiques et longues durées restent inchangées ; la preuve navigateur est renouvelée. Revue indépendante du correctif sans point actionnable ; Safari/iPhone physique reste non testé. Le contrôle après publication exige maintenant les échéances et le retour du focus.

@@ -1,6 +1,6 @@
 {
   "engine": "3.9.0",
-  "fingerprint": "071c805c0d87b8c6fa3f955d51d8033338d4cb14bb0913a8b8109b749fab4cb1",
+  "fingerprint": "dd1b42520942eb0a68be8cee2ec1d6803999e7f39bc1ac4b3186fa519084a820",
   "widths": [
     320,
     390,
@@ -8,6 +8,7 @@
   ],
   "errors": [],
   "cancel": true,
+  "focusReturnsToTrigger": true,
   "compromiseAndRefusal": true,
   "twoAttempts": true,
   "doubleClick": true,

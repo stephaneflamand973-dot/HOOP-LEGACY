@@ -13,6 +13,7 @@ const legacy=await import(pathToFileURL(path.join(previous,'engine.js')));
 const old=legacy.createGame(legacy.defaultBuild()),game=legacy.competition(old).schedule[0];
 old.day=game.day;old.match=legacy.startMatch(old,game);legacy.continueMatch(old,null,60);
 const fixture={save:structuredClone(old)};legacy.continueMatch(old,null,10000);fixture.finished=JSON.parse(JSON.stringify(old.lastMatch));fixture.finishedRng=structuredClone(old.rng);
+const currentCache=fs.readFileSync(new URL('../dist/sw.js',import.meta.url),'utf8').match(/const CACHE='([^']+)'/)[1];
 const current=new URL('../dist/',import.meta.url).pathname,output=new URL('../test-results/',import.meta.url).pathname;
 fs.mkdirSync(output,{recursive:true});let served=previous;
 const server=http.createServer((req,res)=>{
@@ -47,10 +48,10 @@ try{
    q.onsuccess=()=>{resolve({engine:q.result?.engine,match:q.result?.match});r.result.close();};q.onerror=()=>reject(q.error);
   };
  }),oldVersion);assert.equal(backup.engine,oldVersion);assert.deepEqual(backup.match,fixture.save.match);
- await page.waitForFunction(async v=>{
+ await page.waitForFunction(async ({v,cache})=>{
   const worker=navigator.serviceWorker.controller;
-  return worker?.state==='activated'&&worker.scriptURL.endsWith('sw.js?v='+v)&&!!(await(await caches.open('hoop-legacy-'+v)).match('./legacy.js?v='+v));
- },VERSION);
+  return worker?.state==='activated'&&worker.scriptURL.endsWith('sw.js?v='+v)&&!!(await(await caches.open(cache)).match('./legacy.js?v='+v));
+ },{v:VERSION,cache:currentCache});
  await page.locator('[data-action="finish"]').click();await page.waitForSelector('text=Dernier match');
  const finished=await page.evaluate(async v=>await(await import('./storage.js?v='+v)).load(),VERSION);
  assert.deepEqual(JSON.parse(JSON.stringify(finished.lastMatch)),fixture.finished);assert.deepEqual(finished.rng,fixture.finishedRng);

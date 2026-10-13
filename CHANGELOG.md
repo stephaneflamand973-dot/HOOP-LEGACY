@@ -1,3 +1,9 @@
+# 3.9.0 — Correctif interface 1 (13 octobre 2026)
+
+- Échéance annoncée affichée sur les offres, avec rappel que la décision met la simulation en pause.
+- Annuler une négociation ou une signature rend le focus au bouton qui l’a ouverte.
+- Cache et URL des modules d’interface renouvelés ; navigation revalidée pour les installations existantes.
+
 # 3.9.0 — Agents et négociations
 
 - Quatre mandats facultatifs : autogestion, conseiller local, agence nationale et internationale.

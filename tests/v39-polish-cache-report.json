@@ -1,0 +1,11 @@
+{
+  "engine": "3.9.0",
+  "revision": "interface-1",
+  "fingerprint": "d11ce9c2deee3b0484301fa7614e8ce5c074c35388d0147c3c738974060ace57",
+  "oldCache": true,
+  "httpCache": true,
+  "saveIdentical": true,
+  "offline": true,
+  "focusReturnsToTrigger": true,
+  "errors": []
+}
