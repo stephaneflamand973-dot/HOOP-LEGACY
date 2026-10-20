@@ -1,3 +1,4 @@
+import {initV40,validateV40} from './v40-state.js?v=3.9.0';
 import {initRepresentation,validateRepresentation} from './representation-state.js?v=3.9.0';
 import {openNegotiations,prepareSignature,finishSignature,closeNegotiations} from './representation.js?v=3.9.0';
 import {observeLife} from './life-context.js?v=3.9.0';
@@ -247,7 +248,7 @@ function migrateV1(old){if(!old||![1,2].includes(old.schema)||!Array.isArray(old
 export function migrateLegacy(old){
  if(!old||![1,2,3,4].includes(old.schema))throw Error('Sauvegarde incompatible');
  if(old.schema===4){
-  if(old.engine===VERSION)return validate(old);
+  if(old.engine===VERSION){if(old.v40!==undefined)return validate(old);const s=structuredClone(old);initV40(s);return validate(s);}
   if(!['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0','3.7.0','3.8.0'].includes(old.engine))throw Error('Version de moteur incompatible');
   let s=structuredClone(old);delete s.representation;if(old.engine!=='3.8.0')delete s.collective;if(!['3.7.0','3.8.0'].includes(old.engine))delete s.environment;else s.environment.trainingProcessedDay??=null;s.engine=VERSION;initDevelopment(s);
   // Recover prior selections from V3 archives so an existing rookie cannot be drafted again.
@@ -268,8 +269,9 @@ function initV33(s,recovered=false){
  initSimulation(s);initSportEvents(s);initMastery(s,recovered);initCareerLedger(s,recovered);
  for(const c of s.competitions){recoverPostseason(s,c,standings(s,c.id));if(recovered&&c.champion){const title=awardTitle(s,c,{recovered:true});if(title?.eligible)recordLegacyTitle(s);}}
 }
-function initV34(s,recovered=false){initRepresentation(s);initStatistics(s,recovered);initCareerPlan(s);beginChapters(s);initEnvironment(s);initCollective(s);s.mastery.sources.collective??=0;}
+function initV34(s,recovered=false){initV40(s);initRepresentation(s);initStatistics(s,recovered);initCareerPlan(s);beginChapters(s);initEnvironment(s);initCollective(s);s.mastery.sources.collective??=0;}
 export function validate(s){
+ if(s?.v40!==undefined)validateV40(s);
  if(!s||s.schema!==4||s.engine!==VERSION||!Array.isArray(s.players)||!Array.isArray(s.teams)||!Array.isArray(s.competitions)||s.competitions.length!==LEAGUES.length||!s.career||!s.rng)throw Error('Sauvegarde incompatible');
  let ids=new Set();for(let p of s.players){if(typeof p.id!=='string'||!/^[a-zA-Z0-9-]{1,150}$/.test(p.id)||ids.has(p.id))throw Error('Identifiant joueur invalide');ids.add(p.id);if(!WEIGHTS[p.pos]||typeof p.name!=='string'||!Number.isFinite(p.age)||p.age<16||p.age>80||KEYS.some(k=>!Number.isFinite(p.attrs?.[k])||p.attrs[k]<25||p.attrs[k]>99)||!p.season||!p.byLeague||!p.contract||!Number.isFinite(p.contract.salary)||p.contract.salary<0||!p.badges||!Array.isArray(p.equipped)||!Array.isArray(p.learned)||!Number.isFinite(p.injury)||p.injury<0)throw Error('Joueur invalide');}
  let active=new Set(),clubs=new Set();for(let t of s.teams){if(clubs.has(t.id)||!leagueDef(t.league)||typeof t.name!=='string'||t.roster?.length<5||t.roster?.length>20)throw Error('Club invalide');clubs.add(t.id);for(let id of t.roster){if(!ids.has(id)||active.has(id))throw Error('Effectif incohérent');active.add(id);}}
