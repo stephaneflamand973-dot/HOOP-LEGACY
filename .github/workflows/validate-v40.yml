@@ -1,0 +1,23 @@
+name: V4 reconstruction tests
+on:
+  push:
+    branches: [work/hoop-legacy-v4.0]
+permissions:
+  contents: read
+concurrency:
+  group: hoop-v40-tests
+  cancel-in-progress: true
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm test
