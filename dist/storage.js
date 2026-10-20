@@ -1,18 +1,53 @@
 import {VERSION} from './config.js?v=3.9.0';
 import {validate,migrateLegacy} from './engine.js?v=3.9.0';
-const open=()=>new Promise((resolve,reject)=>{let r=indexedDB.open('hoop-legacy-v1',3);r.onupgradeneeded=()=>{for(let name of ['slots','archives','slotMeta'])if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name)};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);r.onblocked=()=>reject(Error('Fermez les autres onglets du jeu pour terminer la mise à jour.'))});
-let writes=Promise.resolve();const archiveKeys=new WeakMap();
+const open=()=>new Promise((resolve,reject)=>{
+ const r=indexedDB.open('hoop-legacy-v1',4);let blocked=false;
+ r.onupgradeneeded=()=>{for(const name of ['slots','archives','slotMeta'])if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name);};
+ r.onsuccess=()=>{const db=r.result;db.onversionchange=()=>db.close();if(blocked){db.close();return;}resolve(db);};
+ r.onerror=()=>reject(r.error);
+ r.onblocked=()=>{blocked=true;reject(Error('Fermez les autres onglets du jeu pour terminer la mise à jour.'));};
+});
+let writes=Promise.resolve();const archiveKeys=new WeakMap(),revisions=new Map();
 function archiveKey(a){if(a.deferred&&a.archiveRef)return a.archiveRef;let key=archiveKeys.get(a);if(key)return key;let str=JSON.stringify(a),h=2166136261;for(let i=0;i<str.length;i++)h=Math.imul(h^str.charCodeAt(i),16777619);key='season-'+a.season+'-'+(h>>>0)+'-'+str.length;archiveKeys.set(a,key);return key;}
 export function save(state,slot='auto'){
  if(!state)return Promise.resolve();if(state.schema===4)validate(needsMigration(state)?migrateLegacy(state):state);const refs=(state.archives||[]).map(archiveKey),snapshot=structuredClone({...state,archives:[]}),archives=[...(state.archives||[])];snapshot.archiveRefs=refs;snapshot.archiveIndex=archives.map((a,i)=>({season:a.season,team:a.team,league:a.league,archiveRef:refs[i],deferred:true}));
  writes=writes.catch(()=>{}).then(()=>write(snapshot,archives,slot));return writes;
 }
-async function write(state,archives,slot){let db=await open();return new Promise((res,rej)=>{let tx=db.transaction(['slots','archives','slotMeta'],'readwrite'),slots=tx.objectStore('slots'),store=tx.objectStore('archives');
- for(let i=0;i<archives.length;i++){if(archives[i].deferred)continue;let key=state.archiveRefs[i],req=store.get(key);req.onsuccess=()=>{if(!req.result)store.put(archives[i],key);};}
- if(slot==='auto'){let previous=slots.get(slot);previous.onsuccess=()=>{if(previous.result)slots.put(previous.result,'rollback');};}
- slots.put(state,slot);tx.objectStore('slotMeta').put({savedAt:Date.now()},slot);tx.oncomplete=()=>{db.close();res()};tx.onerror=()=>{db.close();rej(tx.error)};tx.onabort=()=>{db.close();rej(tx.error||Error('Écriture interrompue'))};});}
+async function write(state,archives,slot){
+ const db=await open();
+ return new Promise((res,rej)=>{
+  const tx=db.transaction(['slots','archives','slotMeta'],'readwrite'),slots=tx.objectStore('slots'),store=tx.objectStore('archives'),meta=tx.objectStore('slotMeta');
+  let conflict=null,revision;
+  const current=meta.get(slot);
+  current.onsuccess=()=>{
+   const actual=current.result?.revision||0;
+   if(actual!==(revisions.get(slot)||0)){conflict=Error('Cette carrière a été enregistrée dans un autre onglet. Rechargez-la avant de continuer.');tx.abort();return;}
+   revision=actual+1;
+   for(let i=0;i<archives.length;i++){
+    if(archives[i].deferred)continue;
+    const key=state.archiveRefs[i],req=store.get(key);req.onsuccess=()=>{if(!req.result)store.put(archives[i],key);};
+   }
+   if(slot==='auto'){
+    const previous=slots.get(slot);previous.onsuccess=()=>{
+     if(!previous.result)return;
+     slots.put(previous.result,'rollback');
+     const backupMeta=meta.get('rollback');backupMeta.onsuccess=()=>meta.put({savedAt:Date.now(),revision:(backupMeta.result?.revision||0)+1},'rollback');
+    };
+   }
+   slots.put(state,slot);meta.put({savedAt:Date.now(),revision},slot);
+  };
+  tx.oncomplete=()=>{revisions.set(slot,revision);db.close();res();};
+  tx.onerror=()=>{db.close();rej(conflict||tx.error);};
+  tx.onabort=()=>{db.close();rej(conflict||tx.error||Error('Écriture interrompue'));};
+ });
+}
 export async function load(slot='auto',{lazy=false}={}){
- await writes.catch(()=>{});let db=await open();let data=await new Promise((res,rej)=>{let r=db.transaction('slots').objectStore('slots').get(slot);r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)});
+ await writes.catch(()=>{});let db=await open();let data=await new Promise((res,rej)=>{
+ const tx=db.transaction(['slots','slotMeta']),r=tx.objectStore('slots').get(slot),m=tx.objectStore('slotMeta').get(slot);
+ tx.oncomplete=()=>{revisions.set(slot,m.result?.revision||0);res(r.result);};
+ tx.onerror=()=>{db.close();rej(tx.error);};
+ tx.onabort=()=>{db.close();rej(tx.error||Error('Lecture interrompue'));};
+});
  if(data?.archiveRefs?.length){let refs=data.archiveRefs;data.archives=await new Promise((res,rej)=>{let tx=db.transaction('archives'),out=new Array(refs.length);refs.forEach((key,i)=>{if(lazy&&data.engine===VERSION&&data.archiveIndex?.[i]&&i<refs.length-1){out[i]=data.archiveIndex[i];return;}let r=tx.objectStore('archives').get(key);r.onsuccess=()=>{if(!r.result){rej(Error('Archive manquante : chargez le secours ou votre export JSON.'));return;}out[i]=r.result;};r.onerror=()=>rej(r.error);});tx.oncomplete=()=>res(out);tx.onerror=()=>rej(tx.error);});delete data.archiveRefs;delete data.archiveIndex;}
  db.close();if(!data)return null;if(needsMigration(data)){let migrated=migrate(data);await save(data,(data.schema===4?'backup-before-'+data.engine+'-':'backup-before-migration-')+slot);data=migrated;await save(data,slot);}return validate(data);
 }
@@ -38,7 +73,7 @@ export function deleteSlot(slot){
    const referenced=new Set(remaining.result.flatMap(s=>s.archiveRefs||[]));
    const cursor=archives.openCursor();cursor.onsuccess=()=>{const c=cursor.result;if(!c)return;if(!referenced.has(c.key))c.delete();c.continue();};
   };
-  tx.oncomplete=()=>{db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};tx.onabort=()=>{db.close();reject(tx.error||Error('Suppression interrompue'));};
+  tx.oncomplete=()=>{revisions.delete(slot);db.close();resolve();};tx.onerror=()=>{db.close();reject(tx.error);};tx.onabort=()=>{db.close();reject(tx.error||Error('Suppression interrompue'));};
  });});return writes;
 }
 
