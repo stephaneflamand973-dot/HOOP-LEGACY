@@ -27,7 +27,7 @@ export function coachQuote(s,offerId,domain){
 function beginPeriod(s,offerId,domain,start){
  const e=s.environment,o=offerFor(offerId),id=e.nextId++;
  s.money=cents(s.money-o.price);receipt(s,`${o.name} · période #${id}`,-o.price);
- e.contract={id,catalogVersion:1,offerId,domain,price:o.price,rate:o.rate,bought:s.day,start,end:start+29,lastSessionDay:null,sessions:0,extraXP:0};
+ e.contract={id,catalogVersion:2,offerId,domain,price:o.price,rate:o.rate,bought:s.day,start,end:start+29,lastSessionDay:null,sessions:0,extraXP:0};
  e.totals.paid=cents(e.totals.paid+o.price);e.notice=null;
 }
 export function hireCoach(s,offerId,domain,{busy=false}={}){
@@ -68,7 +68,7 @@ export function validateEnvironment(s){
  const periods=[...e.history,...(e.contract?[e.contract]:[])],ids=new Set();let paid=0,sessions=0,extraXP=0,previous=null;
  if(e.totals.extraXP>(s.development?.sources?.training??0))fail();
  for(const c of periods){
-  if(!c||!integer(c.id)||c.id<1||c.id>=e.nextId||ids.has(c.id)||c.catalogVersion!==1||!offerFor(c.offerId)||!Object.hasOwn(GROUPS,c.domain))fail();
+  if(!c||!integer(c.id)||c.id<1||c.id>=e.nextId||ids.has(c.id)||![1,2].includes(c.catalogVersion)||!offerFor(c.offerId)||!Object.hasOwn(GROUPS,c.domain))fail();
   const o=offerFor(c.offerId),archived=c!==e.contract;
   // At most 38 raw XP in the coached domain (hard pro training plus video).
   if(c.extraXP>c.sessions*Math.ceil(38*o.rate)||!archived&&c.end<s.day)fail();

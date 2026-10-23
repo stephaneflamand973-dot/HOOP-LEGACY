@@ -1,3 +1,4 @@
+import {closeServices} from './services.js?v=3.9.0';
 import {closeTeamWork} from './career-plan.js?v=3.9.0';
 import {closeEnvironment} from './environment.js?v=3.9.0';
 import {closeStage} from './collective.js?v=3.9.0';
@@ -13,6 +14,7 @@ export function retireCareer(s) {
   closeEnvironment(s,'La retraite termine votre accompagnement.');
   closeStage(s,'La retraite clôt le stage, sans remboursement.');
   closeRepresentation(s,'La retraite clôt votre représentation.');
+  closeServices(s,'La retraite clôt le service.');
   s.retired=true;
   s.phase='Retraite';
   if (s.simulation) s.simulation.cursor=null;

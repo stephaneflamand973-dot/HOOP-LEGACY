@@ -67,7 +67,7 @@ export function refreshWorld(s){initWorld(s);s.lastDraft=[];let pool=new Set(s.f
  // Budgets constrain future offers only. Active commitments are never rescaled.
  for(let t of clubs)updateProject(s,t);
  let remaining=[...pool].map(id=>getPlayer(s,id)).sort((a,b)=>rating(b)-rating(a));s.freeAgents=remaining.slice(0,180).map(p=>p.id);for(let p of remaining.slice(180)){remember(s,p);retired.add(p.id);}
- let active=new Set([...s.teams.flatMap(t=>t.roster),...s.freeAgents,s.hero]);s.players=s.players.filter(p=>active.has(p.id)&&!retired.has(p.id));s.world.drafts.push({season:s.season-1,picks:s.lastDraft});s.world.transactions=s.world.transactions.slice(0,300);syncCollective(s);
+ let active=new Set([...s.teams.flatMap(t=>t.roster),...s.freeAgents,s.hero]);s.players=s.players.filter(p=>active.has(p.id)&&!retired.has(p.id));if(s.v40){const live=new Set(s.players.map(p=>p.id));for(const id of Object.keys(s.v40.roles))if(!live.has(id))delete s.v40.roles[id];}s.world.drafts.push({season:s.season-1,picks:s.lastDraft});s.world.transactions=s.world.transactions.slice(0,300);syncCollective(s);
 }
 export function marketDay(s){if(s.day%45!==0||s.day%365>180||s.match)return;initWorld(s);let clubs=s.teams.filter(t=>!leagueDef(t.league).amateur);
  const offset=Math.floor(rng(s,'career')*clubs.length);for(let i=0;i<clubs.length;i++){const a=clubs[(i+offset)%clubs.length];updateProject(s,a);for(const b of clubs.filter(t=>t.id!==a.id&&t.league===a.league)){updateProject(s,b);const candidates=t=>t.roster.map(id=>getPlayer(s,id)).filter(p=>p.id!==s.hero&&p.age<35&&!p.injury).sort((p,q)=>overall(p)-overall(q)||p.id.localeCompare(q.id)).slice(0,6);for(const p of candidates(a))for(const q of candidates(b))if(executeTrade(s,a,b,p,q))return;}}

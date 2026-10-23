@@ -1,3 +1,4 @@
+import {startMatch as v38Start,stepMatch as v38Step} from '../dist/match-v38.js';
 import test from 'node:test';import assert from 'node:assert/strict';
 import {createGame,defaultBuild,competition,team,finalizeMatch} from '../dist/engine.js';
 import {initCollective,duoFor,pairKey} from '../dist/collective-state.js';
@@ -22,7 +23,7 @@ test('duos match : clôture une fois et croissance amortie',()=>{
  m.done=true;finishCollectiveMatch(s,m);assert.equal(duoFor(s,g.home,a,b).score,50.4);assert.equal(duoFor(s,g.home,a,b).sources.match,.4);m=JSON.parse(JSON.stringify(m));const before=structuredClone(s);finishCollectiveMatch(s,m);assert.deepEqual(s,before);
 });
 test('match : zéro automatisme préserve exactement règles 3.5 et RNG',()=>{
- for(const seed of [2026,973,7]){const s=createGame({...defaultBuild(),path:'rookie',seed}),a=structuredClone(s),g=competition(s).schedule[0],m=startMatch(s,g),legacy=oldStart(a,g);stepMatch(s,m,20000);oldStep(a,legacy,20000);const stripped=structuredClone(m);delete stripped.collective;stripped.rulesVersion='3.5.0';assert.deepEqual(stripped,legacy);assert.deepEqual(s.rng,a.rng);}
+ for(const seed of [2026,973,7]){const s=createGame({...defaultBuild(),path:'rookie',seed}),a=structuredClone(s),g=competition(s).schedule[0],m=v38Start(s,g),legacy=oldStart(a,g);v38Step(s,m,20000);oldStep(a,legacy,20000);const stripped=structuredClone(m);delete stripped.collective;stripped.rulesVersion='3.5.0';assert.deepEqual(stripped,legacy);assert.deepEqual(s.rng,a.rng);}
 });
 test('match : reprise historique et découpage moderne conservent résultats et compteurs',()=>{
  const base=make(),g=competition(base).schedule[0];

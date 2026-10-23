@@ -1,7 +1,8 @@
 import test from 'node:test';import assert from 'node:assert/strict';
 import {createGame,defaultBuild,hero,competition,requestTrade,sign,migrateLegacy,validate} from '../dist/engine.js';
 import {parseSave,save,load} from '../dist/storage.js';
-import {startMatch,stepMatch} from '../dist/match.js';
+import {stepMatch} from '../dist/match.js';
+import {startMatch} from '../dist/match-v38.js';
 import {hireCoach} from '../dist/environment.js';
 import {stageQuote,bookStage} from '../dist/collective.js';
 import {setMandate} from '../dist/representation.js';

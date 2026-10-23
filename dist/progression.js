@@ -1,3 +1,5 @@
+import {serviceTraining,formationSession} from './services.js?v=3.9.0';
+import {V40_RULES} from './v40-rules.js?v=3.9.0';
 import {canChange} from './commands.js?v=3.9.0';
 import {initEnvironment,coachTraining} from './environment.js?v=3.9.0';
 import {masteryTraining} from './system.js?v=3.9.0';
@@ -13,7 +15,8 @@ export function costDetails(p,k){
  // Physical maintenance consumes reserves increasingly; technique stays cheaper.
  const onset=EXPLOSIVE.has(k)?28:ATHLETIC.has(k)?30:36;
  const ageFactor=1+Math.pow(Math.max(0,p.age-onset)/(EXPLOSIVE.has(k)?3.5:ATHLETIC.has(k)?3.5:5),EXPLOSIVE.has(k)||ATHLETIC.has(k)?3:2);
- return {base:Math.round(base),ageFactor,total:Math.round(base*ageFactor)};
+ const masteryFactor=1+.025*Math.max(0,p.attrs[k]-75)+.015*Math.max(0,p.attrs[k]-90)**2;
+ return {base:Math.round(base),ageFactor,masteryFactor,total:Math.max(1,Math.round(base*ageFactor*masteryFactor))};
 }
 export const costFor=(p,k)=>costDetails(p,k).total;
 export function initDevelopment(s){
@@ -48,18 +51,22 @@ export function matchXP(s,p,b,league){if(!b?.min)return null;initDevelopment(s);
 export function trainingDay(s,p){initDevelopment(s);initEnvironment(s);if(s.environment.trainingProcessedDay===s.day)return;s.environment.trainingProcessedDay=s.day;if(p.injury||s.environment.lastTrainingDay===s.day)return;
  let plan=s.trainingPlan,rest=s.activity==='repos'||p.fatigue>65;
  if(rest){p.fatigue=Math.max(0,p.fatigue-7);return;}
- if(s.day%2!==0)return; // Fixed dates: clicking or splitting time cannot farm a session.
+ if(s.day%2!==0)return;
+ if(formationSession(s,p))return; // Fixed dates: clicking or splitting time cannot farm a session.
  s.environment.lastTrainingDay=s.day;
  let intensity=plan.intensity==='light'?.7:plan.intensity==='hard'?1.25:1;
  if(plan.mode==='assisted'&&p.fatigue>40)intensity=.65;intensity*=Math.max(.85,1-(s.life?.sponsors.reduce((n,c)=>n+c.obligation,0)||0)*.025-(s.life?.children.length||0)*.015);
- const focus=plan.domain,raw=Object.fromEntries(DOMAINS.map(d=>[d,(d===focus?29:12)*intensity*(s.career.stage==='highschool'?.25:s.career.stage==='college'?.45:.8)]));
+ const legacyAssiette=s.environment.contract?.catalogVersion===1&&s.day>=s.environment.contract.start&&s.day<=s.environment.contract.end;
+ const focus=plan.domain,raw=Object.fromEntries(DOMAINS.map(d=>[d,(d===focus?29:legacyAssiette?12:V40_RULES.trainingOther)*intensity*(s.career.stage==='highschool'?.25:s.career.stage==='college'?.45:.8)]));
  if(s.activity==='video'){raw.Création+=9;raw.Défense+=9;s.iq=Math.min(99,s.iq+.1);}
  if(s.activity==='etudes'){s.career.academics=Math.min(100,s.career.academics+.6);for(let d of DOMAINS)raw[d]*=.8;}
  if(s.activity==='famille')for(let d of DOMAINS)raw[d]*=.8;
- const coached=coachTraining(s,p,raw);
- masteryTraining(s,intensity);p.fatigue=Math.min(100,p.fatigue+intensity*3);awardXP(s,p,coached.amounts,'training');
+ const coached=coachTraining(s,p,raw),facility=serviceTraining(s,p,raw,coached);
+ const before={...p.attrs};masteryTraining(s,intensity);p.fatigue=Math.min(100,p.fatigue+intensity*3);const amounts=awardXP(s,p,facility.amounts,'training');
+ if(s.v40){s.v40.training.lastDay=s.day;s.v40.training.history.push({day:s.day,amounts,coachXP:coached.extraXP,installationXP:facility.extraXP,legacyAssiette,gains:Object.fromEntries(KEYS.filter(k=>p.attrs[k]!==before[k]).map(k=>[k,p.attrs[k]-before[k]]))});s.v40.training.history=s.v40.training.history.slice(-24);}
 }
 export function ageAttributes(p,{care=1,ai=false,coach=65,random=()=>.5}={}){
+ care=Math.max(1,Math.min(1.35,Number.isFinite(care)?care:1));
  const changes={},minutes=p.season?.gp?p.season.min/p.season.gp:0;
  const opportunity=.42+Math.min(.58,minutes/38),support=.85+Math.max(0,coach-50)/160;
  const late=(p.developmentTiming??0)>=.8;
@@ -70,8 +77,8 @@ export function ageAttributes(p,{care=1,ai=false,coach=65,random=()=>.5}={}){
    const mastery=1/(1+(Math.max(0,p.attrs[k]-76)/12)**2);
    delta=window*(p.developmentRate??1)*opportunity*support*mastery*(WEIGHTS[p.pos]?.[k]?1.08:.65)*(.7+random()*.6);
   }
-  if(EXPLOSIVE.has(k)&&p.age>=30)delta-=(p.age-29)*.17/care;
-  else if(ATHLETIC.has(k)&&p.age>=33)delta-=(p.age-32)*.12/care;
+  if(EXPLOSIVE.has(k)&&p.age>=30)delta-=(p.age-29)*.20/care;
+  else if(ATHLETIC.has(k)&&p.age>=33)delta-=(p.age-32)*.14/care;
   else if(['pass','interior','post'].includes(k)){
    if(p.age>=28&&p.age<36)delta+=.2;
    else if(p.age>=40)delta-=(p.age-39)*.05/care;
@@ -89,3 +96,5 @@ export function closeDevelopmentYear(s,p,aging){
  d.year={season:s.season,start:{...p.attrs},sources:{match:0,training:0},gains:0};
  return d.lastSeason;
 }
+
+export function developmentProfile(p){const mean=d=>GROUPS[d].reduce((n,k)=>n+p.attrs[k],0)/GROUPS[d].length;const scores={Créateur:mean('Création'),Scoreur:(mean('Finition')+mean('Tir'))/2,Défenseur:mean('Défense'),Intérieur:(mean('Finition')+mean('Rebond'))/2};const rows=Object.entries(scores).sort((a,b)=>b[1]-a[1]);return {label:rows[0][1]-rows[1][1]<3?'Polyvalent':rows[0][0],scores};}

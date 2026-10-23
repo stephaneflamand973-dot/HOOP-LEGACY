@@ -1,3 +1,4 @@
+import {projectRole,applyRole} from './role.js?v=3.9.0';
 import {offerNet} from './representation.js?v=3.9.0';
 import {canChange} from './commands.js?v=3.9.0';
 import {hero,team,getPlayer,overall,clamp,log} from './engine.js?v=3.9.0';
@@ -5,12 +6,7 @@ import {leagueDef} from './leagues.js?v=3.9.0';
 import {sportingPause} from './sport-events.js?v=3.9.0';
 export const PREFERENCES={balanced:'Équilibre',minutes:'Temps de jeu',title:'Projet de titre',salary:'Salaire',stability:'Stabilité'};
 export function initCareerPlan(s){s.careerPlan??={version:1,preference:'balanced',evaluation:null,reviews:[]};s.careerPlan.discussions??={version:1,history:[],cooldowns:{},teamwork:null};}
-export function roleProjection(s,club=team(s)){
- const p=hero(s),rivals=club.roster.map(id=>getPlayer(s,id)).filter(q=>q.id!==s.hero&&q.pos===p.pos),rival=rivals.length?Math.max(...rivals.map(overall)):leagueDef(club.league).level;
- let minutes=Math.round(clamp(19+(overall(p)-rival)*.62+(s.trust-50)*.19,10,Math.min(leagueDef(club.league).minutes-4,38)));
- if(s.career.stage!=='pro')minutes=Math.max(21,minutes);
- return {minutes,role:minutes>=33?'Joueur majeur':minutes>=27?'Titulaire':minutes>=23?'Sixième homme':minutes>=17?'Rotation':'Développement',rival};
-}
+export function roleProjection(s,club=team(s)){return projectRole(s,s.hero,club.id);}
 export function requestRole(s){
  if(!canChange(s)||s.careerPlan.evaluation||s.day-(s.lastRoleRequest??-100)<21)return false;
  s.lastRoleRequest=s.day;
@@ -24,7 +20,7 @@ export function reviewCoach(s,reason=null){
  const p=hero(s);
  if(!reason&&e.gp<e.targetGames&&p.injury&&!e.extended){e.due=s.day+14;e.extended=true;log(s,'Évaluation reportée','La blessure reporte le bilan du coach de quatorze jours.');return false;}
  const avg=e.gp?e.grades/e.gp:0,projection=roleProjection(s),met=e.gp>=e.targetGames&&avg>=e.targetGrade;
- if(!reason&&met&&!p.injury){s.minutes=projection.minutes;s.role=projection.role;}
+ if(!reason&&met&&!p.injury){applyRole(s,'match');}
  const outcome=reason||e.gp<e.targetGames?'Évaluation interrompue':s.minutes>e.startMinutes?'Responsabilités en hausse':'Rôle maintenu';
  const text=reason||`${e.gp} matchs, ${avg.toFixed(1)}/100 de moyenne. ${met?'Attentes remplies.':'Attentes non remplies.'} Niveau ${overall(p)}, concurrence ${projection.rival}. ${p.injury?'Retour de blessure nécessaire. ':''}${s.role} : ${e.startMinutes} → ${s.minutes} minutes prévues. Le rôle continue d’évoluer avec vos matchs.`;
  s.careerPlan.reviews.push({...e,closed:s.day,average:avg,met,outcome,text,endMinutes:s.minutes,endRole:s.role});s.careerPlan.evaluation=null;

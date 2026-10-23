@@ -26,7 +26,7 @@ export function collectiveSummary(m,heroId){
 }
 export function validateCollectiveMatch(s,m,{historical=false}={}){
  if(!m)return;
- if(m.rulesVersion!=='3.8.0'){if(m.collective)throw Error('Collectif de match invalide');return;}
+ if(!['3.8.0','4.0.0'].includes(m.rulesVersion)){if(m.collective)throw Error('Collectif de match invalide');return;}
  const c=m.collective,fail=()=>{throw Error('Collectif de match invalide');},finite=x=>Number.isFinite(x)&&x>=0;
  if(!c||c.version!==1||typeof c.applied!=='boolean'||c.applied&&!m.done||!c.scores||!c.minutes||!c.effects||!finite(m.duration)||m.duration<=0||!Number.isSafeInteger(m.regulation)||m.regulation<=0||!Number.isSafeInteger(m.n)||m.n<0)fail();
  for(const map of [c.scores,c.minutes,c.effects])if(Object.keys(map).length!==2||!Object.hasOwn(map,m.home)||!Object.hasOwn(map,m.away))fail();
