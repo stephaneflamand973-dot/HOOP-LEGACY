@@ -47,7 +47,7 @@ test('coach : renouvellement avant revenus et placements, sans retry après refu
  const a=make();env.hireCoach(a,'local','Tir');env.setCoachRenewal(a,true);a.money=6000;a.day=31;a.life.finance.automatic=true;a.life.finance.percent=20;const b=structuredClone(a);b.money=5700;financeDay(b);env.environmentDay(a);financeDay(a);assert.equal(a.money,b.money);assert.equal(a.life.investments,b.life.investments);
 });
 test('coach : résiliation, plafond et blessure sans prolongation, transfert portable',()=>{
- for(const mode of ['cancel','cap','injury','transfer']){const s=make();env.hireCoach(s,'local','Tir');env.setCoachRenewal(s,true);if(mode==='cancel')env.setCoachRenewal(s,false);if(mode==='cap')for(const k of GROUPS.Tir)hero(s).attrs[k]=99;if(mode==='injury')hero(s).injury=40;if(mode==='transfer')s.team=s.teams.find(t=>t.id!==s.team).id;s.day=30;env.environmentDay(s);assert.equal(s.environment.contract.end,30);s.day=31;env.environmentDay(s);assert.equal(!!s.environment.contract,['injury','transfer'].includes(mode));assert.equal(s.environment.totals.paid,['injury','transfer'].includes(mode)?600:300);}
+ for(const mode of ['cancel','cap','injury','transfer']){const s=make();env.hireCoach(s,'local','Tir');s.environment.contract.catalogVersion=1;env.setCoachRenewal(s,true);if(mode==='cancel')env.setCoachRenewal(s,false);if(mode==='cap')for(const k of GROUPS.Tir)hero(s).attrs[k]=99;if(mode==='injury')hero(s).injury=40;if(mode==='transfer')s.team=s.teams.find(t=>t.id!==s.team).id;s.day=30;env.environmentDay(s);assert.equal(s.environment.contract.end,30);s.day=31;env.environmentDay(s);assert.equal(!!s.environment.contract,['injury','transfer'].includes(mode));assert.equal(s.environment.totals.paid,['injury','transfer'].includes(mode)?600:300);}
 });
 test('coach : matrice domaines, intensités et activités, XP réels sans effets cachés',()=>{
  for(const domain of Object.keys(GROUPS))for(const [intensity,factor] of [['light',.7],['normal',1],['hard',1.25]])for(const activity of ['individuel','video','etudes','famille']){
@@ -71,7 +71,7 @@ test('environnement : nouvelle carrière initialisée et import courant incomple
 test('migration 3.0–3.6 : aucun coach payé, match et RNG intacts, idempotence',()=>{
  for(const version of ['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0']){
   const s=make();s.engine=version;delete s.environment;s.match=startMatch(s,competition(s).schedule[0]);stepMatch(s,s.match,36);const old=structuredClone(s),m=migrateLegacy(s);
-  assert.equal(m.engine,'3.9.0');assert.equal(m.environment.contract,null);assert.equal(m.environment.renew,false);assert.equal(m.environment.totals.paid,0);assert.equal(m.money,old.money);assert.deepEqual(m.rng,old.rng);assert.deepEqual(m.match,old.match);assert.deepEqual(hero(m).attrs,hero(old).attrs);assert.deepEqual(migrateLegacy(m),m);stepMatch(m,m.match,10000);stepMatch(old,old.match,10000);assert.deepEqual(m.match,old.match);assert.deepEqual(m.rng,old.rng);
+  assert.equal(m.engine,'4.0.0');assert.equal(m.environment.contract,null);assert.equal(m.environment.renew,false);assert.equal(m.environment.totals.paid,0);assert.equal(m.money,old.money);assert.deepEqual(m.rng,old.rng);assert.deepEqual(m.match,old.match);assert.deepEqual(hero(m).attrs,hero(old).attrs);assert.deepEqual(migrateLegacy(m),m);stepMatch(m,m.match,10000);stepMatch(old,old.match,10000);assert.deepEqual(m.match,old.match);assert.deepEqual(m.rng,old.rng);
  }
 });
 test('environnement : import hostile rejeté sans remplacer la partie',()=>{
@@ -81,7 +81,7 @@ test('environnement : import hostile rejeté sans remplacer la partie',()=>{
 });
 test('migration IndexedDB V3.6 : sauvegarde de secours avant remplacement',async()=>{
  await import('fake-indexeddb/auto');const {save,load}=await import('../dist/storage.js');const s=make();s.engine='3.6.0';delete s.environment;
- await save(s,'v37-upgrade');const m=await load('v37-upgrade');assert.equal(m.engine,'3.9.0');assert.equal(m.environment.contract,null);assert.equal(m.money,s.money);
+ await save(s,'v37-upgrade');const m=await load('v37-upgrade');assert.equal(m.engine,'4.0.0');assert.equal(m.environment.contract,null);assert.equal(m.money,s.money);
  const backup=await new Promise((resolve,reject)=>{const r=indexedDB.open('hoop-legacy-v1');r.onerror=()=>reject(r.error);r.onsuccess=()=>{const q=r.result.transaction('slots').objectStore('slots').get('backup-before-3.6.0-v37-upgrade');q.onsuccess=()=>{resolve(q.result);r.result.close();};q.onerror=()=>reject(q.error);};});assert.equal(backup.engine,'3.6.0');assert.equal(backup.environment,undefined);assert.deepEqual(backup.rng,s.rng);
 });
 test('environnement : imports aux gains ou périodes impossibles refusés',()=>{

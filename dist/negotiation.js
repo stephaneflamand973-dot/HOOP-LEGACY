@@ -1,5 +1,5 @@
-import {negotiationLimits,evaluateCounter} from './negotiation-rules.js?v=3.9.0';
-import {appendNegotiation} from './representation-state.js?v=3.9.0';
+import {negotiationLimits,evaluateCounter} from './negotiation-rules.js?v=4.0.0';
+import {appendNegotiation} from './representation-state.js?v=4.0.0';
 export {negotiationLimits,evaluateCounter};
 export function negotiationQuote(s,offerId,request){
  const session=s.representation?.session,e=session?.offers.find(e=>e.offerId===offerId),o=s.offers?.find(o=>o.id===offerId);

@@ -1,0 +1,254 @@
+{
+  "balanceScenarios": 80,
+  "medianPopulation": "Joueurs IA ayant joué en NBA dans la saison, identifiants dédupliqués, héros exclu",
+  "version": "4.0.0",
+  "fingerprint": "15a28ebf0b5307594ab4b7ea310a7fb3bbafcf314ed6335a15494a2f488f498f",
+  "browserFingerprint": "035d294e29145c851b858a6f3e6fb3b67e3647392c14da9cf737d662fbc7fe81",
+  "comparisons": [
+    {
+      "seed": 2026,
+      "season": 10,
+      "before": 81,
+      "after": 81,
+      "delta": 0,
+      "beforeHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 22,
+        "70-79": 141,
+        "80-89": 269,
+        "90-99": 16
+      },
+      "afterHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 22,
+        "70-79": 143,
+        "80-89": 269,
+        "90-99": 15
+      }
+    },
+    {
+      "seed": 2026,
+      "season": 30,
+      "before": 78,
+      "after": 78,
+      "delta": 0,
+      "beforeHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 28,
+        "70-79": 280,
+        "80-89": 111,
+        "90-99": 30
+      },
+      "afterHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 21,
+        "70-79": 276,
+        "80-89": 123,
+        "90-99": 29
+      }
+    },
+    {
+      "seed": 973,
+      "season": 10,
+      "before": 81,
+      "after": 81,
+      "delta": 0,
+      "beforeHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 25,
+        "70-79": 144,
+        "80-89": 264,
+        "90-99": 15
+      },
+      "afterHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 20,
+        "70-79": 149,
+        "80-89": 266,
+        "90-99": 14
+      }
+    },
+    {
+      "seed": 973,
+      "season": 30,
+      "before": 77,
+      "after": 78,
+      "delta": 1,
+      "beforeHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 18,
+        "70-79": 287,
+        "80-89": 113,
+        "90-99": 31
+      },
+      "afterHistogram": {
+        "25-39": 0,
+        "40-49": 0,
+        "50-59": 0,
+        "60-69": 21,
+        "70-79": 266,
+        "80-89": 139,
+        "90-99": 23
+      }
+    }
+  ],
+  "migrations": [
+    {
+      "from": "3.0.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.0.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.1.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.1.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.2.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.2.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.3.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.3.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.4.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.4.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.5.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.5.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.6.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.6.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.7.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.7.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.8.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.8.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    },
+    {
+      "from": "3.9.0",
+      "to": "4.0.0",
+      "oldCache": true,
+      "backup": "3.9.0",
+      "matchPreserved": true,
+      "offlineVersionedLink": true,
+      "legacyIdempotent": true,
+      "errors": []
+    }
+  ],
+  "browser": {
+    "version": "4.0.0",
+    "fingerprint": "035d294e29145c851b858a6f3e6fb3b67e3647392c14da9cf737d662fbc7fe81",
+    "formationCompleted": true,
+    "retirementView": true,
+    "manualReplacement": true,
+    "staleTabRejected": true,
+    "widths": [
+      320,
+      390,
+      1440
+    ],
+    "tabs": 6,
+    "services": 5,
+    "cancel": true,
+    "focus": true,
+    "reload": true,
+    "offline": true,
+    "persistentSimulation": true,
+    "errors": [],
+    "physicalSafari": false
+  },
+  "performance": {
+    "rows": [
+      {
+        "version": "3.9.0",
+        "launchMedian": 500.9129150000008,
+        "renderP95": 4.7000000000116415,
+        "renders": 200,
+        "saveMB": 105.227128
+      },
+      {
+        "version": "4.0.0",
+        "launchMedian": 454.10296799999924,
+        "renderP95": 4.300000000046566,
+        "renders": 200,
+        "saveMB": 105.227128
+      }
+    ],
+    "launchRatio": 0.9065507284834101,
+    "renderRatio": 0.9148936170289181
+  },
+  "physicalSafari": false
+}

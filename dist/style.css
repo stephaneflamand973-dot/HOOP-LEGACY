@@ -42,3 +42,23 @@ h1,h2,h3,h4,.timeline p,.hero-panel>div:first-child{overflow-wrap:anywhere}.hero
 #agent-panel select,.counter-form select{width:100%;max-width:100%;min-width:0}
 .contract-card:focus,.counter-form:focus,.signature-confirm:focus,#agent-panel:focus{outline:2px solid var(--orange);outline-offset:4px}
 @media(max-width:400px){.contract-amounts{grid-template-columns:1fr}.contract-card .button-row{display:grid;grid-template-columns:1fr}.counter-form,.signature-confirm{padding:12px}.contract-card button{width:100%}}
+/* V4: readable mobile career navigation and service decisions. */
+:root{--surface:#1b1e24;--muted:#b6bdc8;--text:#f3f4f6;--orange:#ffb454}
+body{background:radial-gradient(ellipse at 80% 0,#242019 0,transparent 35%),var(--bg)}
+.panel,.next-event{border-radius:16px;background:var(--surface)}
+.hero-panel.v40-identity{background:linear-gradient(125deg,#30291f,#1b1e24 65%);border:1px solid #55432e;border-radius:20px;min-height:0}
+.v40-identity h2{font-size:clamp(1.6rem,5vw,2.6rem)}
+.services-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:24px 0}
+.service-card{padding:20px;border:1px solid var(--line);border-radius:12px;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
+.service-card>strong{font-size:1.6rem;color:var(--orange)}
+.service-card label,.service-card select{width:100%;min-width:0}.service-card button{margin-top:auto;width:100%}
+.service-confirm{padding:24px;border:2px solid var(--orange);border-radius:14px;background:#242019;margin:20px 0}
+.role-minute{font-size:3rem;font-weight:800;color:var(--orange)}.role-minute small{display:block;color:var(--muted);font-size:1rem}
+.role-factors{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:20px 0}.role-factors div{display:grid;gap:8px;padding:12px;border:1px solid var(--line);border-radius:10px}.role-factors b{font-size:1.4rem}
+.moment{padding:16px 0;border-top:1px solid var(--line)}.moment small{color:var(--orange)}.moment h4{margin-top:8px}.moment p{margin-bottom:0}
+.moment-preference select{width:100%;margin-top:10px}.services details summary{min-height:44px;padding:10px 0}
+.primary:hover{background:#ffc980}.selected{background:#ffb45420!important}.bottom-nav button.active{color:var(--orange)}
+@media(max-width:650px){.services-grid{grid-template-columns:1fr}.role-factors{grid-template-columns:repeat(2,minmax(0,1fr))}.service-card{padding:16px}.hero-panel.v40-identity{padding:22px}.next-event{padding:20px}.service-confirm{padding:16px}.service-confirm button{width:100%;margin-top:10px}main{min-width:0}.panel{overflow-wrap:anywhere}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+.v40-moments{padding:24px;margin-bottom:22px}
+@media(max-width:650px){.v40-moments{padding:20px}.next-event .advance{width:100%;display:flex;flex-direction:column;align-items:stretch}.next-event .advance select,.next-event .advance button{width:100%}}

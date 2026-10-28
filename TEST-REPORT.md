@@ -1,32 +1,27 @@
-# HOOP LEGACY V3.9 — validation de livraison
+# HOOP LEGACY V4.0 — validation de livraison
 
-Code validé pour livraison. Bilan V3.8 archivé dans `docs/validation-v3.8.md`.
+## Contrôles exécutés
 
-## Preuves
+- Deux carrières de trente saisons terminées (graines 2026 et 973), avec contrôle des archives, playoffs, effectifs, attributs et scores. Écarts de médiane IA NBA V4/V3.9 : 2026/S10 : 0, 2026/S30 : 0, 973/S10 : 0, 973/S30 : 1 points (seuil 5).
 
-- **166 tests réussis**, zéro échec, y compris refus d’une ancienne session de signature sans mutation et extraction des neuf archives de migration.
-- **72 saisons économiques** : deux graines × quatre mandats × trois stratégies × trois saisons. Marché exploré une fois par saison après huit matchs, sans argent ajouté ; trois signatures minimum par scénario. Solde jamais négatif, frais quotidiens recomptés au centime, zéro frais en autogestion.
-- **Deux carrières de 30 saisons**, archives et suivi cohérents. Sauvegardes finales : 105,23 et 105,26 Mo ; général du héros 95 à 46 ans ; maximum 14 et 13 titres par franchise. Ces mesures ne garantissent pas un équilibrage optimal.
-- **Huit saisons de neutralité** : deux saisons lycée et rookie, graines 2026/973 ; égalité avec la V3.8 publiée après normalisation de la version et du seul sous-état representation.
-- **Neuf migrations V3.0–V3.8**, ancien cache actif, copie de secours, match/RNG conservés et réouverture hors ligne.
-- Chromium **320/390/1440 px** : annulation, compromis/refus, deux tentatives, double clic, signature, taux fixé, import d’une autre carrière et hors ligne. Aucun débordement ni erreur JavaScript.
-- Worker identique au calcul direct ; destination conservée sur 80 jours malgré quatre interruptions. Sauvegarde de 30 saisons importée, poursuivie et rechargée, sans clic forcé.
+- 221 tests Node réussis, zéro échec : moteur, migration, stockage, worker réel, services, rotation et matchs historiques.
+- 80 scénarios de progression et services : deux graines, cinq postes, jeunes/vétérans, spécialistes/polyvalents, avec/sans services.
+- Chromium aux largeurs 320, 390 et 1440 : cinq achats, annulation, focus, sauvegarde/rechargement, mode hors ligne, préférence de simulation, formation complète et retraite. Zéro erreur JavaScript ni débordement global.
+- Remplacement confirmé d’un emplacement après rechargement et refus d’écriture d’un onglet obsolète dans un vrai navigateur.
+- Dix migrations V3.0–V3.9 avec ancien cache actif, copie de secours, match/RNG préservés et réouverture hors ligne.
+- Parcours de publication testé localement : création, match, playoffs, statistiques, rôle, service débité une seule fois, négociation et import réel V3.9 avec destination « fin de saison/décision » conservée.
+- Performance sur une sauvegarde de 105,23 Mo : médiane de cinq lancements et p95 de 100 changements d’écran. Après préchargement des modules, ratios V4/V3.9 de 0,907 au lancement et 0,915 au rendu ; seuil maximal 1,20.
 
-[CI indépendante : cinq jobs réussis](https://github.com/stephaneflamand973-dot/HOOP-LEGACY/actions/runs/38162171989), commit `896a01d1e438df10858db49bd3acc05654b031dd`. Artifacts récupérés, sommes SHA-256 contrôlées ; `node tools/v39-evidence.mjs` vérifie les empreintes des rapports contre le code livré.
+La provenance des sauvegardes de comparaison V3.9 est consignée dans `tests/v40-baseline-provenance.json` ; leurs points de contrôle sont comparés au rapport V3.9 publié avant acceptation.
 
-## Lecture économique
-
-Dans les scénarios négociés, les frais cumulés sur trois saisons sont environ 62–68 k€ (local), 124–139 k€ (national) et 186–212 k€ (international). Ils dépendent des salaires effectivement obtenus et reçus. Les trajectoires, clubs et durées divergent ; comparer le patrimoine final ne mesure pas seulement l’effet comptable de l’agent. Les parcours lycée → université → draft restent exempts, contrôlés dans chaque job économique.
+Les rapports générés `tests/v40-browser-report.json`, `tests/v40-performance-report.json`, `tests/v40-balance-report.json` et `tests/v40-evidence.json` contiennent les mesures et empreintes. Les carrières longues sont conservées dans `tests/v40-release-long-run-2026.json` et `tests/v40-release-long-run-973.json`.
 
 ## Revue et limites
 
-Revue V3.9 indépendante : aucun critique ; deux importants corrigés et testés RED→GREEN. Mineurs différés : échéance d’offre non affichée ; focus rendu à la carte plutôt qu’au bouton exact après annulation. Voir `docs/v3.9-review.md`.
+Les quatre défauts importants de la revue indépendante ont été reproduits puis corrigés : rotation sans lissage, remplacement manuel, validation d’historiques importés et renouvellement physique pendant blessure/repos. Détails dans `docs/v4.0-review.md`.
 
-Pas de test sur iPhone physique/Safari. La réserve historique de revue V3.8 reste distincte. Le workflow GitHub Pages effectue un contrôle public après chaque déploiement : création, match, sauvegarde/rechargement, anciennes vues, mandat, négociation, signature et destination persistante.
+Safari/iPhone physique n’a pas été testé. Ces scénarios déterministes ne garantissent pas l’équilibrage de toutes les parties. La confiance et la maîtrise individuelles de l’IA restent neutres à 50 tant qu’elles ne sont pas modélisées. Le temps de jeu est une projection, pas une garantie. Aucun revenu automatique n’est accordé aux qualifications.
 
+L’archive de sources est construite à partir des fichiers Git suivis, hors archive elle-même, puis comparée octet par octet. Les validations GitHub et le contrôle du site public constituent la dernière étape de publication ; les contrôles locaux seuls ne prouvent pas le déploiement.
 
-## Correctif interface 1 — 13 octobre 2026
-
-Les deux mineurs différés ci-dessus sont corrigés : échéance annoncée lisible (sans ajouter d’expiration automatique), et retour du focus au déclencheur exact après annulation. Aucun changement du moteur ni du format de sauvegarde.
-
-Validation : 167 tests, parcours Chromium 320/390/1440, et passage de la V3.9 publiée au correctif avec ancien cache HTTP, réouverture hors ligne et sauvegarde identique. Le test attend le changement effectif de contrôleur avant la réouverture. Les empreintes économiques et longues durées restent inchangées ; la preuve navigateur est renouvelée. Revue indépendante du correctif sans point actionnable ; Safari/iPhone physique reste non testé. Le contrôle après publication exige maintenant les échéances et le retour du focus.
+Bilan V3.9 conservé dans `docs/validation-v3.9.md`.

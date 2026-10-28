@@ -16,7 +16,7 @@ test('V4 immediately replaces fouled-out players and permits emergency reduced r
  const other=fixture();for(const id of team(other.s,other.g.home).roster.slice(4))other.s.players.find(p=>p.id===id).injury=2;const short=startMatch(other.s,other.g);stepMatch(other.s,short,2);assert.equal(short.lineups[other.g.home].length,4);assert.equal(new Set(short.lineups[other.g.home]).size,4);
 });
 test('V4 overtime and continental fixtures conserve each game’s own minutes',()=>{
- const s=createGame({...defaultBuild(),path:'rookie',seed:73}),g=competition(s).schedule.find(g=>g.home===s.team||g.away===s.team),m=startMatch(s,g);stepMatch(s,m,10000);assert.equal(m.ot,1);
+ const s=createGame({...defaultBuild(),path:'rookie',seed:61}),g=competition(s).schedule.find(g=>g.home===s.team||g.away===s.team),m=startMatch(s,g);stepMatch(s,m,10000);assert.equal(m.ot,1);
  assert.ok(Math.abs(team(s,g.home).roster.reduce((n,id)=>n+m.box[id].min,0)-265)<1e-6);
  const euro=s.competitions.find(c=>c.id==='euroleague'),em=startMatch(s,euro.schedule[0]);assert.equal(em.duration,40);stepMatch(s,em,10000);assert.ok(Math.abs(team(s,em.home).roster.reduce((n,id)=>n+em.box[id].min,0)-5*(40+5*em.ot))<1e-6);
 });

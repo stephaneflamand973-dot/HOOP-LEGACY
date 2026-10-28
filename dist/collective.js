@@ -1,8 +1,8 @@
-import {STAGES} from './collective-catalog.js?v=3.9.0';
-import {initCollective,duoFor,reconcileCollective} from './collective-state.js?v=3.9.0';
-import {masteryCollective} from './system.js?v=3.9.0';
-import {canChange} from './commands.js?v=3.9.0';
-import {receipt,cents} from './finance.js?v=3.9.0';
+import {STAGES} from './collective-catalog.js?v=4.0.0';
+import {initCollective,duoFor,reconcileCollective} from './collective-state.js?v=4.0.0';
+import {masteryCollective} from './system.js?v=4.0.0';
+import {canChange} from './commands.js?v=4.0.0';
+import {receipt,cents} from './finance.js?v=4.0.0';
 export {STAGES};
 const offerFor=id=>Object.hasOwn(STAGES,id)?STAGES[id]:null;
 const player=s=>s.players.find(p=>p.id===s.hero);

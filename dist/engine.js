@@ -1,30 +1,31 @@
-import {serviceDay} from './services.js?v=3.9.0';
-import {projectRole,recordRoleMatch,applyRole,validateRotation} from './role.js?v=3.9.0';
-import {initV40,validateV40} from './v40-state.js?v=3.9.0';
-import {initRepresentation,validateRepresentation} from './representation-state.js?v=3.9.0';
-import {openNegotiations,prepareSignature,finishSignature,closeNegotiations} from './representation.js?v=3.9.0';
-import {observeLife} from './life-context.js?v=3.9.0';
-import {initStatistics,recordStatistics,recordInjury,recordWorldTitle,closeStatistics,beginStatistics,settleAwards,validateStatistics} from './statistics.js?v=3.9.0';
-import {initEnvironment,environmentDay,validateEnvironment} from './environment.js?v=3.9.0';
-import {initCareerPlan,recordCoachMatch,reviewCoach,recordTeamMatch,discussionDay,closeTeamWork,validateDiscussions} from './career-plan.js?v=3.9.0';
-import {beginChapters,updateChapters,closeChapters} from './chapters.js?v=3.9.0';
-import {canChange,retireCareer} from './commands.js?v=3.9.0';
-import {initSimulation,validateSimulation} from './simulation.js?v=3.9.0';
-import {initSportEvents,sportingPause,hasSportPause} from './sport-events.js?v=3.9.0';
-import {initCollective,validateCollective} from './collective-state.js?v=3.9.0';
-import {collectiveDay,syncCollective} from './collective.js?v=3.9.0';
-import {finishCollectiveMatch,collectiveSummary,validateCollectiveMatch} from './collective-match.js?v=3.9.0';
-import {initMastery,masteryMatch,transferMastery} from './system.js?v=3.9.0';
-import {seedPostseason,makeSeries,seriesHome,syncRound,recoverPostseason} from './postseason.js?v=3.9.0';
-import {initCareerLedger,openStint,recordStintMatch,awardTitle,seasonTitles,seasonStints} from './career-ledger.js?v=3.9.0';
-import {initLegacy,beginLegacySeason,refreshAmbition,recordLegacyMatch,recordLegacySeries,finishLegacySeason,recordLegacyTitle,validateLegacy} from './legacy.js?v=3.9.0';
-import {KEYS,WEIGHTS,CFG,STYLES,BADGES,TECHNIQUES,VERSION,MATCH_RULES} from './config.js?v=3.9.0';
-import {startMatch,stepMatch} from './match.js?v=3.9.0';
-export {startMatch,stepMatch} from './match.js?v=3.9.0';
-import {initDevelopment,spendXP,awardXP,matchXP,trainingDay,ageAttributes,closeDevelopmentYear,costFor,DOMAINS,domainOf} from './progression.js?v=3.9.0';
-import {initLife,lifeDay,resolveLife} from './life.js?v=3.9.0';
-import {realRoster,initWorld,refreshWorld,marketDay} from './world.js?v=3.9.0';
-import {LEAGUES,REFERENCE,leagueDef,clubCatalog,clubId,makeCalendar} from './leagues.js?v=3.9.0';
+import {emitMoment} from './career-moments.js?v=4.0.0';
+import {serviceDay} from './services.js?v=4.0.0';
+import {projectRole,recordRoleMatch,applyRole,validateRotation} from './role.js?v=4.0.0';
+import {initV40,validateV40} from './v40-state.js?v=4.0.0';
+import {initRepresentation,validateRepresentation} from './representation-state.js?v=4.0.0';
+import {openNegotiations,prepareSignature,finishSignature,closeNegotiations} from './representation.js?v=4.0.0';
+import {observeLife} from './life-context.js?v=4.0.0';
+import {initStatistics,recordStatistics,recordInjury,recordWorldTitle,closeStatistics,beginStatistics,settleAwards,validateStatistics} from './statistics.js?v=4.0.0';
+import {initEnvironment,environmentDay,validateEnvironment} from './environment.js?v=4.0.0';
+import {initCareerPlan,recordCoachMatch,reviewCoach,recordTeamMatch,discussionDay,closeTeamWork,validateDiscussions} from './career-plan.js?v=4.0.0';
+import {beginChapters,updateChapters,closeChapters} from './chapters.js?v=4.0.0';
+import {canChange,retireCareer} from './commands.js?v=4.0.0';
+import {initSimulation,validateSimulation} from './simulation.js?v=4.0.0';
+import {initSportEvents,sportingPause,hasSportPause} from './sport-events.js?v=4.0.0';
+import {initCollective,validateCollective} from './collective-state.js?v=4.0.0';
+import {collectiveDay,syncCollective} from './collective.js?v=4.0.0';
+import {finishCollectiveMatch,collectiveSummary,validateCollectiveMatch} from './collective-match.js?v=4.0.0';
+import {initMastery,masteryMatch,transferMastery} from './system.js?v=4.0.0';
+import {seedPostseason,makeSeries,seriesHome,syncRound,recoverPostseason} from './postseason.js?v=4.0.0';
+import {initCareerLedger,openStint,recordStintMatch,awardTitle,seasonTitles,seasonStints} from './career-ledger.js?v=4.0.0';
+import {initLegacy,beginLegacySeason,refreshAmbition,recordLegacyMatch,recordLegacySeries,finishLegacySeason,recordLegacyTitle,validateLegacy} from './legacy.js?v=4.0.0';
+import {KEYS,WEIGHTS,CFG,STYLES,BADGES,TECHNIQUES,VERSION,MATCH_RULES} from './config.js?v=4.0.0';
+import {startMatch,stepMatch} from './match.js?v=4.0.0';
+export {startMatch,stepMatch} from './match.js?v=4.0.0';
+import {initDevelopment,spendXP,awardXP,matchXP,trainingDay,ageAttributes,closeDevelopmentYear,costFor,DOMAINS,domainOf} from './progression.js?v=4.0.0';
+import {initLife,lifeDay,resolveLife} from './life.js?v=4.0.0';
+import {realRoster,initWorld,refreshWorld,marketDay} from './world.js?v=4.0.0';
+import {LEAGUES,REFERENCE,leagueDef,clubCatalog,clubId,makeCalendar} from './leagues.js?v=4.0.0';
 export const clamp=(x,a=0,b=100)=>Math.max(a,Math.min(b,x));
 export function rng(s,stream='career'){let x=s.rng[stream]>>>0;x^=x<<13;x^=x>>>17;x^=x<<5;s.rng[stream]=x>>>0;return (x>>>0)/4294967296}
 const pick=(s,a,stream)=>a[Math.floor(rng(s,stream)*a.length)];
@@ -67,7 +68,7 @@ export function createGame(input){let b={...input};b.age=b.path==='young'?clamp(
  let p={...b,id:'hero',caps,absolute:limits(b),attrs:Object.fromEntries(KEYS.map(k=>[k,Math.min(caps[k],base+(STYLES[b.style].includes(k)?12:4))])),fatigue:0,injury:0,season:totals(),byLeague:{},contract:{years:stage==='pro'?2:1,salary:stage==='pro'?1200000:0,guarantee:1,option:stage==='pro'?'Équipe':'Aucune'},badges:{},learned:[],equipped:[],practice:{}};s.players.push(p);let choices=s.teams.filter(t=>t.league===s.league);s.team=choices[stage==='pro'?29:0].id;for(let t of s.teams){let real=realRoster(s,t);if(real){let remove=new Set(t.roster);s.players=s.players.filter(p=>!remove.has(p.id));s.players.push(...real);t.roster=real.map(p=>p.id)}}team(s).roster.push('hero');s.points=0;initDevelopment(s);initLife(s);initWorld(s);setupCompetitions(s);initLegacy(s);initV33(s);initV34(s);log(s,'Nouvelle trajectoire',`${p.name} rejoint ${team(s).name}. ${stage==='highschool'?'Objectif : décrocher une place à l’université.':stage==='college'?'Faites vos preuves avant de vous déclarer à la draft.':'Votre première saison NBA commence.'}`);return syncLeague(s)
 }
 export const calendar=(teams,season,league='nba')=>makeCalendar(leagueDef(league),season,teams);
-export const upgradeCost=costFor;
+export function upgradeCost(p,k){return costFor(p,k);}
 export function upgrade(s,k){return canChange(s)&&spendXP(s,hero(s),k)}
 export function addXP(s,n){return awardXP(s,hero(s),Object.fromEntries(DOMAINS.map(d=>[d,n/DOMAINS.length])),'training')}
 function advanceDay(s,day){
@@ -94,7 +95,7 @@ export function finalizeMatch(s,g,m){
  if(p.id===s.hero){s.health??={rehab:'active',history:[]};s.health.history.push({season:s.season,day:s.day,days:p.injury,serious});if(serious){p.rehabDeficit={speed:3,agility:3,vertical:3};for(let k of Object.keys(p.rehabDeficit))p.attrs[k]=Math.max(25,p.attrs[k]-3);}
  queueDecision(s,{type:'medical',title:serious?'Blessure importante':'Passage à l’infirmerie',text:`${p.injury} jours estimés d’absence. Les matchs continuent et votre progression reprend avec la rééducation.`,choices:[['rehab','Suivre le programme de soins']]});log(s,'Blessure',`${p.injury} jours d’absence. ${serious?'Récupération complète possible avec la rééducation.':''}`);}}
  }
- if(mine){let p=hero(s),b=m.box[s.hero];s.lastMatch=structuredClone(m);s.grade=m.grade;s.records??={pts:0,reb:0,ast:0,stl:0,blk:0};for(let k of Object.keys(s.records)){if((b?.[k]||0)>s.records[k]){s.records[k]=b[k];if(k==='pts'&&b.pts>=20)log(s,'Record personnel',`${b.pts} points face à ${team(s,g.home===s.team?g.away:g.home).name}.`);}}
+ if(mine){let p=hero(s),b=m.box[s.hero];s.lastMatch=structuredClone(m);s.grade=m.grade;s.records??={pts:0,reb:0,ast:0,stl:0,blk:0};for(let k of Object.keys(s.records)){if((b?.[k]||0)>s.records[k]){s.records[k]=b[k];emitMoment(s,{id:`record-${g.id}-${k}`,kind:'record',title:'Record personnel',text:`${b[k]} ${({pts:'points',reb:'rebonds',ast:'passes décisives',stl:'interceptions',blk:'contres'})[k]||k}.`});if(k==='pts'&&b.pts>=20)log(s,'Record personnel',`${b.pts} points face à ${team(s,g.home===s.team?g.away:g.home).name}.`);}}
  if(b?.min){s.recent.push(m.grade);s.recent=s.recent.slice(-6);s.trust=clamp(s.trust*.8+s.recent.reduce((a,b)=>a+b,0)/s.recent.length*.2);s.relationships.coach=s.trust;let competitors=team(s).roster.map(id=>getPlayer(s,id)).filter(q=>q.id!==s.hero&&q.pos===p.pos),rival=competitors.length?Math.max(...competitors.map(overall)):leagueDef(s.league).level;
  let oldRole=s.role;applyRole(s,'match');
  if(oldRole!==s.role&&s.day-(s.lastRoleNotice??-100)>=21){s.lastRoleNotice=s.day;if(['Titulaire','Joueur majeur'].includes(oldRole)||['Titulaire','Joueur majeur'].includes(s.role))sportingPause(s,`role-${s.day}-${s.role}`,'Votre place évolue : '+s.role,s.roleReason);log(s,'Rotation',`${s.role}, environ ${s.minutes} minutes. ${s.roleReason}`);}
@@ -229,7 +230,7 @@ export function openContractNegotiations(s,{exempt=false}={}){
 }
 export function sign(s,index,choice=null){if(!canChange(s,{pending:true}))return false;let o=s.offers[index];if(!o||s.pending?.type!=='contract')return false;if(!team(s,o.team)||!Number.isFinite(o.salary)||o.salary<0||!Number.isInteger(o.years)||o.years<1||o.years>4||!Number.isFinite(o.minutes)||o.minutes<0||o.minutes>48)return false;let prepared=null;
  if(s.representation?.session){const e=s.representation.session.offers.find(e=>e.offerId===o.id);if(choice&&choice.offerId!==o.id)return false;prepared=prepareSignature(s,choice||{sessionId:s.representation.session.id,offerId:o.id,source:'initial',revision:e?.revision});if(!prepared.ok)return false;o={...o,...prepared.terms};}else if(choice)return false;
- let origin=team(s).name;moveHero(s,o.team);let p=hero(s);p.contract={years:o.years,salary:o.salary,guarantee:o.guarantee,option:o.option};s.role=o.role;s.minutes=o.minutes;if(o.academic){s.career.stage='college';s.career.collegeYears=0}else s.career.stage='pro';if(prepared)finishSignature(s,prepared);s.pending=null;s.offers=[];s.lastTransfer=s.day;s.career.milestones.push({season:s.season,day:s.day,text:`${origin} → ${team(s).name} (${leagueDef(s.league).name})`});log(s,o.academic?'Université choisie':'Contrat signé',`${team(s).name} · ${leagueDef(s.league).name} · ${o.academic?'Scolarité et basket universitaire':`${o.years} ans · ${o.salary.toLocaleString('fr-FR')} € par saison (simulation)`} · rôle ${o.role}.`);refreshAmbition(s);syncLeague(s);return true}
+ let origin=team(s).name;moveHero(s,o.team);let p=hero(s);p.contract={years:o.years,salary:o.salary,guarantee:o.guarantee,option:o.option};s.role=o.role;s.minutes=o.minutes;if(o.academic){s.career.stage='college';s.career.collegeYears=0}else s.career.stage='pro';if(prepared)finishSignature(s,prepared);s.pending=null;s.offers=[];s.lastTransfer=s.day;applyRole(s,'transfer');emitMoment(s,{id:`transfer-${s.day}-${s.team}`,kind:'transfer',title:'Nouveau contrat',text:`${origin} → ${team(s).name}. ${s.roleReason}`});s.career.milestones.push({season:s.season,day:s.day,text:`${origin} → ${team(s).name} (${leagueDef(s.league).name})`});log(s,o.academic?'Université choisie':'Contrat signé',`${team(s).name} · ${leagueDef(s.league).name} · ${o.academic?'Scolarité et basket universitaire':`${o.years} ans · ${o.salary.toLocaleString('fr-FR')} € par saison (simulation)`} · rôle ${o.role}.`);refreshAmbition(s);syncLeague(s);return true}
 export function requestTrade(s){if(s.pending||s.match||s.retired)return false;if(s.career.stage!=='pro'){log(s,'Orientation','Terminez votre saison : les choix universitaires et professionnels arrivent à l’intersaison.');return false}if(s.lastMarketDay!==undefined&&s.day-s.lastMarketDay<20){log(s,'Agent','Les clubs attendent de nouvelles performances. Prochaine démarche après vingt jours.');return false}s.lastMarketDay=s.day;if(hero(s).contract.years>1&&s.round<8){log(s,'Transfert refusé','Votre club ne vous libère pas aussi tôt. Huit matchs et de nouvelles performances sont nécessaires avant une autre démarche.');s.relationships.agent=clamp(s.relationships.agent+3);return false}s.offers=marketOffers(s);s.pending={type:'contract',title:'Votre marché international',text:'Offres filtrées selon votre niveau, votre production et les besoins des clubs. Le changement de pays conserve votre carrière ; vous rejoignez le calendrier en cours.',canDecline:true};openContractNegotiations(s);return true}
 export function enterDraft(s){if(!canChange(s,{pending:s.pending?.type==='draft-choice'}))return false;if(s.career.draftEntered||s.career.stage!=='college'||hero(s).age<19||s.career.collegeYears<1)return false;let estimate=s.lastSeasonScouting||scouting(s);let prospects=s.world.draftPool?.length?s.world.draftPool:Array.from({length:60},(_,i)=>({id:'prospect-'+s.season+'-'+i,score:58+rng(s,'players')*26+(i<8?4:0)}));let actual=estimate.score+(rng(s,'career')-.5)*4;let rank=1+prospects.filter(p=>p.score>actual).length;s.career.draftEntered=true;s.draftResult={season:s.season-1,rank:rank<=60?rank:null,projection:estimate.projection,evaluation:actual};
  let prior=s.archives.at(-1)?.competitions?.find(c=>c.id==='nba')?.records;let nba=prior?Object.entries(prior).sort((a,b)=>a[1].wins-b[1].wins||(a[1].for-a[1].against)-(b[1].for-b[1].against)).map(([id])=>team(s,id)):standings(s,'nba').reverse();if(rank<=60){let t=nba[(rank-1)%30];let displaced=s.lastDraft?.find(q=>q.pick===rank);if(displaced){let prospect=getPlayer(s,displaced.id);if(prospect)prospect.draft={season:s.season-1,pick:null,team:null};hero(s).draft={season:s.season-1,pick:rank,team:t.id};let club=s.teams.find(q=>q.roster.includes(displaced.id));if(club)club.roster=club.roster.filter(id=>id!==displaced.id);if(!s.freeAgents.includes(displaced.id))s.freeAgents.push(displaced.id);s.lastDraft=s.lastDraft.filter(q=>q.pick!==rank);s.lastDraft.push({id:s.hero,name:hero(s).name,team:t.name,league:'nba',pos:hero(s).pos,ovr:overall(hero(s)),age:hero(s).age,pick:rank});s.lastDraft.sort((a,b)=>a.pick-b.pick);if(s.world.drafts.length)s.world.drafts.at(-1).picks=s.lastDraft;}s.offers=[offerFor(s,t,{draftRank:rank}),...marketOffers(s,{includeNBA:false}).slice(0,3)];s.pending={type:'contract',title:`Draft NBA · choix n° ${rank}`,text:`${t.name} vous sélectionne. Vous pouvez signer dans cette franchise ou choisir une offre hors NBA. Aucune autre franchise NBA ne vous est proposée à la draft.`};log(s,'Draft NBA',`${hero(s).name} sélectionné n° ${rank} par ${t.name}.`)}else{s.offers=marketOffers(s,{includeNBA:false});s.pending={type:'contract',title:'Non-drafté : votre carrière continue',text:'Aucune franchise ne vous a sélectionné. Voici les possibilités concrètes à l’étranger. De bonnes performances pourront ouvrir une porte en NBA lors d’un prochain marché.'};log(s,'Draft NBA','Non-drafté. Votre agent recherche des clubs dans les championnats compatibles avec votre niveau.')}openContractNegotiations(s,{exempt:true});return true}
@@ -249,7 +250,8 @@ function migrateV1(old){if(!old||![1,2].includes(old.schema)||!Array.isArray(old
 export function migrateLegacy(old){
  if(!old||![1,2,3,4].includes(old.schema))throw Error('Sauvegarde incompatible');
  if(old.schema===4){
-  if(old.engine===VERSION){if(old.v40!==undefined)return validate(old);const current=structuredClone(old);initV40(current);return validate(current);}
+  if(old.engine===VERSION)return validate(old);
+  if(old.engine==='3.9.0'){const s=structuredClone(old);s.engine=VERSION;initV40(s);return validate(s);}
   if(!['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0','3.7.0','3.8.0'].includes(old.engine))throw Error('Version de moteur incompatible');
   let s=structuredClone(old);delete s.representation;if(old.engine!=='3.8.0')delete s.collective;if(!['3.7.0','3.8.0'].includes(old.engine))delete s.environment;else s.environment.trainingProcessedDay??=null;s.engine=VERSION;initDevelopment(s);
   // Recover prior selections from V3 archives so an existing rookie cannot be drafted again.
@@ -272,7 +274,7 @@ function initV33(s,recovered=false){
 }
 function initV34(s,recovered=false){initV40(s);initRepresentation(s);initStatistics(s,recovered);initCareerPlan(s);beginChapters(s);initEnvironment(s);initCollective(s);s.mastery.sources.collective??=0;}
 export function validate(s){
- if(s?.v40!==undefined)validateV40(s);validateRotation(s?.match);validateRotation(s?.lastMatch);
+ if(s?.schema===4&&s.engine===VERSION)validateV40(s);validateRotation(s?.match);validateRotation(s?.lastMatch);
  if(!s||s.schema!==4||s.engine!==VERSION||!Array.isArray(s.players)||!Array.isArray(s.teams)||!Array.isArray(s.competitions)||s.competitions.length!==LEAGUES.length||!s.career||!s.rng)throw Error('Sauvegarde incompatible');
  let ids=new Set();for(let p of s.players){if(typeof p.id!=='string'||!/^[a-zA-Z0-9-]{1,150}$/.test(p.id)||ids.has(p.id))throw Error('Identifiant joueur invalide');ids.add(p.id);if(!WEIGHTS[p.pos]||typeof p.name!=='string'||!Number.isFinite(p.age)||p.age<16||p.age>80||KEYS.some(k=>!Number.isFinite(p.attrs?.[k])||p.attrs[k]<25||p.attrs[k]>99)||!p.season||!p.byLeague||!p.contract||!Number.isFinite(p.contract.salary)||p.contract.salary<0||!p.badges||!Array.isArray(p.equipped)||!Array.isArray(p.learned)||!Number.isFinite(p.injury)||p.injury<0)throw Error('Joueur invalide');}
  let active=new Set(),clubs=new Set();for(let t of s.teams){if(clubs.has(t.id)||!leagueDef(t.league)||typeof t.name!=='string'||t.roster?.length<5||t.roster?.length>20)throw Error('Club invalide');clubs.add(t.id);for(let id of t.roster){if(!ids.has(id)||active.has(id))throw Error('Effectif incohérent');active.add(id);}}

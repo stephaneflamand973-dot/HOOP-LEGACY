@@ -1,4 +1,4 @@
-import {MANDATES,validMandate} from './representation-catalog.js?v=3.9.0';
+import {MANDATES,validMandate} from './representation-catalog.js?v=4.0.0';
 const invalid=()=>{throw Error('Négociation invalide');};
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 export function negotiationLimits({salary,years,age,gap,budget,payroll,mandate}){

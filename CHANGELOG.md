@@ -1,3 +1,13 @@
+# 4.0.0 — Carrière, progression et accompagnement
+
+- Rôle expliqué, forme récente et rotations avec variation progressive des minutes.
+- Entraînement spécialisé, coût de progression et vieillissement différenciés.
+- Moments marquants dédupliqués et choix d’interruption indépendant de la destination de simulation.
+- Préparation physique, récupération, proximité du logement, installation et formation de reconversion avec devis vérifié et bilan.
+- Cinq onglets mobiles, accueil compact, confirmations accessibles et modules préchargés.
+- Protection des sauvegardes entre onglets et remplacement confirmé des emplacements après rechargement.
+- Migration V3.0–V3.9 avec secours, règles des matchs historiques conservées.
+
 # 3.9.0 — Correctif interface 1 (13 octobre 2026)
 
 - Échéance annoncée affichée sur les offres, avec rappel que la décision met la simulation en pause.

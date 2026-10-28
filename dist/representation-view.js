@@ -1,6 +1,6 @@
-import {MANDATES} from './representation-catalog.js?v=3.9.0';
-import {orderedOffers,PREFERENCES,offerComparison} from './career-plan.js?v=3.9.0';
-import {leagueDef} from './leagues.js?v=3.9.0';
+import {MANDATES} from './representation-catalog.js?v=4.0.0';
+import {orderedOffers,PREFERENCES,offerComparison} from './career-plan.js?v=4.0.0';
+import {leagueDef} from './leagues.js?v=4.0.0';
 const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const outcome=x=>({accepted:'Accord',compromise:'Compromis',refused:'Refus'})[x]||x;
 const money=n=>Number.isFinite(n)?n.toLocaleString('fr-FR',{maximumFractionDigits:2})+' €':'—';

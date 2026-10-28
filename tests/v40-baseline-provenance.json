@@ -1,0 +1,12 @@
+{
+  "checkpointSource": "af06d110c1f7f66ae2cfc170c18c0aaa4d81a8c3",
+  "checkpointFingerprint": "b140f60ac384a93fab47bad68a83c94fbc5b0aec6aa1f50cd082a31f63805cd0",
+  "resumeSource": "c25078c2b7d427b2cb51713efd43182125568fc1",
+  "resumeFingerprint": "4af7089e214df549b012ef11808d23d4ed197f5e6c73175001818a86fee11cd3",
+  "compatibility": "Only prepareSignature sessionId guard and its default caller differ; automated campaign uses default current-session signatures. All 11 checkpoint rows match the published V3.9 report exactly. Final 30 rows are checked again before accepting the resumed baseline.",
+  "seed2026": "All 30 checkpoint rows match the published V3.9 report exactly.",
+  "verifiedPublishedCheckpointRows": {
+    "2026": 30,
+    "973": 30
+  }
+}

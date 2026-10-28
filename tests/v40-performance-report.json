@@ -1,0 +1,20 @@
+{
+  "rows": [
+    {
+      "version": "3.9.0",
+      "launchMedian": 500.9129150000008,
+      "renderP95": 4.7000000000116415,
+      "renders": 200,
+      "saveMB": 105.227128
+    },
+    {
+      "version": "4.0.0",
+      "launchMedian": 454.10296799999924,
+      "renderP95": 4.300000000046566,
+      "renders": 200,
+      "saveMB": 105.227128
+    }
+  ],
+  "launchRatio": 0.9065507284834101,
+  "renderRatio": 0.9148936170289181
+}

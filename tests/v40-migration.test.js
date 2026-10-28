@@ -6,7 +6,7 @@ import {save,load,parseSave} from '../dist/storage.js';
 
 const make=()=>createGame({...defaultBuild(),path:'rookie'});
 test('V4 migration preserves acquired state and is idempotent',()=>{
- const old=make();delete old.v40;const before=structuredClone(old),current=migrateLegacy(old);
+ const old=make();delete old.v40;old.engine='3.9.0';const before=structuredClone(old),current=migrateLegacy(old);
  assert.equal(current.v40?.version,1);
  for(const key of ['players','money','simulation','archives','environment','representation','rng','match'])assert.deepEqual(current[key],before[key],key);
  assert.deepEqual(old,before);assert.deepEqual(migrateLegacy(current),current);
@@ -19,7 +19,7 @@ test('V4 rejects corrupt extension and future versions without mutating input',(
  const future=structuredClone(s);future.engine='9.0.0';assert.throws(()=>parseSave(JSON.stringify(future)));
 });
 test('V4 storage retains raw pre-migration backup and blocks legacy database writer',async()=>{
- const old=make();delete old.v40;await save(old,'v40-old');const s=await load('v40-old');assert.equal(s.v40?.version,1);
+ const old=make();delete old.v40;old.engine='3.9.0';await save(old,'v40-old');const s=await load('v40-old');assert.equal(s.v40?.version,1);
  const backup=await new Promise((resolve,reject)=>{const r=indexedDB.open('hoop-legacy-v1');r.onerror=()=>reject(r.error);r.onsuccess=()=>{const db=r.result,q=db.transaction('slots').objectStore('slots').get('backup-before-3.9.0-v40-old');q.onsuccess=()=>{resolve(q.result);db.close()};};});
  assert.equal(backup.v40,undefined);assert.deepEqual(backup.players,old.players);
  await assert.rejects(new Promise((resolve,reject)=>{const r=indexedDB.open('hoop-legacy-v1',3);r.onerror=()=>reject(r.error);r.onsuccess=()=>{r.result.close();resolve()};}),{name:'VersionError'});

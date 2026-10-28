@@ -1,6 +1,7 @@
+import {emitMoment} from './career-moments.js?v=4.0.0';
 // All observations are recorded at finalization. Reading a table never changes state.
-import {getPlayer,team} from './engine.js?v=3.9.0';
-import {leagueDef} from './leagues.js?v=3.9.0';
+import {getPlayer,team} from './engine.js?v=4.0.0';
+import {leagueDef} from './leagues.js?v=4.0.0';
 const keys=['gp','pts','reb','oreb','ast','stl','blk','tov','fgm','fga','tpm','tpa','ftm','fta','min'];
 export const emptyStats=()=>Object.fromEntries(keys.map(k=>[k,0]));
 const add=(a,b)=>{for(const k of keys)a[k]+=(b[k]||0);return a;};
@@ -106,7 +107,7 @@ export function settleAwards(s,c,phase='regular'){
   if(kind==='team'){winners=[];for(const [positions,count] of [[['MJ','AR'],2],[['AI','AF'],2],[['P'],1]])winners.push(...eligible.filter(r=>positions.includes(r.pos)).slice(0,count));}
   const result={id,season:s.season,league:c.id,kind,day:s.day,winners:winners.map(r=>({id:r.id,name:r.name,teams:r.teams})),candidates:ranking.candidates.slice(0,8).map(r=>({id:r.id,name:r.name,score:r.score,eligible:r.eligible,reason:r.reason,stats:r.stats,components:r.components})),unavailable:ranking.unavailable};
   s.statistics.awards.push(result);
-  if(winners.some(p=>p.id===s.hero)){const label=`${AWARD_NAMES[kind]} ${leagueDef(c.id).name} · saison ${s.season}`;if(!s.trophies.includes(label))s.trophies.push(label);}
+  if(winners.some(p=>p.id===s.hero)){const label=`${AWARD_NAMES[kind]} ${leagueDef(c.id).name} · saison ${s.season}`;if(!s.trophies.includes(label))s.trophies.push(label);emitMoment(s,{id:'award-'+id,kind:'selection',title:AWARD_NAMES[kind],text:label,league:c.id});}
  }
 }
 export function validateStatistics(s){

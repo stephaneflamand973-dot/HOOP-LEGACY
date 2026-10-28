@@ -1,6 +1,6 @@
-import {GROUPS} from './config.js?v=3.9.0';
-import {canChange} from './commands.js?v=3.9.0';
-import {receipt,cents} from './finance.js?v=3.9.0';
+import {GROUPS} from './config.js?v=4.0.0';
+import {canChange} from './commands.js?v=4.0.0';
+import {receipt,cents} from './finance.js?v=4.0.0';
 
 export const COACHES=Object.freeze({
  local:Object.freeze({name:'Coach de proximité',price:300,rate:.1}),
@@ -50,6 +50,7 @@ export function environmentDay(s){
  const c=e.contract;if(!c||s.day<=c.end)return;
  const renew=e.renew;closeEnvironment(s,'Période terminée, sans remboursement.');
  if(!renew)return;
+ if(c.catalogVersion===2&&(s.players.find(p=>p.id===s.hero)?.injury||s.activity==='repos')){e.notice='Renouvellement arrêté : blessure ou repos.';return;}
  if(capped(s,c.domain)){e.notice='Renouvellement arrêté : domaine entièrement à 99.';return;}
  if(cents(s.money-offerFor(c.offerId).price)<s.life.finance.reserve){e.notice='Renouvellement arrêté : fonds insuffisants après maintien de votre réserve.';return;}
  beginPeriod(s,c.offerId,c.domain,s.day);e.renew=true;e.notice='Coach renouvelé pour 30 jours.';

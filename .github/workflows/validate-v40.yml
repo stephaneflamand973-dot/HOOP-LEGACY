@@ -1,4 +1,4 @@
-name: V4 reconstruction tests
+name: Valider HOOP LEGACY V4.0
 on:
   push:
     branches: [work/hoop-legacy-v4.0]
@@ -10,7 +10,7 @@ concurrency:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
@@ -20,4 +20,30 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - name: Vérifier l’archive de sources
+        run: |
+          python3 - <<'PYCODE'
+          import subprocess,zipfile,pathlib
+          paths=set(subprocess.check_output(['git','ls-files','-z']).decode().strip('\0').split('\0'))-{'dist/hoop-legacy-source.zip'}
+          with zipfile.ZipFile('dist/hoop-legacy-source.zip') as archive:
+              assert set(archive.namelist())==paths
+              for name in paths:
+                  assert archive.read(name)==pathlib.Path(name).read_bytes(),name
+          PYCODE
       - run: npm test
+      - name: Préparer Chromium
+        run: |
+          if command -v google-chrome >/dev/null; then
+            echo "CHROMIUM_EXECUTABLE_PATH=$(command -v google-chrome)" >> "$GITHUB_ENV"
+          else
+            npx playwright-core install --with-deps chromium
+          fi
+      - run: npm run test:v40-browser
+      - run: node tools/v40-balance.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: validation-v40
+          path: |
+            test-results/
+            tests/v40-*.json

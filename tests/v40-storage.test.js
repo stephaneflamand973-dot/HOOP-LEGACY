@@ -14,7 +14,7 @@ test('another tab cannot overwrite a career loaded before a newer save',async()=
  assert.equal((await first.load('v40-tabs')).money,789);
 });
 test('V3.9 migration preserves an original backup and destination',async()=>{
- const old=createGame(defaultBuild());delete old.v40;
+ const old=createGame(defaultBuild());delete old.v40;old.engine='3.9.0';
  old.simulation={mode:'40',cursor:{mode:'40',fromDay:old.day,fromSeason:old.season,targetSeason:old.season+1}};
  await first.save(old,'v40-old');
  const migrated=await first.load('v40-old');assert.equal(migrated.v40.version,1);

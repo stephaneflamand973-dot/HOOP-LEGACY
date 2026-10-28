@@ -1,6 +1,6 @@
-import {WEIGHTS,KEYS} from './config.js?v=3.9.0';
-import {leagueDef} from './leagues.js?v=3.9.0';
-import {V40_RULES} from './v40-rules.js?v=3.9.0';
+import {WEIGHTS,KEYS} from './config.js?v=4.0.0';
+import {leagueDef} from './leagues.js?v=4.0.0';
+import {V40_RULES} from './v40-rules.js?v=4.0.0';
 const clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
 const overall=p=>Math.round(KEYS.reduce((n,k)=>n+p.attrs[k]*(WEIGHTS[p.pos]?.[k]||.35),0)/KEYS.reduce((n,k)=>n+(WEIGHTS[p.pos]?.[k]||.35),0));
 export const roleLabel=n=>n>=33?'Joueur majeur':n>=27?'Titulaire':n>=23?'Sixième homme':n>=17?'Rotation':'Développement';
@@ -23,17 +23,19 @@ export function recordRoleMatch(s,g,m){
   if(row.seen.includes(g.id))continue;
   const grade=clamp(50+25*(((b.pts+.9*b.ast+.5*b.reb+1.6*(b.stl+b.blk)-1.1*b.tov-.65*(b.fga-b.fgm))/Math.max(8,b.min*.62))-1),0,100);
   row.seen.push(g.id);row.recent.push({id:g.id,grade,day:s.day});row.recent=row.recent.slice(-5);
+  const club=[m.home,m.away].find(id=>s.teams.find(t=>t.id===id)?.roster.includes(b.id));
+  if(club){const q=projectRole(s,b.id,club),prior=Object.values(m.rotation||{}).flat().find(r=>r.playerId===b.id)?.score??q.minutes;row.rotationMinutes=q.availability===1?clamp(q.minutes,Math.max(0,prior-2),prior+2):q.minutes;}
  }
 }
 export function applyRole(s,reason='match'){
  const q=projectRole(s,s.hero,s.team),before=s.minutes;
- s.minutes=reason==='match'&&q.availability===1?clamp(q.minutes,Math.max(0,before-2),before+2):q.minutes;s.role=roleLabel(s.minutes);
+ s.minutes=reason==='match'&&q.availability===1?clamp(q.minutes,Math.max(0,before-2),before+2):q.minutes;s.role=roleLabel(s.minutes);if(s.v40?.roles[s.hero])s.v40.roles[s.hero].rotationMinutes=s.minutes;
  s.roleReason=`Niveau ${q.level} ; concurrence ${q.rival} ; confiance ${Math.round(s.trust)}/100 ; forme ${Math.round(q.form)}/100 ; maîtrise ${Math.round(s.system)}/100. ${before} → ${s.minutes} minutes projetées (${reason==='match'?'évolution après match':reason==='transfer'?'changement de club':'disponibilité ou effectif'}), sans garantie de temps joué.`;
  return q;
 }
 export function rotationPlan(s,teamId,duration){
  const t=s.teams.find(t=>t.id===teamId);if(!t)throw Error('Club inconnu.');
- const rows=t.roster.map(id=>s.players.find(p=>p.id===id)).filter(p=>p&&!p.injury).map(p=>{const q=projectRole(s,p.id,teamId);return {playerId:p.id,targetMinutes:0,score:Math.max(1,q.minutes)};});
+ const rows=t.roster.map(id=>s.players.find(p=>p.id===id)).filter(p=>p&&!p.injury).map(p=>{const q=projectRole(s,p.id,teamId);return {playerId:p.id,targetMinutes:0,score:Math.max(1,q.availability!==1?q.minutes:p.id===s.hero?s.minutes:s.v40?.roles[p.id]?.rotationMinutes??q.minutes)};});
  let remaining=Math.min(5,rows.length)*duration,free=[...rows];
  while(free.length&&remaining>1e-9){const weight=free.reduce((n,r)=>n+r.score,0),capped=free.filter(r=>remaining*r.score/weight>=duration);if(!capped.length){for(const r of free)r.targetMinutes=remaining*r.score/weight;break;}for(const r of capped){r.targetMinutes=duration;remaining-=duration;}free=free.filter(r=>!capped.includes(r));}
  return rows;

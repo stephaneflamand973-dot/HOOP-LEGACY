@@ -5,3 +5,7 @@ test-results/
 
 .qa-cache/
 .qa-previous*/
+
+.qa-v40-cache/
+.qa-v40-release-cache/
+.qa-v39-golden/

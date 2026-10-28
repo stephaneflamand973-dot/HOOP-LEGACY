@@ -1,5 +1,7 @@
+import {emitMoment} from './career-moments.js?v=4.0.0';
 export function initSportEvents(s) { s.sportEvents??={seen:[],notice:null}; }
 export function sportingPause(s,id,title,text,league=s.league) {
+  if(s.v40)return emitMoment(s,{id,title,text,league});
   initSportEvents(s);
   const events=s.sportEvents;
   if (events.seen.includes(id) || s.retired) return false;

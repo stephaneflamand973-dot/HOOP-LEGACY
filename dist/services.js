@@ -1,7 +1,7 @@
-import {GROUPS} from './config.js?v=3.9.0';
-import {canChange} from './commands.js?v=3.9.0';
-import {coachQuote,hireCoach} from './environment.js?v=3.9.0';
-import {receipt,cents} from './finance.js?v=3.9.0';
+import {GROUPS} from './config.js?v=4.0.0';
+import {canChange} from './commands.js?v=4.0.0';
+import {coachQuote,hireCoach} from './environment.js?v=4.0.0';
+import {receipt,cents} from './finance.js?v=4.0.0';
 const player=s=>s.players.find(p=>p.id===s.hero);
 export const RECONVERSION_DOMAINS={coaching:'Coaching',video:'Analyse vidéo',physical:'Préparation physique'};
 const CATALOG={formation:{price:3000,name:'Formation de reconversion',effect:'30 séances de 2 h remplacent l’entraînement individuel les jours d’étude admissibles. Aucun salaire automatique.'},proximity:{price:7500,name:'Proximité de la résidence',effect:'Jusqu’à 0,5 point de fatigue par jour à domicile.'},installation:{price:20300,name:'Installation personnelle',effect:'+10 % XP ciblés hors saison à domicile ; cumul avec coach limité à 20 %. Entretien initial de 300 € inclus.'},maintenance:{price:300,name:'Entretien de l’installation',effect:'30 jours d’entretien, sans renouvellement automatique.'},physical:{price:1200,name:'Préparateur physique',effect:'+15 % XP Physique sur les séances admissibles, emplacement coach individuel.'},recovery:{price:900,name:'Accompagnement récupération',effect:'Jusqu’à 1 point de fatigue récupéré par jour, sans effet sur les blessures.'}};

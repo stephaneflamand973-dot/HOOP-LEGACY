@@ -1,0 +1,22 @@
+{
+  "version": "4.0.0",
+  "fingerprint": "035d294e29145c851b858a6f3e6fb3b67e3647392c14da9cf737d662fbc7fe81",
+  "formationCompleted": true,
+  "retirementView": true,
+  "manualReplacement": true,
+  "staleTabRejected": true,
+  "widths": [
+    320,
+    390,
+    1440
+  ],
+  "tabs": 6,
+  "services": 5,
+  "cancel": true,
+  "focus": true,
+  "reload": true,
+  "offline": true,
+  "persistentSimulation": true,
+  "errors": [],
+  "physicalSafari": false
+}

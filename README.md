@@ -1,8 +1,20 @@
-# HOOP LEGACY — V3.9.0
+# HOOP LEGACY — V4.0.0
 
 Simulation de carrière de basket en français, conçue pour le téléphone. Application statique, hors ligne après le premier chargement, sans compte ni achat intégré.
 
-[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=3.9.0)
+[Jouer sur GitHub Pages](https://stephaneflamand973-dot.github.io/HOOP-LEGACY/dist/?v=4.0.0)
+
+## V4.0 — Une carrière plus lisible et plus personnelle
+
+- Rôle, concurrence, forme, confiance et maîtrise expliquent le temps de jeu projeté ; rotations communes au héros et aux adversaires.
+- Progression spécialisée, coûts croissants au très haut niveau et vieillissement différencié.
+- Moments de carrière consultables, trois préférences d’interruption et destination de simulation conservée.
+- Dans **Vie**, investissez votre argent virtuel dans la préparation physique, la récupération, le logement proche, une installation personnelle ou une formation de reconversion. Chaque achat présente son prix, ses conditions et la réserve protégée avant confirmation.
+- Accueil allégé et navigation mobile en cinq onglets ; archives, playoffs et anciennes carrières conservés.
+
+Les formations délivrent une qualification après 60 heures ; elles ne créent pas automatiquement un revenu. Les minutes projetées et les achats ne garantissent aucune victoire. Aucun nouvel objectif saisonnier obligatoire.
+
+Les sauvegardes V3.0–V3.9 sont migrées avec copie de secours ; les matchs déjà commencés conservent leurs règles historiques. Voir `TEST-REPORT.md` et `docs/v4.0-review.md` pour les preuves et limites.
 
 ## V3.9 — Agents et négociations
 

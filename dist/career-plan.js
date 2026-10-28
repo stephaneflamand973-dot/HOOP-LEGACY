@@ -1,9 +1,9 @@
-import {projectRole,applyRole} from './role.js?v=3.9.0';
-import {offerNet} from './representation.js?v=3.9.0';
-import {canChange} from './commands.js?v=3.9.0';
-import {hero,team,getPlayer,overall,clamp,log} from './engine.js?v=3.9.0';
-import {leagueDef} from './leagues.js?v=3.9.0';
-import {sportingPause} from './sport-events.js?v=3.9.0';
+import {projectRole,applyRole} from './role.js?v=4.0.0';
+import {offerNet} from './representation.js?v=4.0.0';
+import {canChange} from './commands.js?v=4.0.0';
+import {hero,team,getPlayer,overall,clamp,log} from './engine.js?v=4.0.0';
+import {leagueDef} from './leagues.js?v=4.0.0';
+import {sportingPause} from './sport-events.js?v=4.0.0';
 export const PREFERENCES={balanced:'Équilibre',minutes:'Temps de jeu',title:'Projet de titre',salary:'Salaire',stability:'Stabilité'};
 export function initCareerPlan(s){s.careerPlan??={version:1,preference:'balanced',evaluation:null,reviews:[]};s.careerPlan.discussions??={version:1,history:[],cooldowns:{},teamwork:null};}
 export function roleProjection(s,club=team(s)){return projectRole(s,s.hero,club.id);}

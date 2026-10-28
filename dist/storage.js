@@ -1,5 +1,5 @@
-import {VERSION} from './config.js?v=3.9.0';
-import {validate,migrateLegacy} from './engine.js?v=3.9.0';
+import {VERSION} from './config.js?v=4.0.0';
+import {validate,migrateLegacy} from './engine.js?v=4.0.0';
 const open=()=>new Promise((resolve,reject)=>{
  const r=indexedDB.open('hoop-legacy-v1',4);let blocked=false;
  r.onupgradeneeded=()=>{for(const name of ['slots','archives','slotMeta'])if(!r.result.objectStoreNames.contains(name))r.result.createObjectStore(name);};
@@ -9,11 +9,11 @@ const open=()=>new Promise((resolve,reject)=>{
 });
 let writes=Promise.resolve();const archiveKeys=new WeakMap(),revisions=new Map();
 function archiveKey(a){if(a.deferred&&a.archiveRef)return a.archiveRef;let key=archiveKeys.get(a);if(key)return key;let str=JSON.stringify(a),h=2166136261;for(let i=0;i<str.length;i++)h=Math.imul(h^str.charCodeAt(i),16777619);key='season-'+a.season+'-'+(h>>>0)+'-'+str.length;archiveKeys.set(a,key);return key;}
-export function save(state,slot='auto'){
+export function save(state,slot='auto',{expectedRevision}={}){
  if(!state)return Promise.resolve();if(state.schema===4)validate(needsMigration(state)?migrateLegacy(state):state);const refs=(state.archives||[]).map(archiveKey),snapshot=structuredClone({...state,archives:[]}),archives=[...(state.archives||[])];snapshot.archiveRefs=refs;snapshot.archiveIndex=archives.map((a,i)=>({season:a.season,team:a.team,league:a.league,archiveRef:refs[i],deferred:true}));
- writes=writes.catch(()=>{}).then(()=>write(snapshot,archives,slot));return writes;
+ writes=writes.catch(()=>{}).then(()=>write(snapshot,archives,slot,expectedRevision));return writes;
 }
-async function write(state,archives,slot){
+async function write(state,archives,slot,expectedRevision){
  const db=await open();
  return new Promise((res,rej)=>{
   const tx=db.transaction(['slots','archives','slotMeta'],'readwrite'),slots=tx.objectStore('slots'),store=tx.objectStore('archives'),meta=tx.objectStore('slotMeta');
@@ -21,7 +21,7 @@ async function write(state,archives,slot){
   const current=meta.get(slot);
   current.onsuccess=()=>{
    const actual=current.result?.revision||0;
-   if(actual!==(revisions.get(slot)||0)){conflict=Error('Cette carrière a été enregistrée dans un autre onglet. Rechargez-la avant de continuer.');tx.abort();return;}
+   if(actual!==(expectedRevision??revisions.get(slot)??0)){conflict=Error('Cette carrière a été enregistrée dans un autre onglet. Rechargez-la avant de continuer.');tx.abort();return;}
    revision=actual+1;
    for(let i=0;i<archives.length;i++){
     if(archives[i].deferred)continue;
@@ -51,7 +51,7 @@ export async function load(slot='auto',{lazy=false}={}){
  if(data?.archiveRefs?.length){let refs=data.archiveRefs;data.archives=await new Promise((res,rej)=>{let tx=db.transaction('archives'),out=new Array(refs.length);refs.forEach((key,i)=>{if(lazy&&data.engine===VERSION&&data.archiveIndex?.[i]&&i<refs.length-1){out[i]=data.archiveIndex[i];return;}let r=tx.objectStore('archives').get(key);r.onsuccess=()=>{if(!r.result){rej(Error('Archive manquante : chargez le secours ou votre export JSON.'));return;}out[i]=r.result;};r.onerror=()=>rej(r.error);});tx.oncomplete=()=>res(out);tx.onerror=()=>rej(tx.error);});delete data.archiveRefs;delete data.archiveIndex;}
  db.close();if(!data)return null;if(needsMigration(data)){let migrated=migrate(data);await save(data,(data.schema===4?'backup-before-'+data.engine+'-':'backup-before-migration-')+slot);data=migrated;await save(data,slot);}return validate(data);
 }
-const needsMigration=s=>s?.schema===4&&s.engine===VERSION&&s.v40===undefined||[1,2,3].includes(s?.schema)||s?.schema===4&&['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0','3.7.0','3.8.0'].includes(s.engine);
+const needsMigration=s=>[1,2,3].includes(s?.schema)||s?.schema===4&&['3.0.0','3.1.0','3.2.0','3.3.0','3.4.0','3.5.0','3.6.0','3.7.0','3.8.0','3.9.0'].includes(s.engine);
 export function migrate(data){return validate(migrateLegacy(data))}
 export function parseSave(text){if(text.length>150000000)throw Error('Fichier trop volumineux');let s=JSON.parse(text);if(s?.archives?.some(a=>a.deferred)||s?.archiveRefs?.length&&!s.archives?.length)throw Error('Export incomplet : les archives ne sont pas incluses');return needsMigration(s)?migrate(s):validate(s)}
 
@@ -60,7 +60,7 @@ export async function listSlots(){
  return new Promise((resolve,reject)=>{
   const tx=db.transaction(['slots','slotMeta']),slots=tx.objectStore('slots'),metas=tx.objectStore('slotMeta');
   const values=slots.getAll(),keys=slots.getAllKeys(),metadata=metas.getAll(),metaKeys=metas.getAllKeys();
-  tx.oncomplete=()=>{const m=new Map(metaKeys.result.map((k,i)=>[k,metadata.result[i]]));db.close();resolve(keys.result.map((key,i)=>{const s=values.result[i],p=s.players?.find(p=>p.id===s.hero),club=s.teams?.find(t=>t.id===s.team);return {key,name:p?.name||'Carrière',club:club?.name||'Club inconnu',season:s.season,retired:!!s.retired,engine:s.engine,savedAt:m.get(key)?.savedAt||null};}));};
+  tx.oncomplete=()=>{const m=new Map(metaKeys.result.map((k,i)=>[k,metadata.result[i]]));db.close();resolve(keys.result.map((key,i)=>{const s=values.result[i],p=s.players?.find(p=>p.id===s.hero),club=s.teams?.find(t=>t.id===s.team);return {key,name:p?.name||'Carrière',club:club?.name||'Club inconnu',season:s.season,retired:!!s.retired,engine:s.engine,savedAt:m.get(key)?.savedAt||null,revision:m.get(key)?.revision||0};}));};
   tx.onerror=()=>{db.close();reject(tx.error);};
  });
 }
